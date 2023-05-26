@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 20:47:08 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 21:49:20 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,11 @@ std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int 
 				{
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 					visited[neighbor] = true;
-					if (stock_data.data_of_cells[neighbor][6] == 2 && stock_data.data_of_cells[neighbor][9] > 0 && !find_conexion(stock_data, index, neighbor))
+					if (neighbor == stock_data.my_base_index
+						|| (stock_data.data_of_cells[neighbor][6] == 2
+							&& stock_data.data_of_cells[neighbor][9] > 0
+							&& !find_conexion(stock_data, index, neighbor)
+							&& !find_conexion(stock_data, neighbor, index)))
 						return (std::pair<int, int>(neighbor, dist + 1));
 				}
 			}
@@ -101,3 +105,6 @@ std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int 
 	}
 	return (std::pair<int, int>(-1, -1));
 }
+
+// std::vector<bool> visited(stock_data.data_of_cells.size(), false);
+// visited[origin] = true;

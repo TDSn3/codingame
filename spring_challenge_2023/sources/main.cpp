@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 20:53:44 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 22:19:53 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,37 @@ int main()
 		print_by_step(stock_data, stock_data.my_base_index);
 
 		debug(stock_data);
+	}
+}
+
+void	test(Data &stock_data, std::vector<bool> &visited, int &origin)
+{
+	std::queue<std::pair<int, int> > bfs_queue;
+
+	bfs_queue.push(std::pair<int, int>(origin, 0));
+	while (!bfs_queue.empty())
+	{
+		int index = bfs_queue.front().first;
+		int dist = bfs_queue.front().second;
+		bfs_queue.pop();
+
+		if (dist < 20)
+		{
+			for (int j = 0; j < 6; j++)
+			{
+				int neighbor = stock_data.data_of_cells[index][j];
+				if (neighbor != -1 && !visited[neighbor])
+				{
+					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
+					visited[neighbor] = true;
+					if (neighbor == stock_data.my_base_index || (stock_data.data_of_cells[neighbor][6] == 2 && stock_data.data_of_cells[neighbor][9] > 0))
+					{
+						cout << "LINE" << " " << origin << " " << neighbor << " " << "1" << ";";
+						test(stock_data, visited, neighbor);
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -71,9 +102,15 @@ void	print_by_step(Data& stock_data, int src_index)
 				}
 			}
 		}
-/*		
-//		si il y a des ressources dans ce cercle		
-		if (stock_data.res_by_dist[i] > 0)
+		if (i > 0)
+		{
+			std::vector<bool> visited(stock_data.data_of_cells.size(), false);
+			visited[src_index] = true;
+			test(stock_data, visited, src_index);
+			return;
+		}
+/*
+		if (i > 0)
 		{
 //			parcour chaque index du cercle i
 			for (unsigned long int j = 0; j < stock_data.data_of_cells.size(); j++)
@@ -85,20 +122,24 @@ void	print_by_step(Data& stock_data, int src_index)
 					&& stock_data.data_of_cells[j][9] > 0
 					&& stock_data.data_of_cells[j][6] == 2)
 				{
+					cerr << "---> " << j << "\n";
 					std::pair<int, int>	next_index;
 
 					next_index = algorithme_bfs_stop_first(stock_data, j, 20);
 					if (next_index.first != -1)
 					{
+						cerr << "OUI\n";
 						cerr << "next index " << j << " " << next_index.first << ", " << next_index.second << "\n";
 						cout << "LINE" << " " << j << " " << next_index.first << " " << "1" << ";";
+						stock_data.conexions[j].push_back(next_index.first);
+						cerr << "connexion add " << j << "--->" << next_index.first << "\n";
 					}
 				}
 			}
-			return ;
 		}
 */
 	}
+	
 	cout << "BEACON" << " " << stock_data.my_base_index << " " << "1" << ";";
 }
 
