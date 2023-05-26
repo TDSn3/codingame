@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 16:57:34 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 17:00:56 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,16 @@ void	start(Data &stock_data)
 
 	for (int i = 0; i < number_of_bases; i++)
 	{
-		cin >> stock_data.my_base_index; cin.ignore();
+		cin >> stock_data.my_base_index;
+		cin.ignore();
 	}
 
 	for (int i = 0; i < number_of_bases; i++)
 	{
 		int opp_base_index;
-		cin >> opp_base_index; cin.ignore();
+
+		cin >> opp_base_index;
+		cin.ignore();
 	}
 
 	cerr << "Start bfs" << endl;
