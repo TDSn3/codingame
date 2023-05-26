@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 12:22:03 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:20:50 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,95 +21,12 @@ int main()
 	cerr << "Start main" << endl;
 	start(stock_data);
 	while (1)
-	{
-		stock_data.total_ants = 0;
-	
-		for (int i = 0; i < stock_data.number_of_cells; i++)
-		{
-			int resources;	// la quantité actuelle d'oeufs/cristaux sur cette cellule
-			int my_ants;	// le montant de vos fourmis sur cette cellule
-			int opp_ants;	// la quantité de fourmis adverses sur cette cellule
-			cin
-				>> resources
-				>> my_ants
-				>> opp_ants;
-			cin.ignore();
-			stock_data.data_of_cells[i][9] = resources;
-			stock_data.data_of_cells[i][10] = my_ants;
-			stock_data.data_of_cells[i][11] = opp_ants;
-			stock_data.total_ants += my_ants;
-			if (resources > 0 && stock_data.data_of_cells[i][6] == 2)
-			{
-				if (stock_data.data_of_cells[i][8] == 1)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 2)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 3)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 4)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 5)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 6)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 7)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] > 7)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-			}
-			else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)
-			{
-				stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
-			}
-		}
+	{	
+		start_2(stock_data);
+
 		print_by_step(stock_data);
-		cerr << "total_ants :\t"<< stock_data.total_ants << endl;
-		cerr << "res_by_dist :\t";
-		for (unsigned long int i = 0; i < stock_data.res_by_dist.size(); i++)
-		{
-			cerr << stock_data.res_by_dist[i] << " ";
-			stock_data.res_by_dist[i] = 0;
-		}
-		cerr << endl;
-		cerr << "egg_by_dist :\t";
-		for (unsigned long int i = 0; i < stock_data.egg_by_dist.size(); i++)
-		{
-			cerr << stock_data.egg_by_dist[i] << " ";
-			stock_data.egg_by_dist[i] = 0;
-		}
-		cerr << endl;
-		cerr << "conexion :\n";
-		for (unsigned long int i = 0; i < stock_data.conexions.size(); i++)
-		{
-			if (!stock_data.conexions[i].empty())
-			{
-				cerr << i << " :\t";
-				for (unsigned long int j = 0; j < stock_data.conexions[i].size(); j++)
-				{
-					cerr << stock_data.conexions[i][j] << " ";
-					stock_data.conexions[i].erase(stock_data.conexions[i].begin() + j);
-				}
-				cerr << "\n";
-			}
-		}
-		cerr << endl;
-		cout << endl;
+
+	
 	}
 }
 
@@ -197,3 +114,4 @@ void	print_by_step(Data& stock_data)
 //																	// [9]  resources
 //																	// [10] my_ants
 //																	// [11] opp_ants
+//		stock_data.data_of_cells[i].push_back(-1);					// [12] case conected

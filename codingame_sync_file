@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 11:43:33 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:58:46 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ public:
 	std::vector<std::vector<int> >		conexions;
 	std::map<int, std::vector<int> >	data_of_cells;
 
-	int									get_index_base(void);
-
 protected:
 
 private:
@@ -59,7 +57,7 @@ private:
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 11:06:21 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:21:31 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +79,12 @@ private:
 using namespace std;
 
 
-void	start(Data &stock_data);
-void algorithme_bfs(Data& stock_data, int origin, int max_dist);
+void				start(Data &stock_data);
+void				start_2(Data &stock_data);
+void				algorithme_bfs(Data& stock_data, int origin, int max_dist);
 std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int max_dist);
+void				debug(Data &stock_data);
+
 
 #endif
 /* ************************************************************************** */
@@ -94,7 +95,7 @@ std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int 
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:58:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 00:29:54 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 14:58:51 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +108,9 @@ std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int 
 Data::Data(void)
 {
 	this->my_base_index = 0;
-	number_of_cells = 0;
+	this->number_of_cells = 0;
+	this->total_ants = 0;
+	this->max_dist = 0;
 }
 
 /*   COPY CONSTRUCTEUR   **************************************************** */
@@ -143,14 +146,6 @@ Data::~Data(void)
 /* ************************************************************************** */
 
 /*   MÉTHODE PUBLIC   ******************************************************* */
-
-int	Data::get_index_base(void)
-{
-	int	i;
-
-	i = 0;
-	return (i);	
-}
 
 /*   MÉTHODE PRIVATE   ****************************************************** */
 
@@ -245,7 +240,7 @@ std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int 
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 11:29:53 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:18:57 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +288,9 @@ void	start(Data &stock_data)
 	cin >> number_of_bases; cin.ignore();
 
 	for (int i = 0; i < number_of_bases; i++)
+	{
 		cin >> stock_data.my_base_index; cin.ignore();
+	}
 
 	for (int i = 0; i < number_of_bases; i++)
 	{
@@ -308,12 +305,97 @@ void	start(Data &stock_data)
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   start_2.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
+/*   Updated: 2023/05/26 15:18:08 by tda-silv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+void	start_2(Data &stock_data)
+{
+	for (int i = 0; i < stock_data.number_of_cells; i++)
+	{
+		int resources;	// la quantité actuelle d'oeufs/cristaux sur cette cellule
+		int my_ants;	// le montant de vos fourmis sur cette cellule
+		int opp_ants;	// la quantité de fourmis adverses sur cette cellule
+		cin
+			>> resources
+			>> my_ants
+			>> opp_ants;
+		cin.ignore();
+		stock_data.data_of_cells[i][9] = resources;
+		stock_data.data_of_cells[i][10] = my_ants;
+		stock_data.data_of_cells[i][11] = opp_ants;
+		stock_data.total_ants += my_ants;
+		if (resources > 0
+			&& stock_data.data_of_cells[i][6] == 2
+			&& stock_data.data_of_cells[i][8] > 0)							// [6] type == crystal [8] dist_from_base > 0
+			stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
+		else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)		// [6] type == egg
+			stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
+	}
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   debug.cpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/26 15:20:15 by tda-silv          #+#    #+#             */
+/*   Updated: 2023/05/26 15:21:03 by tda-silv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+
+void	debug(Data &stock_data)
+{
+	cerr << "total_ants :\t"<< stock_data.total_ants << endl;
+	cerr << "res_by_dist :\t";
+	for (unsigned long int i = 0; i < stock_data.res_by_dist.size(); i++)
+	{
+		cerr << stock_data.res_by_dist[i] << " ";
+		stock_data.res_by_dist[i] = 0;
+	}
+	cerr << endl;
+	cerr << "egg_by_dist :\t";
+	for (unsigned long int i = 0; i < stock_data.egg_by_dist.size(); i++)
+	{
+		cerr << stock_data.egg_by_dist[i] << " ";
+		stock_data.egg_by_dist[i] = 0;
+	}
+	cerr << endl;
+	cerr << "conexion :\n";
+	for (unsigned long int i = 0; i < stock_data.conexions.size(); i++)
+	{
+		if (!stock_data.conexions[i].empty())
+		{
+			cerr << i << " :\t";
+			for (unsigned long int j = 0; j < stock_data.conexions[i].size(); j++)
+			{
+				cerr << stock_data.conexions[i][j] << " ";
+				stock_data.conexions[i].erase(stock_data.conexions[i].begin() + j);
+			}
+			cerr << "\n";
+		}
+	}
+	cerr << endl;
+	cout << endl;
+}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 12:22:03 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:20:50 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,95 +409,12 @@ int main()
 	cerr << "Start main" << endl;
 	start(stock_data);
 	while (1)
-	{
-		stock_data.total_ants = 0;
-	
-		for (int i = 0; i < stock_data.number_of_cells; i++)
-		{
-			int resources;	// la quantité actuelle d'oeufs/cristaux sur cette cellule
-			int my_ants;	// le montant de vos fourmis sur cette cellule
-			int opp_ants;	// la quantité de fourmis adverses sur cette cellule
-			cin
-				>> resources
-				>> my_ants
-				>> opp_ants;
-			cin.ignore();
-			stock_data.data_of_cells[i][9] = resources;
-			stock_data.data_of_cells[i][10] = my_ants;
-			stock_data.data_of_cells[i][11] = opp_ants;
-			stock_data.total_ants += my_ants;
-			if (resources > 0 && stock_data.data_of_cells[i][6] == 2)
-			{
-				if (stock_data.data_of_cells[i][8] == 1)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 2)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 3)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 4)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 5)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 6)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] == 7)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-				else if (stock_data.data_of_cells[i][8] > 7)
-				{
-					stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-				}
-			}
-			else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)
-			{
-				stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
-			}
-		}
+	{	
+		start_2(stock_data);
+
 		print_by_step(stock_data);
-		cerr << "total_ants :\t"<< stock_data.total_ants << endl;
-		cerr << "res_by_dist :\t";
-		for (unsigned long int i = 0; i < stock_data.res_by_dist.size(); i++)
-		{
-			cerr << stock_data.res_by_dist[i] << " ";
-			stock_data.res_by_dist[i] = 0;
-		}
-		cerr << endl;
-		cerr << "egg_by_dist :\t";
-		for (unsigned long int i = 0; i < stock_data.egg_by_dist.size(); i++)
-		{
-			cerr << stock_data.egg_by_dist[i] << " ";
-			stock_data.egg_by_dist[i] = 0;
-		}
-		cerr << endl;
-		cerr << "conexion :\n";
-		for (unsigned long int i = 0; i < stock_data.conexions.size(); i++)
-		{
-			if (!stock_data.conexions[i].empty())
-			{
-				cerr << i << " :\t";
-				for (unsigned long int j = 0; j < stock_data.conexions[i].size(); j++)
-				{
-					cerr << stock_data.conexions[i][j] << " ";
-					stock_data.conexions[i].erase(stock_data.conexions[i].begin() + j);
-				}
-				cerr << "\n";
-			}
-		}
-		cerr << endl;
-		cout << endl;
+
+	
 	}
 }
 
@@ -503,3 +502,4 @@ void	print_by_step(Data& stock_data)
 //																	// [9]  resources
 //																	// [10] my_ants
 //																	// [11] opp_ants
+//		stock_data.data_of_cells[i].push_back(-1);					// [12] case conected

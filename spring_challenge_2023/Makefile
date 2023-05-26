@@ -10,6 +10,8 @@ CXXFLAGS	=	-Wall -Wextra #-Werror
 SRCS		=	class/Data.cpp		\
 				algorithme_bfs.cpp	\
 				start.cpp			\
+				start_2.cpp			\
+				debug.cpp			\
 				main.cpp			\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR
