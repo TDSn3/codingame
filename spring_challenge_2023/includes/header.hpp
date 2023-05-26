@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/25 23:41:01 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:06:21 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@
 # include <map>
 # include <algorithm>
 #include <queue>
+#include <cmath>
 
 using namespace std;
 
 # include "./class/Data.hpp"
 
 void	start(Data &stock_data);
+void algorithme_bfs(Data& stock_data, int origin, int max_dist);
+std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int max_dist);
 
 #endif

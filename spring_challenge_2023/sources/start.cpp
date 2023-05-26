@@ -6,42 +6,11 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/25 23:57:33 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 11:29:53 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.hpp"
-
-void recursive_dist_from_base(Data& stock_data, int max_dist) {
-	std::vector<bool> visited(stock_data.data_of_cells.size(), false);	// Tableau pour marquer les cellules visitées
-	std::queue<std::pair<int, int>> bfs_queue;							// File d'attente pour la recherche en largeur
-
-	bfs_queue.push({stock_data.my_base_index, 0});						// Ajouter la cellule de départ à la file d'attente
-	visited[stock_data.my_base_index] = true;							// Marquer la cellule de départ comme visitée
-
-	while (!bfs_queue.empty())
-	{
-		int index = bfs_queue.front().first;
-		int dist = bfs_queue.front().second;
-		bfs_queue.pop();
-
-		stock_data.data_of_cells[index][8] = dist;						// Mettre à jour la distance
-		cerr << index << " = " << dist << endl;
-
-		if (dist < max_dist)
-		{
-			for (int j = 0; j < 6; j++)
-			{
-				int neighbor = stock_data.data_of_cells[index][j];
-				if (neighbor != -1 && !visited[neighbor])
-				{
-					bfs_queue.push({neighbor, dist + 1});				// Ajouter le voisin à la file d'attente
-					visited[neighbor] = true;							// Marquer le voisin comme visité
-				}
-			}
-		}
-	}
-}
 
 void	start(Data &stock_data)
 {
@@ -67,16 +36,19 @@ void	start(Data &stock_data)
 			>> neigh_4
 			>> neigh_5;
 		cin.ignore();
-		stock_data.data_of_cells[i].push_back(neigh_0);
-		stock_data.data_of_cells[i].push_back(neigh_1);
-		stock_data.data_of_cells[i].push_back(neigh_2);
-		stock_data.data_of_cells[i].push_back(neigh_3);
-		stock_data.data_of_cells[i].push_back(neigh_4);
-		stock_data.data_of_cells[i].push_back(neigh_5);
-		stock_data.data_of_cells[i].push_back(type);
-		stock_data.data_of_cells[i].push_back(initial_resources);
-		stock_data.data_of_cells[i].push_back(-1);					// distance from my base
-//		cerr << i << endl;
+		stock_data.data_of_cells[i].push_back(neigh_0);				// [0]
+		stock_data.data_of_cells[i].push_back(neigh_1);				// [1]
+		stock_data.data_of_cells[i].push_back(neigh_2);				// [2]
+		stock_data.data_of_cells[i].push_back(neigh_3);				// [3]
+		stock_data.data_of_cells[i].push_back(neigh_4);				// [4]
+		stock_data.data_of_cells[i].push_back(neigh_5);				// [5]
+		stock_data.data_of_cells[i].push_back(type);				// [6]
+		stock_data.data_of_cells[i].push_back(initial_resources);	// [7]
+		stock_data.data_of_cells[i].push_back(-1);					// [8]  distance from my base
+																	// [9]  resources
+																	// [10] my_ants
+																	// [11] opp_ants
+		stock_data.data_of_cells[i].push_back(-1);					// [12] case conected
 	}
 
 	int number_of_bases;
@@ -91,11 +63,7 @@ void	start(Data &stock_data)
 		cin >> opp_base_index; cin.ignore();
 	}
 
-	std::vector<int>	save_index;
-	int					dist;
-
-	dist = 0;
-	cerr << "Start recursive" << endl;
-	recursive_dist_from_base(stock_data, 20);
+	cerr << "Start bfs" << endl;
+	algorithme_bfs(stock_data, stock_data.my_base_index, 20);
 }
 
