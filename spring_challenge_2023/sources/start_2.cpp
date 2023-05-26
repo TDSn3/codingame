@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 15:18:08 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:29:28 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,23 @@ void	start_2(Data &stock_data)
 			stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
 		else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)		// [6] type == egg
 			stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
+	}
+
+
+
+	vector<pair<int, int>>	stock;
+
+	for (int i = 0; i < stock_data.number_of_cells; i++)
+	{
+		stock.push_back(std::pair<int, int>(stock_data.data_of_cells[i][8], i));
+	}
+	sort(stock.begin(), stock.end());
+	for (int i = 0; i < stock_data.number_of_cells; i++)
+	{
+		int	size;
+
+		size = stock_data.data_of_cells[i].size();
+		for (int j = 0; j < size; j++)
+			stock_data.dof_short_by_dist[i].push_back(stock_data.data_of_cells[stock[i].second][j]);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 12:21:37 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:27:18 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int 
 				{
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 					visited[neighbor] = true;
-					if (stock_data.data_of_cells[neighbor][6] == 2 && stock_data.data_of_cells[neighbor][9] > 0 && stock_data.data_of_cells[neighbor][8] < 4)
+					if (stock_data.data_of_cells[neighbor][6] == 2 && stock_data.data_of_cells[neighbor][9] > 0 && stock_data.data_of_cells[neighbor][8] < 20)
 						return (std::pair<int, int>(neighbor, dist + 1));
 				}
 			}

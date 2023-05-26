@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 15:20:50 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 15:39:15 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int main()
 
 		print_by_step(stock_data);
 
-	
+		debug(stock_data);
 	}
 }
 
@@ -69,21 +69,24 @@ void	print_by_step(Data& stock_data)
 					int	power;
 
 					power = 1;
+					//                    opp_ants [11]                       my_ants [10]                                              distance_from_base [8]
 //					if (stock_data.data_of_cells[j][11] >= stock_data.data_of_cells[j][10] && stock_data.res_by_dist[i] == 1 && stock_data.data_of_cells[j][8] < 4)
 //						power+= 1;
 //					if (stock_data.data_of_cells[j][11] >= stock_data.data_of_cells[j][10] && stock_data.data_of_cells[j][8] < 3)
 //						power+= 1;
+//					if (stock_data.data_of_cells[j][11] >= stock_data.data_of_cells[j][10])
+//						power+= 100;
 					std::pair<int, int>	stock;
 
 					stock = algorithme_bfs_stop_first(stock_data, j, 20);
 					if (stock.first != -1 && stock.second <= stock_data.data_of_cells[j][8] && !find_conexion(stock_data, stock.first, j))
 					{
-						cout << "LINE" << " " << j << " " << stock.first << " " << power + 100 << ";";
+						cout << "LINE" << " " << j << " " << stock.first << " " << power + 99 << ";";
 						stock_data.conexions[j].push_back(stock.first);
 					}
 					else
 					{
-						cout << "LINE" << " " << stock_data.my_base_index << " " << j << " " << power + 100 << ";";
+						cout << "LINE" << " " << stock_data.my_base_index << " " << j << " " << power + 99 << ";";
 						stock_data.conexions[j].push_back(stock_data.my_base_index);
 					}
 					cerr << "debug : " <<  j << " : " << "[" << stock.first << "]" << stock.second << " < " << stock_data.data_of_cells[j][8] << " " << (stock.second <= stock_data.data_of_cells[j][8]) << endl;
