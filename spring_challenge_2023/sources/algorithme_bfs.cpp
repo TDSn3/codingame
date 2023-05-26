@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 18:50:15 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 20:47:08 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,25 @@ void algorithme_bfs(Data& stock_data, int origin, int max_dist)
 	}
 }
 
+bool	find_conexion(Data& stock_data, int src_index, int chr_index)
+{
+	int size;
+
+	size = stock_data.conexions[src_index].size();
+	cerr << "+-------+\n";
+	cerr << src_index << " ---> " << chr_index << "size :" << size << endl;
+	for (unsigned long int j = 0; j < size; j++)
+	{
+		if (stock_data.conexions[src_index][j] == chr_index)
+		{
+			cerr << "+---1---+\n";
+			return (true);
+		}
+	}
+	cerr << "+---0---+\n";
+	return (false);
+}
+
 std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int max_dist)
 {
 	std::vector<bool> visited(stock_data.data_of_cells.size(), false);
@@ -63,21 +82,21 @@ std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int 
 		int dist = bfs_queue.front().second;
 		bfs_queue.pop();
 
-		cerr << index << " = " << dist << endl;
-
 		if (dist < max_dist)
 		{
 			for (int j = 0; j < 6; j++)
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
+				cerr << "===" << neighbor << endl;
 				if (neighbor != -1 && !visited[neighbor])
 				{
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 					visited[neighbor] = true;
-					if (stock_data.data_of_cells[neighbor][6] == 2 && stock_data.data_of_cells[neighbor][9] > 0 && stock_data.data_of_cells[neighbor][8] < 20)
+					if (stock_data.data_of_cells[neighbor][6] == 2 && stock_data.data_of_cells[neighbor][9] > 0 && !find_conexion(stock_data, index, neighbor))
 						return (std::pair<int, int>(neighbor, dist + 1));
 				}
 			}
+			cerr << endl;
 		}
 	}
 	return (std::pair<int, int>(-1, -1));

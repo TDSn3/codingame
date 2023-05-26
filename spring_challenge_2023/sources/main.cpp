@@ -6,13 +6,13 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 18:55:40 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 20:53:44 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.hpp"
 
-void	print_by_step(Data& stock_data);
+void	print_by_step(Data& stock_data, int src_index);
 
 int main()
 {
@@ -24,77 +24,80 @@ int main()
 	{	
 		start_2(stock_data);
 
-		print_by_step(stock_data);
+		print_by_step(stock_data, stock_data.my_base_index);
 
 		debug(stock_data);
 	}
 }
 
-bool	find_conexion(Data& stock_data, int src_index, int chr_index)
-{
-	cerr << "+-------+\n";
-	cerr << src_index << " " << chr_index << endl;
-	for (unsigned long int j = 0; j < stock_data.conexions[src_index].size(); j++)
-	{
-		if (stock_data.conexions[src_index][j] == chr_index)
-		{
-			cerr << "+---1---+\n";
-			return (true);
-		}
-	}
-	cerr << "+---0---+\n";
-	return (false);
-}
-
-void	print_by_step(Data& stock_data)
+void	print_by_step(Data& stock_data, int src_index)
 {
 //	parcour chaque cercle autour de la base
-	for (unsigned long int i = 1; i < stock_data.res_by_dist.size(); i++)
+//	i == dist du cercle par rapport a la base
+	for (unsigned long int i = 0; i < stock_data.res_by_dist.size(); i++)
 	{
 //		si il y a un oeuf a moins de 1 de la base		
 		if (stock_data.egg_by_dist[i] > 0 && i < 2)
 		{
-			cerr << "X" << endl;
 			for (unsigned long int j = 0; j < stock_data.data_of_cells.size(); j++)
 				if (stock_data.data_of_cells[j][8] == i && stock_data.data_of_cells[j][9] > 0 && stock_data.data_of_cells[j][6] == 1)
 					cout << "LINE" << " " << stock_data.my_base_index << " " << j << " " << "1" << ";";
 			return ;
 		}
+		if (i == 0)
+		{
+//			parcour chaque index du cercle i
+			for (unsigned long int j = 0; j < stock_data.data_of_cells.size(); j++)
+			{
+//				si l'index est au bon cercle
+//				si il y a des ressources
+//				si c'est un crystal
+				if (stock_data.data_of_cells[j][8] == i + 1
+					&& stock_data.data_of_cells[j][9] > 0
+					&& stock_data.data_of_cells[j][6] == 2)
+				{
+					cerr << "---> " << j << "\n";
+					std::pair<int, int>	next_index;
+
+					next_index = algorithme_bfs_stop_first(stock_data, src_index, 20);
+					if (next_index.first != -1)
+					{
+						cerr << "OUI\n";
+						cerr << "next index " << src_index << " " << next_index.first << ", " << next_index.second << "\n";
+						cout << "LINE" << " " << src_index << " " << next_index.first << " " << "1" << ";";
+						stock_data.conexions[src_index].push_back(next_index.first);
+						cerr << "connexion add " << src_index << "--->" << next_index.first << "\n";
+					}
+				}
+			}
+		}
+/*		
 //		si il y a des ressources dans ce cercle		
 		if (stock_data.res_by_dist[i] > 0)
 		{
-//			parcour chaque case
+//			parcour chaque index du cercle i
 			for (unsigned long int j = 0; j < stock_data.data_of_cells.size(); j++)
 			{
-//																					resources [9]								   type [6] == crystal
-				if (stock_data.dof_short_by_dist[j][8] == i && stock_data.dof_short_by_dist[j][9] > 0 && stock_data.dof_short_by_dist[j][6] == 2)
+//				si l'index est au bon cercle
+//				si il y a des ressources
+//				si c'est un crystal
+				if (stock_data.data_of_cells[j][8] == i
+					&& stock_data.data_of_cells[j][9] > 0
+					&& stock_data.data_of_cells[j][6] == 2)
 				{
-					int	power;
+					std::pair<int, int>	next_index;
 
-					power = 1;
-					std::pair<int, int>	stock;
-
-					stock = algorithme_bfs_stop_first(stock_data, j, 20);
-//					 index_neighbor			neighbor_dist			     distance_from_base [8]
-					if (stock.first != -1 && stock.second <= stock_data.dof_short_by_dist[j][8] && !find_conexion(stock_data, stock.first, j))
+					next_index = algorithme_bfs_stop_first(stock_data, j, 20);
+					if (next_index.first != -1)
 					{
-						cout << "LINE" << " " << stock_data.dof_short_by_dist[j][13] << " " << stock.first << " " << power + 99 << ";";
-						stock_data.conexions[j].push_back(stock.first);
+						cerr << "next index " << j << " " << next_index.first << ", " << next_index.second << "\n";
+						cout << "LINE" << " " << j << " " << next_index.first << " " << "1" << ";";
 					}
-					else
-					{
-						cout << "LINE" << " " << stock_data.my_base_index << " " << j << " " << power + 99 << ";";
-						stock_data.conexions[j].push_back(stock_data.my_base_index);
-					}
-					cerr << "debug : " <<  stock_data.dof_short_by_dist[j][13] << " : " << "[" << stock.first << "]" << stock.second << " < " << stock_data.dof_short_by_dist[j][8] << " " << (stock.second <= stock_data.data_of_cells[j][8]) << endl;
 				}
-				//if (stock_data.dof_short_by_dist[j][8] == i && stock_data.dof_short_by_dist[j][9] > 0 && stock_data.dof_short_by_dist[j][6] == 1)
-				//{
-				//	cout << "BEACON" << " " << stock_data.dof_short_by_dist[j][13] << " " << "1" << ";";
-				//	cerr << "!!!!!!!    " << stock_data.dof_short_by_dist[j][9] << endl;
-				//}
 			}
+			return ;
 		}
+*/
 	}
 	cout << "BEACON" << " " << stock_data.my_base_index << " " << "1" << ";";
 }

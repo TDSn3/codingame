@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 18:56:44 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 20:03:39 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,38 +54,38 @@ void	start_2(Data &stock_data)
 			stock_data.dof_short_by_dist[i].push_back(stock_data.data_of_cells[stock[i].second][j]);
 	}
 
-	cerr << "PRINT MAP" << "\n";
-	for (int i = 0; i < stock_data.number_of_cells; i++)
-	{
-		int	size2;
-
-		size2 = stock_data.data_of_cells[i].size();
-		cerr << i << "\t";
-		for (int j = 0; j < size2; j++)
-		{
-			if (j == 8)
-				cerr << "\t";
-			cerr << stock_data.data_of_cells[i][j] << " ";
-			if (j == 8)
-				cerr << "\t";
-		}
-		cerr << "\n";
-	}
-	for (int i = 0; i < stock_data.number_of_cells; i++)
-	{
-		int	size2;
-
-		size2 = stock_data.data_of_cells[i].size();
-		cerr << i << "\t";
-		for (int j = 0; j < size2; j++)
-		{
-			if (j == 8)
-				cerr << "\t";
-			cerr << stock_data.data_of_cells[ stock_data.dof_short_by_dist[i][13] ][j] << " ";
-			if (j == 8)
-				cerr << "\t";
-		}
-		cerr << "\n";
-	}
+//	cerr << "PRINT MAP" << "\n";
+//	for (int i = 0; i < stock_data.number_of_cells; i++)
+//	{
+//		int	size2;
+//
+//		size2 = stock_data.data_of_cells[i].size();
+//		cerr << i << "\t";
+//		for (int j = 0; j < size2; j++)
+//		{
+//			if (j == 8)
+//				cerr << "\t";
+//			cerr << stock_data.data_of_cells[i][j] << " ";
+//			if (j == 8)
+//				cerr << "\t";
+//		}
+//		cerr << "\n";
+//	}
+//	for (int i = 0; i < stock_data.number_of_cells; i++)
+//	{
+//		int	size2;
+//
+//		size2 = stock_data.data_of_cells[i].size();
+//		cerr << i << "\t";
+//		for (int j = 0; j < size2; j++)
+//		{
+//			if (j == 8)
+//				cerr << "\t";
+//			cerr << stock_data.data_of_cells[ stock_data.dof_short_by_dist[i][13] ][j] << " ";
+//			if (j == 8)
+//				cerr << "\t";
+//		}
+//		cerr << "\n";
+//	}
 
 }
