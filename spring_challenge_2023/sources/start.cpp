@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 15:44:25 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:57:34 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ void	start(Data &stock_data)
 		stock_data.data_of_cells[i].push_back(type);				// [6]
 		stock_data.data_of_cells[i].push_back(initial_resources);	// [7]
 		stock_data.data_of_cells[i].push_back(-1);					// [8]  distance from my base
-																	// [9]  resources
-																	// [10] my_ants
-																	// [11] opp_ants
+		stock_data.data_of_cells[i].push_back(-1);					// [9]  resources
+		stock_data.data_of_cells[i].push_back(-1);					// [10] my_ants
+		stock_data.data_of_cells[i].push_back(-1);					// [11] opp_ants
 		stock_data.data_of_cells[i].push_back(-1);					// [12] case conected
+		stock_data.data_of_cells[i].push_back(i);					// [13] real index 
 	}
 
 	int number_of_bases;

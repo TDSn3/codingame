@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 15:39:15 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/26 16:48:40 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ void	print_by_step(Data& stock_data)
 			cerr << "O" << endl;
 			for (unsigned long int j = 0; j < stock_data.data_of_cells.size(); j++)
 			{
-				if (stock_data.data_of_cells[j][8] == i && stock_data.data_of_cells[j][9] > 0 && stock_data.data_of_cells[j][6] == 2)
+//										 resources [9]								    type [6] == crystal
+				if (stock_data.dof_short_by_dist[j][9] > 0 && stock_data.dof_short_by_dist[j][6] == 2)
 				{
 					int	power;
 
@@ -78,10 +79,10 @@ void	print_by_step(Data& stock_data)
 //						power+= 100;
 					std::pair<int, int>	stock;
 
-					stock = algorithme_bfs_stop_first(stock_data, j, 20);
-					if (stock.first != -1 && stock.second <= stock_data.data_of_cells[j][8] && !find_conexion(stock_data, stock.first, j))
+					stock = algorithme_bfs_stop_first_2(stock_data, j, 20);
+					if (stock.first != -1 && stock.second <= stock_data.dof_short_by_dist[j][8] && !find_conexion(stock_data, stock.first, j))
 					{
-						cout << "LINE" << " " << j << " " << stock.first << " " << power + 99 << ";";
+						cout << "LINE" << " " << stock_data.dof_short_by_dist[j][13] << " " << stock.first << " " << power + 99 << ";";
 						stock_data.conexions[j].push_back(stock.first);
 					}
 					else
@@ -89,10 +90,10 @@ void	print_by_step(Data& stock_data)
 						cout << "LINE" << " " << stock_data.my_base_index << " " << j << " " << power + 99 << ";";
 						stock_data.conexions[j].push_back(stock_data.my_base_index);
 					}
-					cerr << "debug : " <<  j << " : " << "[" << stock.first << "]" << stock.second << " < " << stock_data.data_of_cells[j][8] << " " << (stock.second <= stock_data.data_of_cells[j][8]) << endl;
+					cerr << "debug : " <<  stock_data.dof_short_by_dist[j][13] << " : " << "[" << stock.first << "]" << stock.second << " < " << stock_data.dof_short_by_dist[j][8] << " " << (stock.second <= stock_data.data_of_cells[j][8]) << endl;
 				}
-				if (stock_data.data_of_cells[j][8] == i && stock_data.data_of_cells[j][9] > 0 && stock_data.data_of_cells[j][6] == 1)
-					cout << "BEACON" << " " << j << " " << "1" << ";";
+				if (stock_data.dof_short_by_dist[j][8] == i && stock_data.dof_short_by_dist[j][9] > 0 && stock_data.dof_short_by_dist[j][6] == 1)
+					cout << "BEACON" << " " << stock_data.dof_short_by_dist[j][13] << " " << "1" << ";";
 			}
 		}
 		cerr << i << " ";
@@ -118,3 +119,5 @@ void	print_by_step(Data& stock_data)
 //																	// [10] my_ants
 //																	// [11] opp_ants
 //		stock_data.data_of_cells[i].push_back(-1);					// [12] case conected
+//		stock_data.data_of_cells[i].push_back(-1);					// [13] real index 
+
