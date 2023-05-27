@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:58:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 14:58:51 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 17:02:06 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,17 @@ Data::Data(void)
 	this->number_of_cells = 0;
 	this->total_ants = 0;
 	this->max_dist = 0;
+}
+
+Data::Data(int my_base_index, int number_of_cells)
+{
+	this->my_base_index = my_base_index;
+	this->number_of_cells = number_of_cells;
+	this->total_ants = 0;
+	this->max_dist = 0;
+	for (int i = 0; i < number_of_cells; i++)
+		for (int j = 0; j < 13; j++)
+			this->data_of_cells[i].push_back(-1);
 }
 
 /*   COPY CONSTRUCTEUR   **************************************************** */

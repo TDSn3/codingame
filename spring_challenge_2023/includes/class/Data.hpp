@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/27 14:41:54 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 18:56:06 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ class Data
 public:
 
 	Data(void);
+	Data(int my_base_index, int number_of_cells);
 	Data(const Data &src);
 	~Data(void);
 
@@ -44,6 +45,7 @@ public:
 	std::vector<std::vector<int> >		conexions;
 	std::map<int, std::vector<int> >	data_of_cells;
 	std::map<int, std::vector<int> >	dof_short_by_dist; // dof = data_of_cells
+	std::list<std::list<int> >			path_to_base;
 
 protected:
 

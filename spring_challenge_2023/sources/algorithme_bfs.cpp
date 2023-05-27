@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/27 14:42:24 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 00:22:14 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void algorithme_bfs(Data& stock_data, int origin, int max_dist)
 		bfs_queue.pop();
 
 		stock_data.data_of_cells[index][8] = dist;
-//		cerr << index << " = " << dist << endl;
-
 		if (dist < max_dist)
 		{
 			std::vector<int>	stock;
@@ -51,60 +49,84 @@ void algorithme_bfs(Data& stock_data, int origin, int max_dist)
 	}
 }
 
-// bool	find_conexion(Data& stock_data, int src_index, int chr_index)
-// {
-// 	int size;
-
-// 	size = stock_data.conexions[src_index].size();
-// 	cerr << "+-------+\n";
-// 	cerr << src_index << " ---> " << chr_index << "size :" << size << endl;
-// 	for (int j = 0; j < size; j++)
-// 	{
-// 		if (stock_data.conexions[src_index][j] == chr_index)
-// 		{
-// 			cerr << "+---1---+\n";
-// 			return (true);
-// 		}
-// 	}
-// 	cerr << "+---0---+\n";
-// 	return (false);
-// }
-
-std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int max_dist)
+std::vector<int>	algorithme_bfs_2(Data& stock_data, int origin, int dest, int max_dist)
 {
-	std::vector<bool> visited(stock_data.data_of_cells.size(), false);
-	// std::queue<std::pair<int, int> > bfs_queue;
+	std::vector<bool>					visited(stock_data.data_of_cells.size(), false);
+	std::vector<int>					previous(stock_data.data_of_cells.size(), -1);
+	std::queue<std::pair<int, int> >	bfs_queue;
 
-	// bfs_queue.push(std::pair<int, int>(origin, 0));
-	// visited[origin] = true;
+	bfs_queue.push(std::pair<int, int>(origin, 0));
+	visited[origin] = true;
 
-	// while (!bfs_queue.empty())
-	// {
-	// 	int index = bfs_queue.front().first;
-	// 	int dist = bfs_queue.front().second;
-	// 	bfs_queue.pop();
+	while (!bfs_queue.empty())
+	{
+		int index = bfs_queue.front().first;
+		int dist = bfs_queue.front().second;
+		bfs_queue.pop();
 
-	// 	if (dist < max_dist)
-	// 	{
-	// 		for (int j = 0; j < 6; j++)
-	// 		{
-	// 			int neighbor = stock_data.data_of_cells[index][j];
-	// 			if (neighbor != -1 && !visited[neighbor])
-	// 			{
-	// 				bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
-	// 				visited[neighbor] = true;
-	// 				if (neighbor == stock_data.my_base_index
-	// 					|| (stock_data.data_of_cells[neighbor][6] == 2
-	// 						&& stock_data.data_of_cells[neighbor][9] > 0
-	// 						&& !find_conexion(stock_data, index, neighbor)
-	// 						&& !find_conexion(stock_data, neighbor, index)))
-	// 					return (std::pair<int, int>(neighbor, dist + 1));
-	// 			}
-	// 		}
-	// 	}
-	// }
-	return (std::pair<int, int>(-1, -1));
+		if (index == dest)
+		{
+			std::vector<int>	path;
+			int	current;
+
+			current = dest;
+		    while (current != origin)
+            {
+                path.push_back(current);
+                current = previous[current];
+            }
+			path.push_back(origin);
+			return (path);
+		}
+		if (dist < max_dist)
+		{
+			std::vector<int>	stock;
+
+			for (int j = 0; j < 6; j++)
+			{
+				int neighbor = stock_data.data_of_cells[index][j];
+				if (neighbor != -1 && !visited[neighbor])
+				{
+					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
+					visited[neighbor] = true;
+					previous[neighbor] = index;
+				}
+			}
+		}
+	}
+	return (std::vector<int>(0));
 }
 
-// std::vector<bool> visited(stock_data.data_of_cells.size(), false);
-// visited[origin] = true;
+std::pair<int, int>	find_next_cell_conected(Data& stock_data, int origin, int max_dist)
+{
+	std::vector<bool> visited(stock_data.data_of_cells.size(), false);
+	std::queue<std::pair<int, int> > bfs_queue;
+
+	bfs_queue.push(std::pair<int, int>(origin, 0));
+	visited[origin] = true;
+
+	while (!bfs_queue.empty())
+	{
+		int index = bfs_queue.front().first;
+		int dist = bfs_queue.front().second;
+		bfs_queue.pop();
+
+		if (dist < max_dist)
+		{
+			std::vector<int>	stock;
+			
+			for (int j = 0; j < 6; j++)
+			{
+				int neighbor = stock_data.data_of_cells[index][j];
+				if (neighbor != -1 && !visited[neighbor])
+				{
+					if (stock_data.conected_to_base[neighbor] == true)
+						return (std::pair<int, int>(neighbor, dist));
+					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
+					visited[neighbor] = true;
+				}
+			}
+		}
+	}
+	return (std::pair<int, int>(-1, -1));
+}

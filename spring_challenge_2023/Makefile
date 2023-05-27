@@ -11,6 +11,9 @@ SRCS		=	class/Data.cpp		\
 				algorithme_bfs.cpp	\
 				start.cpp			\
 				start_2.cpp			\
+				my_line.cpp			\
+				print_one_path.cpp	\
+				print_by_step.cpp	\
 				debug.cpp			\
 				main.cpp			\
 
