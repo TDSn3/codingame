@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 20:03:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 10:37:32 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	start_2(Data &stock_data)
 
 
 
-	vector<pair<int, int>>	stock;
+	vector<pair<int, int> >	stock;
 
 	for (int i = 0; i < stock_data.number_of_cells; i++)
 	{

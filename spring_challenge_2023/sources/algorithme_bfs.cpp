@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 21:49:20 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 11:37:42 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void algorithme_bfs(Data& stock_data, int origin, int max_dist)
 		bfs_queue.pop();
 
 		stock_data.data_of_cells[index][8] = dist;
-		cerr << index << " = " << dist << endl;
+//		cerr << index << " = " << dist << endl;
 
 		if (dist < max_dist)
 		{
@@ -35,6 +35,7 @@ void algorithme_bfs(Data& stock_data, int origin, int max_dist)
 			
 			stock_data.res_by_dist.push_back(0);
 			stock_data.egg_by_dist.push_back(0);
+			stock_data.pheromone.push_back(0);
 			stock_data.conexions.push_back(stock);
 			for (int j = 0; j < 6; j++)
 			{
@@ -56,7 +57,7 @@ bool	find_conexion(Data& stock_data, int src_index, int chr_index)
 	size = stock_data.conexions[src_index].size();
 	cerr << "+-------+\n";
 	cerr << src_index << " ---> " << chr_index << "size :" << size << endl;
-	for (unsigned long int j = 0; j < size; j++)
+	for (int j = 0; j < size; j++)
 	{
 		if (stock_data.conexions[src_index][j] == chr_index)
 		{
@@ -87,7 +88,6 @@ std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int 
 			for (int j = 0; j < 6; j++)
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
-				cerr << "===" << neighbor << endl;
 				if (neighbor != -1 && !visited[neighbor])
 				{
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
@@ -100,7 +100,6 @@ std::pair<int, int>	algorithme_bfs_stop_first(Data& stock_data, int origin, int 
 						return (std::pair<int, int>(neighbor, dist + 1));
 				}
 			}
-			cerr << endl;
 		}
 	}
 	return (std::pair<int, int>(-1, -1));

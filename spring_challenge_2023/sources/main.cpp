@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 22:19:53 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 11:33:49 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ int main()
 	}
 }
 
-void	test(Data &stock_data, std::vector<bool> &visited, int &origin)
+void	test(Data &stock_data, std::vector<bool> &star, int &origin)
 {
 	std::queue<std::pair<int, int> > bfs_queue;
+	std::vector<bool> visited(stock_data.data_of_cells.size(), false);
 
 	bfs_queue.push(std::pair<int, int>(origin, 0));
+	visited[origin] = true;
 	while (!bfs_queue.empty())
 	{
 		int index = bfs_queue.front().first;
@@ -46,14 +48,21 @@ void	test(Data &stock_data, std::vector<bool> &visited, int &origin)
 			for (int j = 0; j < 6; j++)
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
+//				cerr << index << " " << j << " === " << stock_data.data_of_cells[index][j] << endl;
 				if (neighbor != -1 && !visited[neighbor])
 				{
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 					visited[neighbor] = true;
 					if (neighbor == stock_data.my_base_index || (stock_data.data_of_cells[neighbor][6] == 2 && stock_data.data_of_cells[neighbor][9] > 0))
 					{
-						cout << "LINE" << " " << origin << " " << neighbor << " " << "1" << ";";
-						test(stock_data, visited, neighbor);
+						if ((dist + 1 <= stock_data.data_of_cells[neighbor][8] && star[neighbor] == false && stock_data.data_of_cells[neighbor][8] > stock_data.data_of_cells[origin][8] + dist + 1 + 3 ) || neighbor == stock_data.my_base_index)
+						{
+							cout << "LINE" << " " << origin << " " << neighbor << " " << "1" << ";";
+							cerr << origin << " ---> " << neighbor << endl;
+							cerr << neighbor << " dist :\t" << dist + 1 << endl;
+							cerr << neighbor << " dist base\t: " << stock_data.data_of_cells[neighbor][8] << endl;
+							star[neighbor] = true;
+						}
 					}
 				}
 			}
@@ -63,6 +72,9 @@ void	test(Data &stock_data, std::vector<bool> &visited, int &origin)
 
 void	print_by_step(Data& stock_data, int src_index)
 {
+//	std::vector<bool> visited(stock_data.data_of_cells.size(), false);
+	std::vector<bool> star(stock_data.data_of_cells.size(), false);
+
 //	parcour chaque cercle autour de la base
 //	i == dist du cercle par rapport a la base
 	for (unsigned long int i = 0; i < stock_data.res_by_dist.size(); i++)
@@ -71,10 +83,11 @@ void	print_by_step(Data& stock_data, int src_index)
 		if (stock_data.egg_by_dist[i] > 0 && i < 2)
 		{
 			for (unsigned long int j = 0; j < stock_data.data_of_cells.size(); j++)
-				if (stock_data.data_of_cells[j][8] == i && stock_data.data_of_cells[j][9] > 0 && stock_data.data_of_cells[j][6] == 1)
+				if (stock_data.data_of_cells[j][8] == (int) i && stock_data.data_of_cells[j][9] > 0 && stock_data.data_of_cells[j][6] == 1)
 					cout << "LINE" << " " << stock_data.my_base_index << " " << j << " " << "1" << ";";
 			return ;
 		}
+/*
 		if (i == 0)
 		{
 //			parcour chaque index du cercle i
@@ -83,7 +96,7 @@ void	print_by_step(Data& stock_data, int src_index)
 //				si l'index est au bon cercle
 //				si il y a des ressources
 //				si c'est un crystal
-				if (stock_data.data_of_cells[j][8] == i + 1
+				if (stock_data.data_of_cells[j][8] == (int) i + 1
 					&& stock_data.data_of_cells[j][9] > 0
 					&& stock_data.data_of_cells[j][6] == 2)
 				{
@@ -101,43 +114,23 @@ void	print_by_step(Data& stock_data, int src_index)
 					}
 				}
 			}
-		}
-		if (i > 0)
-		{
-			std::vector<bool> visited(stock_data.data_of_cells.size(), false);
 			visited[src_index] = true;
-			test(stock_data, visited, src_index);
-			return;
-		}
-/*
-		if (i > 0)
-		{
-//			parcour chaque index du cercle i
-			for (unsigned long int j = 0; j < stock_data.data_of_cells.size(); j++)
-			{
-//				si l'index est au bon cercle
-//				si il y a des ressources
-//				si c'est un crystal
-				if (stock_data.data_of_cells[j][8] == i
-					&& stock_data.data_of_cells[j][9] > 0
-					&& stock_data.data_of_cells[j][6] == 2)
-				{
-					cerr << "---> " << j << "\n";
-					std::pair<int, int>	next_index;
-
-					next_index = algorithme_bfs_stop_first(stock_data, j, 20);
-					if (next_index.first != -1)
-					{
-						cerr << "OUI\n";
-						cerr << "next index " << j << " " << next_index.first << ", " << next_index.second << "\n";
-						cout << "LINE" << " " << j << " " << next_index.first << " " << "1" << ";";
-						stock_data.conexions[j].push_back(next_index.first);
-						cerr << "connexion add " << j << "--->" << next_index.first << "\n";
-					}
-				}
-			}
 		}
 */
+		if (i > 0)
+		{
+			for (int j = 0; (size_t) j < stock_data.data_of_cells.size(); j++)
+			{
+				if (stock_data.data_of_cells[j][8] == (int) i
+					&& stock_data.data_of_cells[j][9] > 0
+					&& stock_data.data_of_cells[j][6] == 2
+					&& star[j] == false)
+				{
+//					visited[j] = true;
+					test(stock_data, star, j);
+				}	
+			}
+		}
 	}
 	
 	cout << "BEACON" << " " << stock_data.my_base_index << " " << "1" << ";";
