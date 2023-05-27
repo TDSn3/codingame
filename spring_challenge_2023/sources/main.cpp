@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/27 15:45:21 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 16:01:36 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,7 @@ void	test(Data &stock_data, std::vector<bool> &star, int &origin)
 					int stock_neighbor = neighbor;
 					if ((neighbor == stock_data.my_base_index && origin != stock_data.my_base_index) || (stock_data.data_of_cells[neighbor][6] == 2 && stock_data.data_of_cells[neighbor][9] > 0))
 					{
-						if ((stock_data.conected_to_base[origin] == 1
-								&& stock_data.conected_to_base[neighbor] == 0
-								&& ((origin != stock_data.my_base_index && stock_data.data_of_cells[neighbor][8] >= dist + 1)
-										|| (origin == stock_data.my_base_index)))
-							|| (stock_data.conected_to_base[origin] == 0
-								&& stock_data.conected_to_base[neighbor] == 1))
+						if (origin == 37)
 						{
 							cerr << "+---START---+" << endl;
 							cerr << "origin : " << origin << endl;
@@ -93,14 +88,25 @@ void	test(Data &stock_data, std::vector<bool> &star, int &origin)
 							cerr << "origin dist : " << stock_data.data_of_cells[origin][8] << endl;
 							cerr << "neighbor dist : " << stock_data.data_of_cells[neighbor][8] << endl;
 							cerr << "O___END___O" << endl;
+						}
 
+						if ((stock_data.conected_to_base[origin] == 1
+								&& stock_data.conected_to_base[neighbor] == 0
+								&& ((origin != stock_data.my_base_index && stock_data.data_of_cells[neighbor][8] >= dist + 1)
+										|| (origin == stock_data.my_base_index)))
+							|| (stock_data.conected_to_base[origin] == 0
+								&& stock_data.conected_to_base[neighbor] == 1))
+						{
 							cout << "LINE" << " " << origin << " " << neighbor << " " << "1" << ";";
 							stock_data.conexions[origin].push_back(neighbor);
 							cerr << origin << " ---> " << stock_neighbor << endl;
 //							cerr << stock_neighbor << " dist :\t" << dist + 1 << endl;
 //							cerr << stock_neighbor << " dist base\t: " << stock_data.data_of_cells[stock_neighbor][8] << endl;
 							star[stock_neighbor] = true;
-							stock_data.conected_to_base[stock_neighbor] = 1;
+							if (stock_data.conected_to_base[origin] == 1)
+								stock_data.conected_to_base[stock_neighbor] = 1;
+							else
+								stock_data.conected_to_base[origin] = 1;
 							signal_stop = 1;	
 						}
 											
@@ -228,10 +234,10 @@ void	print_by_step(Data& stock_data, int src_index)
 	for (unsigned long int i = 0; i < stock_data.data_of_cells.size(); i++)
 	{
 //		si il y a un oeuf a moins de 1 de la base		
-		if (stock_data.egg_by_dist[i] > 0 && i < 2)
+		if (i == 0 && stock_data.egg_by_dist[i + 1])
 		{
 			for (unsigned long int j = 0; j < stock_data.data_of_cells.size(); j++)
-				if (stock_data.data_of_cells[j][8] == (int) i && stock_data.data_of_cells[j][9] > 0 && stock_data.data_of_cells[j][6] == 1)
+				if (stock_data.data_of_cells[j][8] == (int) i + 1 && stock_data.data_of_cells[j][9] > 0 && stock_data.data_of_cells[j][6] == 1)
 					cout << "LINE" << " " << stock_data.my_base_index << " " << j << " " << "1" << ";";
 			return ;
 		}
