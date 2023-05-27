@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/27 14:27:01 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 14:42:24 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void algorithme_bfs(Data& stock_data, int origin, int max_dist)
 			stock_data.res_by_dist.push_back(0);
 			stock_data.egg_by_dist.push_back(0);
 			stock_data.pheromone.push_back(0);
+			stock_data.conected_to_base.push_back(0);
 			stock_data.conexions.push_back(stock);
 			for (int j = 0; j < 6; j++)
 			{

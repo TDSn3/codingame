@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:20:15 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/26 21:05:41 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 15:46:16 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,10 @@ void	debug(Data &stock_data)
 	}
 	cerr << endl;
 	cout << endl;
+
+	for (unsigned long int i = 0; i < stock_data.pheromone.size(); i++)
+		stock_data.pheromone[i] = 0;
+	for (unsigned long int i = 0; i < stock_data.conected_to_base.size(); i++)
+		stock_data.conected_to_base[i] = 0;
+	stock_data.conected_to_base[stock_data.my_base_index] = 1;
 }

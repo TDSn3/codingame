@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/27 10:44:51 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 14:49:22 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ void	start(Data &stock_data)
 
 	cerr << "Start bfs" << endl;
 	algorithme_bfs(stock_data, stock_data.my_base_index, 20);
+	stock_data.conected_to_base[stock_data.my_base_index] = 1;
 }
 

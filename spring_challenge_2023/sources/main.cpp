@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/27 14:29:01 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/27 15:45:21 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,80 @@ void	test(Data &stock_data, std::vector<bool> &star, int &origin)
 
 		if (dist < 20)
 		{
+			int	signal_stop = 0;
+
+			for (int j = 0; j < 6; j++)
+			{
+				int neighbor = stock_data.data_of_cells[index][j];
+//				cerr << index << " " << j << " === " << stock_data.data_of_cells[index][j] << endl;
+				if (neighbor != -1 && !visited[neighbor])
+				{
+					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
+					visited[neighbor] = true;
+					int stock_neighbor = neighbor;
+					if ((neighbor == stock_data.my_base_index && origin != stock_data.my_base_index) || (stock_data.data_of_cells[neighbor][6] == 2 && stock_data.data_of_cells[neighbor][9] > 0))
+					{
+						if ((stock_data.conected_to_base[origin] == 1
+								&& stock_data.conected_to_base[neighbor] == 0
+								&& ((origin != stock_data.my_base_index && stock_data.data_of_cells[neighbor][8] >= dist + 1)
+										|| (origin == stock_data.my_base_index)))
+							|| (stock_data.conected_to_base[origin] == 0
+								&& stock_data.conected_to_base[neighbor] == 1))
+						{
+							cerr << "+---START---+" << endl;
+							cerr << "origin : " << origin << endl;
+							cerr << "neighbor : " << neighbor << endl;
+							cerr << "origin conected_to_base : " << stock_data.conected_to_base[origin] << endl;
+							cerr << "neighbor conected_to_base : " << stock_data.conected_to_base[neighbor] << endl;
+							cerr << "dist + 1 : " << dist + 1 << endl;
+							cerr << "origin dist : " << stock_data.data_of_cells[origin][8] << endl;
+							cerr << "neighbor dist : " << stock_data.data_of_cells[neighbor][8] << endl;
+							cerr << "O___END___O" << endl;
+
+							cout << "LINE" << " " << origin << " " << neighbor << " " << "1" << ";";
+							stock_data.conexions[origin].push_back(neighbor);
+							cerr << origin << " ---> " << stock_neighbor << endl;
+//							cerr << stock_neighbor << " dist :\t" << dist + 1 << endl;
+//							cerr << stock_neighbor << " dist base\t: " << stock_data.data_of_cells[stock_neighbor][8] << endl;
+							star[stock_neighbor] = true;
+							stock_data.conected_to_base[stock_neighbor] = 1;
+							signal_stop = 1;	
+						}
+											
+//						if (((dist + 1 <= stock_data.data_of_cells[neighbor][8] 
+//							&& star[neighbor] == false 
+//							&& stock_data.conected_to_base[origin] == 1 
+//							&& stock_data.conected_to_base[neighbor] == 0) 
+//								|| (neighbor == stock_data.my_base_index 
+//									&& stock_data.conected_to_base[origin] == 0))
+//								&& !find_conexion(stock_data, origin, neighbor) 
+//								&& !find_conexion(stock_data, neighbor, origin))
+					}
+				}
+			}
+			if (signal_stop)
+				return ;
+		}
+	}
+}
+
+void	test2(Data &stock_data, std::vector<bool> &star, int &origin)
+{
+	std::queue<std::pair<int, int> > bfs_queue;
+	std::vector<bool> visited(stock_data.data_of_cells.size(), false);
+
+	bfs_queue.push(std::pair<int, int>(origin, 0));
+	visited[origin] = true;
+	while (!bfs_queue.empty())
+	{
+		int index = bfs_queue.front().first;
+		int dist = bfs_queue.front().second;
+		bfs_queue.pop();
+
+		if (dist < 20)
+		{
+			int	signal_stop = 0;
+
 			for (int j = 0; j < 6; j++)
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
@@ -84,47 +158,47 @@ void	test(Data &stock_data, std::vector<bool> &star, int &origin)
 							stock_data.pheromone[neighbor]++;
 							cerr << "+---START---+" << endl;
 							cerr << neighbor << endl;
-							// while (neighbor != origin)
-							// {
-							// 	int	stock_index_phero = -1;
-							// 	int	stock_phero = 0;
+							while (neighbor != origin)
+							{
+								int	stock_index_phero = -1;
+								int	stock_phero = 0;
 
-							// 	for (int j = 0; j < 6; j++)
-							// 	{
-							// 		int	index_back;
+								for (int j = 0; j < 6; j++)
+								{
+									int	index_back;
 									
-							// 		index_back = stock_data.data_of_cells[neighbor][j];
-							// 		if (stock_data.pheromone[index_back] > stock_phero && index_back != neighbor)
-							// 		{
-							// 			stock_index_phero = index_back;
-							// 			stock_phero = stock_data.pheromone[index_back];
-							// 		}
-							// 	}
-							// 	if (stock_phero > 0)
-							// 	{
-							// 		cerr << "PHERO ! " << stock_index_phero << endl;
-							// 		cout << "BEACON" << " " << stock_index_phero << " " << "1" << ";";
-							// 		stock_data.pheromone[stock_index_phero]++;
-							// 		dist_back = stock_data.data_of_cells[stock_index_phero][8];
-							// 		neighbor = stock_index_phero;
-							// 		continue ;
-							// 	}
-							// 	for (int j = 0; j < 6; j++)
-							// 	{
-							// 		int	index_back;
+									index_back = stock_data.data_of_cells[neighbor][j];
+									if (stock_data.pheromone[index_back] > stock_phero && index_back != neighbor)
+									{
+										stock_index_phero = index_back;
+										stock_phero = stock_data.pheromone[index_back];
+									}
+								}
+								if (stock_phero > 0)
+								{
+									cerr << "PHERO ! " << stock_index_phero << endl;
+									cout << "BEACON" << " " << stock_index_phero << " " << "1" << ";";
+									stock_data.pheromone[stock_index_phero]++;
+									dist_back = stock_data.data_of_cells[stock_index_phero][8];
+									neighbor = stock_index_phero;
+									continue ;
+								}
+								for (int j = 0; j < 6; j++)
+								{
+									int	index_back;
 									
-							// 		index_back = stock_data.data_of_cells[neighbor][j];
-							// 		if (stock_data.data_of_cells[index_back][8] < dist_back)
-							// 		{
-							// 			cerr << "Non. " << index_back << endl;
-							// 			cout << "BEACON" << " " << index_back << " " << "1" << ";";
-							// 			stock_data.pheromone[index_back]++;
-							// 			dist_back--;
-							// 			neighbor = index_back;
-							// 			break ;
-							// 		}
-							// 	}
-							// }
+									index_back = stock_data.data_of_cells[neighbor][j];
+									if (stock_data.data_of_cells[index_back][8] < dist_back)
+									{
+										cerr << "Non. " << index_back << endl;
+										cout << "BEACON" << " " << index_back << " " << "1" << ";";
+										stock_data.pheromone[index_back]++;
+										dist_back--;
+										neighbor = index_back;
+										break ;
+									}
+								}
+							}
 							cerr << "O___END___O" << endl;
 
 
@@ -134,11 +208,13 @@ void	test(Data &stock_data, std::vector<bool> &star, int &origin)
 							cerr << stock_neighbor << " dist :\t" << dist + 1 << endl;
 							cerr << stock_neighbor << " dist base\t: " << stock_data.data_of_cells[stock_neighbor][8] << endl;
 							star[stock_neighbor] = true;
-							return ;
+							signal_stop = 1;
 						}
 					}
 				}
 			}
+			if (signal_stop)
+				return ;
 		}
 	}
 }
