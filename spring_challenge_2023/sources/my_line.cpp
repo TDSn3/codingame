@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:52:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/27 23:07:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 03:18:43 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	my_line(Data &stock_data, int &origin, int neighbor, int dist)
 		stock_data.pheromone[path[k]]++;
 		neighbor = path[k];
 	}
-//	cout << "BEACON" << " " << neighbor << " " << "1" << ";";
+	cout << "BEACON" << " " << neighbor << " " << "1" << ";";
 }

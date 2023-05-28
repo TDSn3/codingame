@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/27 18:56:06 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 03:08:18 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ public:
 	int									my_base_index;
 	int									number_of_cells;
 	int									total_ants;
+	int									total_opp_ants;
 	int									max_dist;
 	std::vector<int>					res_by_dist;
 	std::vector<int>					egg_by_dist;

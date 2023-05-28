@@ -6,18 +6,27 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:56:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 00:32:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 12:50:21 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.hpp"
+
+int	visit_six_next_cell(
+	Data &stock_data,
+	int &origin,
+	std::queue<std::pair<int, int> > &bfs_queue,
+	std::vector<bool> &visited,
+	int &signal_stop,
+	int &index,
+	int &dist,
+	int j);
 
 void	print_one_path(Data &stock_data, int &origin)
 {
 	std::queue<std::pair<int, int> >	bfs_queue;
 	std::vector<bool>					visited(stock_data.data_of_cells.size(), false);
 	int									signal_stop;
-	int 								neighbor;
 
 	bfs_queue.push(std::pair<int, int>(origin, 0));
 	visited[origin] = true;
@@ -31,45 +40,82 @@ void	print_one_path(Data &stock_data, int &origin)
 		if (dist < 20)
 		{
 			for (int j = 0; j < 6; j++)
-			{
-				neighbor = stock_data.data_of_cells[index][j];
-				if (neighbor != -1 && !visited[neighbor])
-				{
-					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
-					visited[neighbor] = true;
-					if ((neighbor == stock_data.my_base_index
-							&& origin != stock_data.my_base_index)
-						|| (stock_data.data_of_cells[neighbor][6] == 2
-							&& stock_data.data_of_cells[neighbor][9] > 0))
-					{
-						if ((stock_data.conected_to_base[origin] == 1
-								&& stock_data.conected_to_base[neighbor] == 0
-								&& ((origin != stock_data.my_base_index && stock_data.data_of_cells[neighbor][8] >= dist + 1)
-										|| (origin == stock_data.my_base_index)))
-							|| (stock_data.conected_to_base[origin] == 0
-								&& stock_data.conected_to_base[neighbor] == 1))
-						{
-							std::pair<int, int> stock = find_next_cell_conected(stock_data, origin, 10);
+				if (visit_six_next_cell(stock_data, origin, bfs_queue, visited, signal_stop, index, dist, j))
+					return ;
+		}
+		if (signal_stop && dist == signal_stop)
+			return ;
+	}
+}
 
-							if (stock.first != -1 && stock_data.conected_to_base[stock.first] && stock.first != neighbor)
-								continue ;
-							else
-							{
-								my_line(stock_data, origin, neighbor, dist + 1);
-								stock_data.conexions[origin].push_back(neighbor);
-								cerr << origin << " ---> " << neighbor << endl;
-								if (stock_data.conected_to_base[origin] == 1)
-									stock_data.conected_to_base[neighbor] = 1;
-								else
-									stock_data.conected_to_base[origin] = 1;
-								signal_stop = 1;
-							}
-						}
-					}
+int	visit_six_next_cell(
+	Data &stock_data,
+	int &origin,
+	std::queue<std::pair<int, int> > &bfs_queue,
+	std::vector<bool> &visited,
+	int &signal_stop,
+	int &index,
+	int &dist,
+	int j)
+{
+	int	neighbor;
+	
+	neighbor = stock_data.data_of_cells[index][j];
+//	si la cell origin ou neighbor n'est pas vide et que neighbor n'est pas déjà visité
+	if (neighbor != -1 && index != -1 && !visited[neighbor])
+	{
+		bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
+		visited[neighbor] = true;
+//		si la cell visité est la base et que l'origine n'est pas la base
+//		ou
+//		si la cell visité est un crystal et que la cell visité à des ressources
+		if ((neighbor == stock_data.my_base_index
+				&& origin != stock_data.my_base_index)
+			|| (stock_data.data_of_cells[neighbor][6] == 2
+				&& stock_data.data_of_cells[neighbor][9] > 0))
+		{
+			cerr << origin << " ---> " << neighbor  << " ? "<< "(" << index << ") " << dist + 1 <<  endl;
+//			si l'origine est connecté et que la cell visité ne l'est pas et que
+//				l'origine n'est pas la base et que
+//				la distance entre la cell visité et la base est supp ou égale à la dist de l'origine avec la cell visité
+//				ou
+//				que l'origine sois la base
+//			ou
+//			que l'origine n'est pas connecté et que la call visité l'est
+			if ((stock_data.conected_to_base[origin] == 1
+					&& stock_data.conected_to_base[neighbor] == 0
+					&& ((origin != stock_data.my_base_index && stock_data.data_of_cells[neighbor][8] >= dist + 1)
+							|| (origin == stock_data.my_base_index)))
+				|| (stock_data.conected_to_base[origin] == 0
+					&& stock_data.conected_to_base[neighbor] == 1))
+			{
+				std::pair<int, int> stock = find_next_cell_conected(stock_data, neighbor, 10);
+				if (stock.first != -1 && stock_data.conected_to_base[stock.first] && stock.first != neighbor && stock.first != origin)
+				{
+					my_line(stock_data, stock.first, neighbor, dist + 1);
+					stock_data.conexions[stock.first].push_back(neighbor);
+					cerr << stock.first << " -1-> " << neighbor << endl;
+					if (stock_data.conected_to_base[stock.first] == 1)
+						stock_data.conected_to_base[neighbor] = 1;
+					else
+						stock_data.conected_to_base[stock.first] = 1;
+					signal_stop = dist + 1;
+				}
+				else
+				{
+					my_line(stock_data, origin, neighbor, dist + 1);
+					stock_data.conexions[origin].push_back(neighbor);
+					cerr << origin << " -2-> " << neighbor << endl;
+					if (stock_data.conected_to_base[origin] == 1)
+						stock_data.conected_to_base[neighbor] = 1;
+					else
+						stock_data.conected_to_base[origin] = 1;
+					signal_stop = dist + 1;
 				}
 			}
-			if (signal_stop)
-				return ;
 		}
 	}
+	if (signal_stop && dist == signal_stop)
+		return (1);
+	return (0);
 }
