@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 00:22:14 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 01:57:00 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,4 +129,58 @@ std::pair<int, int>	find_next_cell_conected(Data& stock_data, int origin, int ma
 		}
 	}
 	return (std::pair<int, int>(-1, -1));
+}
+
+std::pair<int, std::vector<int> >	find_next_egg(Data& stock_data, int origin, int max_dist)
+{
+	std::vector<bool>					visited(stock_data.data_of_cells.size(), false);
+	std::queue<std::pair<int, int> >	bfs_queue;
+	std::vector<int>					path(stock_data.data_of_cells.size(), -1);
+
+	bfs_queue.push(std::pair<int, int>(origin, 0));
+	visited[origin] = true;
+
+	while (!bfs_queue.empty())
+	{
+		int index = bfs_queue.front().first;
+		int dist = bfs_queue.front().second;
+		bfs_queue.pop();
+
+		if (dist < max_dist)
+		{
+			std::vector<int>	stock;
+			
+			for (int j = 0; j < 6; j++)
+			{
+				int neighbor = stock_data.data_of_cells[index][j];
+				if (neighbor != -1 && !visited[neighbor])
+				{
+					if (stock_data.data_of_cells[neighbor][6] == 1)
+					{
+						std::vector<int>	ret_path;
+						int					path_neighbor = neighbor;
+
+//						cerr << "neighbor["<< neighbor << "] " << index << " FIND !"<< endl;
+
+						path[neighbor] = index;
+						while (path_neighbor != origin)
+						{
+//							cerr << path_neighbor << " " << endl;
+							ret_path.push_back(path_neighbor);
+							path_neighbor = path[path_neighbor];
+						}
+						ret_path.push_back(path_neighbor);
+//						cerr << path_neighbor << " " << endl;
+	
+						return (std::pair<int, std::vector<int> >(neighbor, ret_path));
+					}
+					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
+					visited[neighbor] = true;
+//					cerr << "neighbor["<< neighbor << "] " << index << endl;
+					path[neighbor] = index;
+				}
+			}
+		}
+	}
+	return (std::pair<int, std::vector<int> >(-1, std::vector<int>()));
 }

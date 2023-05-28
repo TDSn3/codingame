@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:58:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 00:34:58 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 02:01:22 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,16 @@ void	print_by_step(Data& stock_data)
 
 	for (unsigned long int i = 0; i < stock_data.data_of_cells.size(); i++)
 	{
-		
+		if (stock_data.pheromone[i])
+		{
+			std::pair<int, std::vector<int> >	stock = find_next_egg(stock_data, i, 3);
+			cerr << "\n";
+			if (stock.first != 1 && !stock_data.conected_to_base[stock.first])
+			{
+				for (int j = 0; j < stock.second.size(); j++)
+					cout << "BEACON" << " " << stock.second[j] << " " << "1" << ";";
+				stock_data.conected_to_base[stock.first] = 1;
+			}
+		}
 	}
 }
