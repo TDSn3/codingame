@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 15:33:03 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:50:07 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ public:
 	int									max_dist;
 	int									beacon;
 	int									egg_and_cryst;
+	int									power_egg;
 	std::vector<int>					res_by_dist;
 	std::vector<int>					egg_by_dist;
 	std::vector<int>					pheromone;

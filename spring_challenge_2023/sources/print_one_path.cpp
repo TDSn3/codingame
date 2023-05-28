@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:56:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 15:35:53 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 16:52:22 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,26 @@ int	visit_six_next_cell(
 				std::pair<int, int> stock = find_next_cell_conected(stock_data, neighbor, 10);
 				if (stock.first != -1)
 				{
-					std::pair<int, std::vector<int> > next_cryst = find_next_res(stock_data, stock.first, 10);
-					if (next_cryst.first != -1 && next_cryst.second.size() < (size_t) stock.second && stock.first != stock_data.my_base_index)
+					std::pair<int, std::vector<int> > next_res = find_next_res(stock_data, stock.first, 10);
+					if (next_res.first != -1
+						&& next_res.second.size() < (size_t) stock.second
+						&& stock.first != stock_data.my_base_index
+						&& stock.first != origin
+						&& stock.first != neighbor
+						&& next_res.first != stock.first
+						&& next_res.first != neighbor
+						&& next_res.first != origin)
+					{
+						cerr << origin << "\t" << neighbor << "\t" << stock.first << " " << next_res.first << endl;
 						return (0) ;
+					}
 				}
 
 				if (stock.first != -1 && stock_data.conected_to_base[stock.first] && stock.first != neighbor && stock.first != origin)
 				{
 					my_line(stock_data, stock.first, neighbor, dist + 1);
 					stock_data.conexions[stock.first].push_back(neighbor);
-					cerr << stock.first << " -1-> " << neighbor << endl;
+					cerr << stock.first << " -1-> " << neighbor << "\torigin :" << origin << endl;
 					if (stock_data.conected_to_base[stock.first] == 1)
 						stock_data.conected_to_base[neighbor] = 1;
 					else
@@ -118,7 +128,7 @@ int	visit_six_next_cell(
 				{
 					my_line(stock_data, origin, neighbor, dist + 1);
 					stock_data.conexions[origin].push_back(neighbor);
-					cerr << origin << " -2-> " << neighbor << endl;
+					cerr << origin << " -2-> " << neighbor << "\torigin :" << origin << endl;
 					if (stock_data.conected_to_base[origin] == 1)
 						stock_data.conected_to_base[neighbor] = 1;
 					else

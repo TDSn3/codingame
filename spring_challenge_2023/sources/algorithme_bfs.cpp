@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 04:45:28 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 16:13:04 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ std::pair<int, std::vector<int> >	find_next_res(Data& stock_data, int origin, in
 				int neighbor = stock_data.data_of_cells[index][j];
 				if (neighbor != -1 && !visited[neighbor])
 				{
-					if (stock_data.data_of_cells[neighbor][6] == 2)
+					if (stock_data.data_of_cells[neighbor][6] == stock_data.egg_and_cryst)
 					{
 						std::vector<int>	ret_path;
 						int					path_neighbor = neighbor;

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 15:35:16 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:57:06 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,13 @@ void	start_2(Data &stock_data)
 
 
 	if (stock_data.total_ants <= stock_data.total_opp_ants)
+	{
 		stock_data.egg_and_cryst = 0;
+		stock_data.power_egg++;
+	}
 	else
+	{
 		stock_data.egg_and_cryst = 1;
+		stock_data.power_egg--;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:58:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 15:35:41 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 16:10:29 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,6 @@ void	print_by_step(Data& stock_data)
 				&& stock_data.data_of_cells[real_index][6] > stock_data.egg_and_cryst))
 		{
 			print_one_path(stock_data, real_index);
-		}
-	}
-
-//	link les oeufs si ils sont proches des phero
-	for (unsigned long int i = 0; i < stock_data.data_of_cells.size(); i++)
-	{
-		if (stock_data.data_of_cells[i][6] == 1 && !stock_data.conected_to_base[i] && stock_data.data_of_cells[i][9] > 0 && stock_data.data_of_cells[i][8] < 10)
-		{
-			std::pair<int, std::vector<int> >	stock = find_next_phero(stock_data, i, 5);
-			if (stock.first != 1)
-			{
-				stock_data.conexions[i].push_back(stock.first);
-				cerr << stock.first << " ---> " << i << endl;
-				if (stock_data.beacon + stock.second.size() > (unsigned long int) stock_data.total_ants)
-					continue ;
-				for (size_t j = 0; j < stock.second.size(); j++)
-				{
-					cout << "BEACON" << " " << stock.second[j] << " " << "1" << ";";
-					if (!stock_data.pheromone[stock.second[j]])
-						stock_data.beacon++;
-					stock_data.pheromone[stock.second[j]]++;
-				}
-				stock_data.conected_to_base[i] = 1;
-			}
 		}
 	}
 }
