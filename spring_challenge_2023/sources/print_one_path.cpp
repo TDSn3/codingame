@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:56:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 15:04:22 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:35:53 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ int	visit_six_next_cell(
 //		si la cell visité est un crystal et que la cell visité à des ressources
 		if ((neighbor == stock_data.my_base_index
 				&& origin != stock_data.my_base_index)
-			|| (stock_data.data_of_cells[neighbor][6] == 2
+			|| (stock_data.data_of_cells[neighbor][6] > stock_data.egg_and_cryst
 				&& stock_data.data_of_cells[neighbor][9] > 0))
 		{
-			cerr << origin << " ---> " << neighbor  << " ? "<< "(" << index << ") " << dist + 1 <<  endl;
+//			cerr << origin << " ---> " << neighbor  << " ? "<< "(" << index << ") " << dist + 1 <<  endl;
 //			si l'origine est connecté et que la cell visité ne l'est pas et que
 //				l'origine n'est pas la base et que
 //				la distance entre la cell visité et la base est supp ou égale à la dist de l'origine avec la cell visité

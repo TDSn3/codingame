@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 12:33:14 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:35:16 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ void	start_2(Data &stock_data)
 			stock_data.dof_short_by_dist[i].push_back(stock_data.data_of_cells[stock[i].second][j]);
 		}
 	}
+
+
+
+	if (stock_data.total_ants <= stock_data.total_opp_ants)
+		stock_data.egg_and_cryst = 0;
+	else
+		stock_data.egg_and_cryst = 1;
 }

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:58:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 03:08:31 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:33:20 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ Data::Data(void)
 	this->total_ants = 0;
 	this->total_opp_ants = 0;
 	this->max_dist = 0;
+	this->beacon = 0;
+	this->egg_and_cryst = 0;
 }
 
 Data::Data(int my_base_index, int number_of_cells)
