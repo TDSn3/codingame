@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:56:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 12:50:21 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 15:04:22 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,15 +81,28 @@ int	visit_six_next_cell(
 //				ou
 //				que l'origine sois la base
 //			ou
-//			que l'origine n'est pas connecté et que la call visité l'est
+//			que l'origine n'est pas connecté et que la cell visité l'est et que
+//				la cell visité n'est pas la base et que
+//				la distance entre l’origine et la base est inf ou égale à la dist de l'origine avec la cell visité
+//				ou
+//				que l'origine sois la base
 			if ((stock_data.conected_to_base[origin] == 1
 					&& stock_data.conected_to_base[neighbor] == 0
 					&& ((origin != stock_data.my_base_index && stock_data.data_of_cells[neighbor][8] >= dist + 1)
 							|| (origin == stock_data.my_base_index)))
-				|| (stock_data.conected_to_base[origin] == 0
-					&& stock_data.conected_to_base[neighbor] == 1))
+				|| ((stock_data.conected_to_base[origin] == 0
+					&& stock_data.conected_to_base[neighbor] == 1)
+					&& ((neighbor != stock_data.my_base_index && stock_data.data_of_cells[origin][8] >= dist + 1)
+							|| (neighbor == stock_data.my_base_index))))
 			{
 				std::pair<int, int> stock = find_next_cell_conected(stock_data, neighbor, 10);
+				if (stock.first != -1)
+				{
+					std::pair<int, std::vector<int> > next_cryst = find_next_res(stock_data, stock.first, 10);
+					if (next_cryst.first != -1 && next_cryst.second.size() < (size_t) stock.second && stock.first != stock_data.my_base_index)
+						return (0) ;
+				}
+
 				if (stock.first != -1 && stock_data.conected_to_base[stock.first] && stock.first != neighbor && stock.first != origin)
 				{
 					my_line(stock_data, stock.first, neighbor, dist + 1);
