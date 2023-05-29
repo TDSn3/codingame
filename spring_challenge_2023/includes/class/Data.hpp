@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/29 19:01:56 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 00:03:39 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <algorithm>
 # include <queue>
 # include <cmath>
+# include <array>
 
 class Data
 {
@@ -42,6 +43,7 @@ public:
 	int									beacon;
 	int									egg_and_cryst;
 	int									power_egg;
+	std::vector<int>					list_base_index;
 	std::vector<int>					res_by_dist;
 	std::vector<int>					egg_by_dist;
 	std::vector<int>					power_cell;

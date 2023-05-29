@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/27 14:49:22 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 01:05:35 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,12 @@ void	start(Data &stock_data)
 
 	for (int i = 0; i < number_of_bases; i++)
 	{
-		cin >> stock_data.my_base_index;
+		int base_index;
+		
+		cin >> base_index;
 		cin.ignore();
+		stock_data.my_base_index = base_index;
+		stock_data.list_base_index.push_back(base_index);
 	}
 
 	for (int i = 0; i < number_of_bases; i++)

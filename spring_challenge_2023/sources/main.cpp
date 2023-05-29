@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/29 22:26:55 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 00:28:25 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int main()
 	while (1)
 	{	
 		start_2(stock_data);
-		cout << "MESSAGE" << " " << "Helo :)" << ";";
+		cout << "MESSAGE" << " " << "Hello :)" << ";";
 		bfs_from_base(stock_data);
 		debug(stock_data);
 		cerr << "-LOOP " << i <<  " -" << endl;

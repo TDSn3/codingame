@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/29 22:21:20 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 01:06:21 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <algorithm>
 # include <queue>
 # include <cmath>
+# include <array>
 
 using namespace std;
 
@@ -39,8 +40,6 @@ std::pair<int, std::vector<int> >	find_next_egg(Data& stock_data, int origin, in
 std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin, int max_dist);
 std::pair<int, std::vector<int> >	find_base(Data& stock_data, int origin, int max_dist);
 int									my_line(Data &stock_data, int origin, int neighbor);
-void								print_one_path(Data &stock_data, int &origin);
-void								print_by_step(Data& stock_data);
 void								debug(Data &stock_data);
 void								bfs_from_base(Data &stock_data);
 

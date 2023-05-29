@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/29 23:14:34 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 00:23:39 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,7 +274,7 @@ std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin,
 			}
 			if (!list_beacons.empty())
 			{
-				for (int k = 0; k < list_beacons.size(); k++)
+				for (size_t k = 0; k < list_beacons.size(); k++)
 				{
 					int	path_neighbor = list_beacons[k].first;
 					
@@ -289,7 +289,7 @@ std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin,
 				int	save_index = -1;
 				int	size_dist_from_base = 1000;
 
-				for (int k = 0; k < list_beacons.size(); k++)
+				for (size_t k = 0; k < list_beacons.size(); k++)
 				{
 					if (stock_data.data_of_cells[ list_beacons[k].first ][8] < size_dist_from_base)
 					{
