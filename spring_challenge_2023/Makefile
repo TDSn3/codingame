@@ -14,6 +14,7 @@ SRCS		=	class/Data.cpp		\
 				my_line.cpp			\
 				print_one_path.cpp	\
 				print_by_step.cpp	\
+				bfs_from_base.cpp	\
 				debug.cpp			\
 				main.cpp			\
 

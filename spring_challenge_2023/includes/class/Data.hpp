@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/29 16:36:38 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/29 19:01:56 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ public:
 	std::vector<int>					res_by_dist;
 	std::vector<int>					egg_by_dist;
 	std::vector<int>					power_cell;
+	std::vector<int>					beacon_this_loop;
 	std::vector<int>					conected_to_base;
 	std::vector<std::vector<int> >		conexions;
 	std::map<int, std::vector<int> >	data_of_cells;
