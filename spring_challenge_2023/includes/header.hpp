@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 04:45:20 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/28 17:30:55 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ std::pair<int, int>					find_next_cell_conected(Data& stock_data, int origin, in
 std::pair<int, std::vector<int> >	find_next_res(Data& stock_data, int origin, int max_dist);
 std::pair<int, std::vector<int> >	find_next_egg(Data& stock_data, int origin, int max_dist);
 std::pair<int, std::vector<int> >	find_next_phero(Data& stock_data, int origin, int max_dist);
+std::pair<int, std::vector<int> >	find_base(Data& stock_data, int origin, int max_dist);
 void								my_line(Data &stock_data, int &origin, int neighbor, int dist);
 void								print_one_path(Data &stock_data, int &origin);
 void								print_by_step(Data& stock_data);

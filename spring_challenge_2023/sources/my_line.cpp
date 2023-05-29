@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:52:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 16:28:51 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/29 13:57:03 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ void	my_line(Data &stock_data, int &origin, int neighbor, int dist)
 //	if (stock_data.beacon + (path.size() * power) > (unsigned long int) stock_data.total_ants
 //		|| (stock_data.dof_short_by_dist[8][origin] > stock_data.total_ants || stock_data.dof_short_by_dist[8][neighbor] > stock_data.total_ants))
 //		return ;
+//	if (stock_data.beacon + path.size() > (unsigned long int) stock_data.total_ants)
+//		return ;
+//	if (stock_data.data_of_cells[8][origin] > stock_data.total_ants)
+//		return ;
+//	if (stock_data.data_of_cells[8][neighbor] > stock_data.total_ants)
+//		return ;
+
+	cerr << "┌─────────────────────────────┐" << endl;
+	cerr << "origin : " <<  origin << "\tneighbor : " << neighbor << endl;
+	cerr << stock_data.beacon << "\t" << path.size() << "\t" << stock_data.total_ants;
+	cerr << stock_data.beacon + path.size() << "\t" << stock_data.total_ants;
+	cerr << "└─────────────────────────────┘" << endl;
+
 	for (size_t k = 0; k < path.size(); k++)
 	{
 		if (stock_data.pheromone[path[k]] > power)

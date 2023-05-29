@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:56:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 16:52:22 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/29 13:53:03 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	visit_six_next_cell(
 						&& next_res.first != neighbor
 						&& next_res.first != origin)
 					{
-						cerr << origin << "\t" << neighbor << "\t" << stock.first << " " << next_res.first << endl;
+//						cerr << origin << "\t" << neighbor << "\t" << stock.first << " " << next_res.first << endl;
 						return (0) ;
 					}
 				}
