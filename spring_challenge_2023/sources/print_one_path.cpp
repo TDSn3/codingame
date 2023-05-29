@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:56:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/29 13:53:03 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:30:39 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ int	visit_six_next_cell(
 	int j)
 {
 	int	neighbor;
-	
+
 	neighbor = stock_data.data_of_cells[index][j];
+	if (origin == 2)
+		cerr << origin << "->" << neighbor << endl;
 //	si la cell origin ou neighbor n'est pas vide et que neighbor n'est pas déjà visité
 	if (neighbor != -1 && index != -1 && !visited[neighbor])
 	{
@@ -108,32 +110,20 @@ int	visit_six_next_cell(
 						&& next_res.first != neighbor
 						&& next_res.first != origin)
 					{
-//						cerr << origin << "\t" << neighbor << "\t" << stock.first << " " << next_res.first << endl;
+//						cerr << origin << " ---> " << neighbor << "\t" << stock.first << " " << next_res.first << endl;
 						return (0) ;
 					}
 				}
 
 				if (stock.first != -1 && stock_data.conected_to_base[stock.first] && stock.first != neighbor && stock.first != origin)
 				{
-					my_line(stock_data, stock.first, neighbor, dist + 1);
-					stock_data.conexions[stock.first].push_back(neighbor);
-					cerr << stock.first << " -1-> " << neighbor << "\torigin :" << origin << endl;
-					if (stock_data.conected_to_base[stock.first] == 1)
-						stock_data.conected_to_base[neighbor] = 1;
-					else
-						stock_data.conected_to_base[stock.first] = 1;
-					signal_stop = dist + 1;
+					if (!my_line(stock_data, stock.first, neighbor, dist + 1))
+						signal_stop = dist + 1;
 				}
 				else
 				{
-					my_line(stock_data, origin, neighbor, dist + 1);
-					stock_data.conexions[origin].push_back(neighbor);
-					cerr << origin << " -2-> " << neighbor << "\torigin :" << origin << endl;
-					if (stock_data.conected_to_base[origin] == 1)
-						stock_data.conected_to_base[neighbor] = 1;
-					else
-						stock_data.conected_to_base[origin] = 1;
-					signal_stop = dist + 1;
+					if (!my_line(stock_data, origin, neighbor, dist + 1))
+						signal_stop = dist + 1;
 				}
 			}
 		}
