@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 17:26:08 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/29 18:11:56 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,24 @@
 
 void	start_2(Data &stock_data)
 {
+	if (stock_data.total_ants <= stock_data.total_opp_ants + 20)
+	{
+		stock_data.egg_and_cryst = 0;
+		stock_data.power_egg = 5;
+	}
+	else
+	{
+		stock_data.egg_and_cryst = 1;
+		stock_data.power_egg = 1;
+	}
+
+	stock_data.beacon = 0;
+	stock_data.total_ants = 0;
+	stock_data.total_opp_ants = 0;
+
+
+
+
 	for (int i = 0; i < stock_data.number_of_cells; i++)
 	{
 		int resources;	// la quantité actuelle d'oeufs/cristaux sur cette cellule
@@ -59,14 +77,4 @@ void	start_2(Data &stock_data)
 
 
 
-	if (stock_data.total_ants <= stock_data.total_opp_ants + 20)
-	{
-		stock_data.egg_and_cryst = 0;
-		stock_data.power_egg = 2;
-	}
-	else
-	{
-		stock_data.egg_and_cryst = 1;
-		stock_data.power_egg = 1;
-	}
 }

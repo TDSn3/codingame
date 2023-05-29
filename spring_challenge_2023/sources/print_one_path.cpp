@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:56:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/29 15:30:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/29 16:06:46 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ int	visit_six_next_cell(
 	int	neighbor;
 
 	neighbor = stock_data.data_of_cells[index][j];
-	if (origin == 2)
-		cerr << origin << "->" << neighbor << endl;
 //	si la cell origin ou neighbor n'est pas vide et que neighbor n'est pas déjà visité
 	if (neighbor != -1 && index != -1 && !visited[neighbor])
 	{

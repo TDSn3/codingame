@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:20:15 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 16:13:34 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/29 17:51:13 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ void	debug(Data &stock_data)
 	cerr << endl;
 	cout << endl;
 
-	for (unsigned long int i = 0; i < stock_data.pheromone.size(); i++)
+	for (unsigned long int i = 0; i < stock_data.power_cell.size(); i++)
 	{
 //		cerr << i << " " << stock_data.pheromone[i] << endl;
-		stock_data.pheromone[i] = 0;
+		stock_data.power_cell[i] = 0;
 	}
 	for (unsigned long int i = 0; i < stock_data.conected_to_base.size(); i++)
 		stock_data.conected_to_base[i] = 0;
 	stock_data.conected_to_base[stock_data.my_base_index] = 1;
-	stock_data.total_ants = 0;
-	stock_data.total_opp_ants = 0;
-	stock_data.beacon = 0;
+//	stock_data.total_ants = 0;
+//	stock_data.total_opp_ants = 0;
+//	stock_data.beacon = 0; --> moove to start2.cpp
 	stock_data.egg_and_cryst = 0;
 }

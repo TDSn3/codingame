@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/28 17:35:41 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/29 16:37:05 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void algorithme_bfs(Data& stock_data, int origin, int max_dist)
 			
 			stock_data.res_by_dist.push_back(0);
 			stock_data.egg_by_dist.push_back(0);
-			stock_data.pheromone.push_back(0);
+			stock_data.power_cell.push_back(0);
 			stock_data.conected_to_base.push_back(0);
 			stock_data.conexions.push_back(stock);
 			for (int j = 0; j < 6; j++)
@@ -263,7 +263,7 @@ std::pair<int, std::vector<int> >	find_next_phero(Data& stock_data, int origin, 
 				int neighbor = stock_data.data_of_cells[index][j];
 				if (neighbor != -1 && !visited[neighbor])
 				{
-					if (stock_data.pheromone[neighbor])
+					if (stock_data.power_cell[neighbor])
 					{
 						std::vector<int>	ret_path;
 						int					path_neighbor = neighbor;
@@ -314,7 +314,7 @@ std::pair<int, std::vector<int> >	find_base(Data& stock_data, int origin, int ma
 			for (int j = 0; j < 6; j++)
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
-				if (neighbor != -1 && !visited[neighbor] && stock_data.pheromone[neighbor])
+				if (neighbor != -1 && !visited[neighbor] && stock_data.power_cell[neighbor])
 				{
 					if (neighbor == stock_data.my_base_index)
 					{
