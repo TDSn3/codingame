@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 04:00:45 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 12:46:33 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ void								start_2(Data &stock_data);
 void								distance_all_cell_from_base(Data& stock_data, int origin, int max_dist, int index_base);
 std::vector<int>					find_path_origin_neighbor(Data& stock_data, int origin, int dest, int max_dist);
 std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin, int max_dist, int index_base);
-int									my_line(Data &stock_data, int origin, int neighbor);
+std::pair<int, std::vector<int> >	find_next_base(Data& stock_data, int origin, int max_dist, int index_base);
+int									my_line(Data &stock_data, int origin, int neighbor, int index_base);
 void								debug(Data &stock_data);
 void								bfs_from_base(Data &stock_data);
 
