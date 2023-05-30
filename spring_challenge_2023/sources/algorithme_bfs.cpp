@@ -6,13 +6,13 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 00:23:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 03:49:49 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.hpp"
 
-void algorithme_bfs(Data& stock_data, int origin, int max_dist)
+void algorithme_bfs(Data& stock_data, int origin, int max_dist, int index_base)
 {
 	std::vector<bool> visited(stock_data.data_of_cells.size(), false);
 	std::queue<std::pair<int, int> > bfs_queue;
@@ -27,16 +27,9 @@ void algorithme_bfs(Data& stock_data, int origin, int max_dist)
 		bfs_queue.pop();
 
 		stock_data.data_of_cells[index][8] = dist;
+		stock_data.dist_from_base[index_base][index] = dist;
 		if (dist < max_dist)
 		{
-			std::vector<int>	stock;
-			
-			stock_data.res_by_dist.push_back(0);
-			stock_data.egg_by_dist.push_back(0);
-			stock_data.power_cell.push_back(0);
-			stock_data.beacon_this_loop.push_back(0);
-			stock_data.conected_to_base.push_back(0);
-			stock_data.conexions.push_back(stock);
 			for (int j = 0; j < 6; j++)
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
@@ -240,7 +233,7 @@ std::pair<int, std::vector<int> >	find_next_res(Data& stock_data, int origin, in
 	return (std::pair<int, std::vector<int> >(-1, std::vector<int>()));
 }
 
-std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin, int max_dist)
+std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin, int max_dist, int index_base)
 {
 	std::queue<std::pair<int, int> >				bfs_queue;
 	std::vector<bool>								visited(stock_data.data_of_cells.size(), false);
@@ -265,7 +258,7 @@ std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin,
 
 				if (neighbor != -1 && !visited[neighbor])
 				{
-					if (stock_data.beacon_this_loop[neighbor])
+					if (stock_data.beacon_this_loop[neighbor] || stock_data.conected_to_base[neighbor])
 						list_beacons.push_back(std::pair<int, std::vector<int> >(neighbor, std::vector<int>()));
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 					visited[neighbor] = true;
@@ -291,7 +284,7 @@ std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin,
 
 				for (size_t k = 0; k < list_beacons.size(); k++)
 				{
-					if (stock_data.data_of_cells[ list_beacons[k].first ][8] < size_dist_from_base)
+					if (stock_data.dist_from_base[index_base][ list_beacons[k].first ] < size_dist_from_base)
 					{
 						save_index = k;
 						size_dist_from_base = stock_data.data_of_cells[ list_beacons[k].first ][8];

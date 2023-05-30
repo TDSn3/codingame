@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 00:03:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 02:32:56 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ public:
 	std::vector<int>					conected_to_base;
 	std::vector<std::vector<int> >		conexions;
 	std::map<int, std::vector<int> >	data_of_cells;
+	std::vector<std::vector<int> >		dist_from_base;
 	std::map<int, std::vector<int> >	dof_short_by_dist; // dof = data_of_cells
 	std::list<std::list<int> >			path_to_base;
 
