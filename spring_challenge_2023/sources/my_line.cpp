@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:52:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 03:58:23 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 12:27:26 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	my_line(Data &stock_data, int origin, int neighbor)
 	for (size_t i = 0; i < path.size(); i++)
 	{
 		cout << "BEACON" << " " << path[i] << " " << "1" << ";";
+		if (!stock_data.beacon_this_loop[path[i]])
+			stock_data.beacon++;
 		stock_data.beacon_this_loop[path[i]] = 1;
-		if (!stock_data.power_cell[path[i]])
-			stock_data.beacon += 1;
 		stock_data.power_cell[path[i]] = 1;
 	}
 	stock_data.conected_to_base[neighbor] = 1;

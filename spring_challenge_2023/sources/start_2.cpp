@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 04:02:21 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 04:17:24 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 void	start_2(Data &stock_data)
 {
-	if (stock_data.total_ants <= stock_data.total_opp_ants + 20)
-	{
+//	if (stock_data.total_ants <= stock_data.total_opp_ants + 20)
+//	{
 		stock_data.egg_and_cryst = 0;
-		stock_data.power_egg = 5;
-	}
-	else
-	{
-		stock_data.egg_and_cryst = 1;
-		stock_data.power_egg = 1;
-	}
+//		stock_data.power_egg = 5;
+//	}
+//	else
+//	{
+//		stock_data.egg_and_cryst = 1;
+//		stock_data.power_egg = 1;
+//	}
 
 	stock_data.beacon = 0;
 	stock_data.total_ants = 0;
@@ -53,6 +53,8 @@ void	start_2(Data &stock_data)
 			stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
 		else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)		// [6] type == egg
 			stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
+		if (resources > 0 && stock_data.data_of_cells[i][6] == 1)
+			stock_data.limit_egg = 1;
 	}
 
 

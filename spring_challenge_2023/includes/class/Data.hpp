@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 02:32:56 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 04:16:20 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ public:
 	int									beacon;
 	int									egg_and_cryst;
 	int									power_egg;
+	int									limit_egg;
 	std::vector<int>					list_base_index;
 	std::vector<int>					res_by_dist;
 	std::vector<int>					egg_by_dist;

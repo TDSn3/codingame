@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:25:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 03:53:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 04:17:16 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ void	visit_neighbors(
 		visited[neighbor] = true;
 
 //		cerr << "base: " << base << "\t\t" << index << " ] " << neighbor;
-		if (stock_data.data_of_cells[neighbor][9] > 0 && stock_data.data_of_cells[neighbor][6] > 0)
+		if (stock_data.data_of_cells[neighbor][9] > 0
+			&& stock_data.data_of_cells[neighbor][6] > stock_data.egg_and_cryst
+			&& stock_data.data_of_cells[neighbor][6] <= stock_data.limit_egg)
 		{
 			std::pair<int, std::vector<int> > stock = find_next_beacon(stock_data, neighbor, 10, base);
 			if (stock.first != -1)
