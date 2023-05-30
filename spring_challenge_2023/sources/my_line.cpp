@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:52:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/29 23:52:48 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 03:58:23 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	my_line(Data &stock_data, int origin, int neighbor)
 {	
 	std::vector<int>	path;
 
-	path = algorithme_bfs_2(stock_data, origin, neighbor, 10);
+	path = find_path_origin_neighbor(stock_data, origin, neighbor, 10);
 
 	if (stock_data.beacon + path.size() > (unsigned long int) stock_data.total_ants * 80 / 100)
 		return (1);

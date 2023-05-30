@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/29 18:11:56 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 04:02:21 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	start_2(Data &stock_data)
 
 	for (int i = 0; i < stock_data.number_of_cells; i++)
 	{
-		int resources;	// la quantité actuelle d'oeufs/cristaux sur cette cellule
-		int my_ants;	// le montant de vos fourmis sur cette cellule
-		int opp_ants;	// la quantité de fourmis adverses sur cette cellule
+		int resources;
+		int my_ants;
+		int opp_ants;
 		cin
 			>> resources
 			>> my_ants

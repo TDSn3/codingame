@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 03:52:04 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 03:59:30 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	start(Data &stock_data)
 {
-	cerr << "Start strat" << endl;
 	cin >> stock_data.number_of_cells; cin.ignore();
 	for (int i = 0; i < stock_data.number_of_cells; i++)
 	{
@@ -84,12 +83,11 @@ void	start(Data &stock_data)
 		stock_data.dist_from_base.push_back(std::vector<int>());
 	}
 
-	cerr << "Start bfs" << endl;
 	for (size_t i = 0; i < stock_data.list_base_index.size(); i++)
 	{
 		for (int j = 0; j < stock_data.number_of_cells; j++)
 			stock_data.dist_from_base[ stock_data.list_base_index[i] ].push_back(-1);
-		algorithme_bfs(stock_data, stock_data.list_base_index[i], 20, stock_data.list_base_index[i]);
+		distance_all_cell_from_base(stock_data, stock_data.list_base_index[i], 20, stock_data.list_base_index[i]);
 
 		stock_data.conected_to_base[stock_data.list_base_index[i]] = 1;
 	}

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 00:28:25 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 04:01:33 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,3 @@ int main()
 		i++;
 	}
 }
-
-//		// [0]
-//		// [1]
-//		// [2]
-//		// [3]
-//		// [4]
-//		// [5]
-//		// [6]  type
-//		// [7]  initial_resources
-//		// [8]  distance from my base
-//		// [9]  resources
-//		// [10] my_ants
-//		// [11] opp_ants
-//		// [12] case conected
-//		// [13] real index 
