@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:58:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 15:35:49 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 22:48:14 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,9 @@ Data::Data(void)
 	this->egg_and_cryst = 0;
 	this->power_egg = 2;
 	this->limit_egg = 2;
+	this->number_egg_cell_start = 0;
+	this->egg_cell_now = 0;
+	this->signal_for_crystal = 0;
 }
 
 Data::Data(int my_base_index, int number_of_cells)

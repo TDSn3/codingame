@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 18:09:26 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 00:15:12 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,19 @@ void	start_2(Data &stock_data)
 			stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
 		else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)		// [6] type == egg
 			stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
-//		if (resources > 0 && stock_data.data_of_cells[i][6] == 1)
-//			stock_data.limit_egg = 1;
+		if (resources > 0 && stock_data.data_of_cells[i][6] == 1)
+			stock_data.limit_egg = 1;
+
+		if (resources > 0 && stock_data.data_of_cells[i][6] == 1)
+		{
+			stock_data.egg_cell_now++;
+		}
 	}
 
+	stock_data.signal_for_crystal = stock_data.number_egg_cell_start - stock_data.egg_cell_now;
 
+	cerr << "==========> " << stock_data.number_egg_cell_start << " " << stock_data.egg_cell_now << endl;
+	cerr << "==========> " << stock_data.signal_for_crystal << endl;
 
 	vector<pair<int, int> >	stock;
 

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 15:28:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 23:02:25 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	start(Data &stock_data)
 		stock_data.data_of_cells[i].push_back(-1);					// [10] my_ants
 		stock_data.data_of_cells[i].push_back(-1);					// [11] opp_ants
 		stock_data.data_of_cells[i].push_back(-1);					// [12] case conected
-		stock_data.data_of_cells[i].push_back(i);					// [13] real index 
+		stock_data.data_of_cells[i].push_back(i);					// [13] real index
+		if (type == 1)
+			stock_data.number_egg_cell_start++;
 	}
 
 	int number_of_bases;

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 15:35:08 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 22:48:02 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ public:
 	int									egg_and_cryst;
 	int									power_egg;
 	int									limit_egg;
+	int									number_egg_cell_start;
+	int									egg_cell_now;
+	int									signal_for_crystal;
 	std::vector<int>					list_base_index;
 	std::vector<int>					list_opp_base_index;
 	std::vector<int>					res_by_dist;

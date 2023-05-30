@@ -6,11 +6,13 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 20:24:29 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 22:32:44 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.hpp"
+
+void	assignation_priority2(Data& stock_data, int	path_neighbor);
 
 void	distance_all_cell_from_base(Data& stock_data, int origin, int max_dist, int index_base)
 {
@@ -66,15 +68,6 @@ std::vector<int>	find_path_origin_neighbor(Data& stock_data, int origin, int des
 			{
 				if (stock_data.priority_cell[current] < 1)
 					stock_data.priority_cell[current] = 1;
-//				if (stock_data.data_of_cells[current][10] < stock_data.data_of_cells[current][11])
-//				{
-//					cerr << "priority : " << current << " : " << stock_data.data_of_cells[current][10] << " < " << stock_data.data_of_cells[current][11] << endl;
-//					stock_data.priority_cell[current] += 5;
-//				}
-//				else if (stock_data.priority_cell[current] > 1)
-//					stock_data.priority_cell[current] -= 1;
-
-
 				path.push_back(current);
 				current = previous[current];
 			}
@@ -100,144 +93,7 @@ std::vector<int>	find_path_origin_neighbor(Data& stock_data, int origin, int des
 	return (std::vector<int>(0));
 }
 
-std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin, int max_dist, int index_base)
-{
-	std::queue<std::pair<int, int> >				bfs_queue;
-	std::vector<bool>								visited(stock_data.data_of_cells.size(), false);
-	std::vector<int>								path(stock_data.data_of_cells.size(), -1);
-	std::vector<std::pair<int, std::vector<int> > >	list_beacons;
-
-	bfs_queue.push(std::pair<int, int>(origin, 0));
-	visited[origin] = true;
-	while (!bfs_queue.empty())
-	{
-		int index = bfs_queue.front().first;
-		int dist = bfs_queue.front().second;
-
-		bfs_queue.pop();
-		if (dist < max_dist)
-		{
-			std::vector<int>	stock;
-			
-			for (int j = 0; j < 6; j++)
-			{
-				int neighbor = stock_data.data_of_cells[index][j];
-
-				if (neighbor != -1 && !visited[neighbor] && !stock_data.check_opp_base(stock_data, neighbor))
-				{
-					if (stock_data.beacon_this_loop[neighbor] || stock_data.conected_to_base[neighbor])
-						list_beacons.push_back(std::pair<int, std::vector<int> >(neighbor, std::vector<int>()));
-					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
-					visited[neighbor] = true;
-					path[neighbor] = index;
-				}
-			}
-			if (!list_beacons.empty())
-			{
-				for (size_t k = 0; k < list_beacons.size(); k++)
-				{
-					int	path_neighbor = list_beacons[k].first;
-					
-					path[list_beacons[k].first] = index;
-					while (path_neighbor != origin)
-					{
-						if (stock_data.priority_cell[path_neighbor] < 1)
-							stock_data.priority_cell[path_neighbor] = 1;
-						
-						list_beacons[k].second.push_back(path_neighbor);
-						path_neighbor = path[path_neighbor];
-					}
-					if (stock_data.priority_cell[path_neighbor] < 1)
-						stock_data.priority_cell[path_neighbor] = 1;
-	
-					list_beacons[k].second.push_back(path_neighbor);
-				}
-				int	save_index = -1;
-				int	size_dist_from_base = 1000;
-
-				for (size_t k = 0; k < list_beacons.size(); k++)
-				{
-					if (stock_data.dist_from_base[index_base][ list_beacons[k].first ] < size_dist_from_base)
-					{
-						save_index = k;
-						size_dist_from_base = stock_data.data_of_cells[ list_beacons[k].first ][8];
-					}
-				}
-				return (list_beacons[save_index]);
-			}
-		}
-	}
-	return (std::pair<int, std::vector<int> >(-1, std::vector<int>()));
-}
-
-std::pair<int, std::vector<int> >	find_next_base(Data& stock_data, int origin, int max_dist, int index_base)
-{
-	std::queue<std::pair<int, int> >				bfs_queue;
-	std::vector<bool>								visited(stock_data.data_of_cells.size(), false);
-	std::vector<int>								path(stock_data.data_of_cells.size(), -1);
-	std::vector<std::pair<int, std::vector<int> > >	list_beacons;
-
-	bfs_queue.push(std::pair<int, int>(origin, 0));
-	visited[origin] = true;
-	while (!bfs_queue.empty())
-	{
-		int index = bfs_queue.front().first;
-		int dist = bfs_queue.front().second;
-
-		bfs_queue.pop();
-		if (dist < max_dist)
-		{
-			std::vector<int>	stock;
-			
-			for (int j = 0; j < 6; j++)
-			{
-				int neighbor = stock_data.data_of_cells[index][j];
-
-				if (neighbor != -1 && !visited[neighbor] && !stock_data.check_opp_base(stock_data, neighbor))
-				{
-					if (neighbor == index_base)
-						list_beacons.push_back(std::pair<int, std::vector<int> >(neighbor, std::vector<int>()));
-					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
-					visited[neighbor] = true;
-					path[neighbor] = index;
-				}
-			}
-			if (!list_beacons.empty())
-			{
-				for (size_t k = 0; k < list_beacons.size(); k++)
-				{
-					int	path_neighbor = list_beacons[k].first;
-					
-					path[list_beacons[k].first] = index;
-					while (path_neighbor != origin)
-					{
-						list_beacons[k].second.push_back(path_neighbor);
-						path_neighbor = path[path_neighbor];
-					}
-					list_beacons[k].second.push_back(path_neighbor);
-				}
-				int	save_index = -1;
-				int	size_dist_from_base = 1000;
-
-				for (size_t k = 0; k < list_beacons.size(); k++)
-				{
-					if (stock_data.dist_from_base[index_base][ list_beacons[k].first ] < size_dist_from_base)
-					{
-						save_index = k;
-						size_dist_from_base = stock_data.data_of_cells[ list_beacons[k].first ][8];
-					}
-				}
-				return (list_beacons[save_index]);
-			}
-		}
-	}
-	return (std::pair<int, std::vector<int> >(-1, std::vector<int>()));
-}
-
-
-
-
-std::vector<int>	find_next_base2(Data& stock_data, int origin, int dest, int max_dist)
+std::vector<int>	find_next_base(Data& stock_data, int origin, int dest, int max_dist)
 {
 	std::queue<std::pair<int, int> >	bfs_queue;
 	std::vector<bool>					visited(stock_data.data_of_cells.size(), false);
@@ -262,9 +118,11 @@ std::vector<int>	find_next_base2(Data& stock_data, int origin, int dest, int max
 				current = dest;
 				while (current != origin)
 				{
+					assignation_priority2(stock_data, current);
 					path.push_back(current);
 					current = previous[current];
 				}
+				assignation_priority2(stock_data, current);
 				path.push_back(origin);
 				return (path);
 			}
@@ -272,7 +130,6 @@ std::vector<int>	find_next_base2(Data& stock_data, int origin, int dest, int max
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
 
-				cerr << neighbor << endl;
 				if (neighbor != -1 && !visited[neighbor] && !stock_data.check_opp_base(stock_data, neighbor) && stock_data.priority_cell[neighbor])
 				{
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
@@ -283,4 +140,17 @@ std::vector<int>	find_next_base2(Data& stock_data, int origin, int dest, int max
 		}
 	}
 	return (std::vector<int>());
+}
+
+void	assignation_priority2(Data& stock_data, int	path_neighbor)
+{
+//	if (stock_data.priority_cell[path_neighbor] < 1)
+//		stock_data.priority_cell[path_neighbor] = 1;
+//	if (stock_data.data_of_cells[path_neighbor][10] < stock_data.data_of_cells[path_neighbor][11])
+//	{
+//		cerr << "===== PRIORITY : " << path_neighbor << " : " << stock_data.data_of_cells[path_neighbor][10] << " < " << stock_data.data_of_cells[path_neighbor][11] << endl;
+//		stock_data.priority_cell[path_neighbor] += 5;
+//	}
+//	else if (stock_data.priority_cell[path_neighbor] > 1)
+//		stock_data.priority_cell[path_neighbor] -= 1;
 }

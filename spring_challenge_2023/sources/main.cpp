@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 04:01:33 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 22:43:31 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int main()
 	unsigned long long int	i;
 
 	i = 0;
-	cerr << "Start main" << endl;
+	cerr << "Start main" << endl;	
 	start(stock_data);
 	while (1)
 	{	
