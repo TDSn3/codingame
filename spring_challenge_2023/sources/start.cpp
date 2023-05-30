@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 03:59:30 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:28:39 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	start(Data &stock_data)
 
 		cin >> opp_base_index;
 		cin.ignore();
+		stock_data.list_opp_base_index.push_back(opp_base_index);
 	}
 
 	for (int i = 0; i < stock_data.number_of_cells; i++)
@@ -77,6 +78,7 @@ void	start(Data &stock_data)
 		stock_data.res_by_dist.push_back(0);
 		stock_data.egg_by_dist.push_back(0);
 		stock_data.power_cell.push_back(0);
+		stock_data.priority_cell.push_back(0);
 		stock_data.beacon_this_loop.push_back(0);
 		stock_data.conected_to_base.push_back(0);
 		stock_data.conexions.push_back(std::vector<int>());

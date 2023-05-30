@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:25:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 13:51:44 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:36:25 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	visit_neighbors(
 	int	neighbor;
 
 	neighbor = stock_data.data_of_cells[index][j];
-	if (neighbor != -1 && !visited[neighbor])
+	if (neighbor != -1 && !visited[neighbor] && !stock_data.check_opp_base(stock_data, neighbor))
 	{
 		bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 		visited[neighbor] = true;

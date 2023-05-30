@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:58:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 04:16:57 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:35:49 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ Data::Data(void)
 	this->total_opp_ants = 0;
 	this->max_dist = 0;
 	this->beacon = 0;
+	this->total_power_beacon = 0;
 	this->egg_and_cryst = 0;
 	this->power_egg = 2;
 	this->limit_egg = 2;
@@ -74,6 +75,14 @@ Data::~Data(void)
 /* ************************************************************************** */
 
 /*   MÉTHODE PUBLIC   ******************************************************* */
+
+int	Data::check_opp_base(Data &stock_data, int index)
+{
+	for (size_t i = 0; i < stock_data.list_opp_base_index.size(); i++)
+		if (stock_data.list_opp_base_index[i] == index)
+			return (1);
+	return (0);
+}
 
 /*   MÉTHODE PRIVATE   ****************************************************** */
 

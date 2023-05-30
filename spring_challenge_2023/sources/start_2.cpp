@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 04:17:24 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:13:17 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	start_2(Data &stock_data)
 //	}
 
 	stock_data.beacon = 0;
+	stock_data.total_power_beacon = 0;
 	stock_data.total_ants = 0;
 	stock_data.total_opp_ants = 0;
 

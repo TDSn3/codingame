@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 14:03:48 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:13:35 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,18 @@ std::vector<int>	find_path_origin_neighbor(Data& stock_data, int origin, int des
 			current = dest;
 		    while (current != origin)
             {
-                path.push_back(current);
+				if (stock_data.priority_cell[current] < 1)
+					stock_data.priority_cell[current] = 1;
+//				if (stock_data.data_of_cells[current][10] < stock_data.data_of_cells[current][11])
+//				{
+//					cerr << "priority : " << current << " : " << stock_data.data_of_cells[current][10] << " < " << stock_data.data_of_cells[current][11] << endl;
+//					stock_data.priority_cell[current] += 5;
+//				}
+//				else if (stock_data.priority_cell[current] > 1)
+//					stock_data.priority_cell[current] -= 1;
+
+
+				path.push_back(current);
                 current = previous[current];
             }
 			path.push_back(origin);
@@ -79,7 +90,7 @@ std::vector<int>	find_path_origin_neighbor(Data& stock_data, int origin, int des
 			for (int j = 0; j < 6; j++)
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
-				if (neighbor != -1 && !visited[neighbor])
+				if (neighbor != -1 && !visited[neighbor] && !stock_data.check_opp_base(stock_data, neighbor))
 				{
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 					visited[neighbor] = true;
@@ -178,7 +189,7 @@ std::pair<int, std::vector<int> >	find_next_base(Data& stock_data, int origin, i
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
 
-				if (neighbor != -1 && !visited[neighbor])
+				if (neighbor != -1 && !visited[neighbor] && !stock_data.check_opp_base(stock_data, neighbor))
 				{
 					if (neighbor == index_base)
 						list_beacons.push_back(std::pair<int, std::vector<int> >(neighbor, std::vector<int>()));
