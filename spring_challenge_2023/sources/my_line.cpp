@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:52:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 16:16:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:57:14 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ std::vector<int>	assign_power_until_base(Data &stock_data, int neighbor, int ind
 		stock_data.power_cell[path_to_base.second[i]] += 1;
 		cerr << std::setw(3) << path_to_base.second[i] << " │";
 	}
+	stock_data.power_cell[index_base] = 1;
 	cerr << endl;
 
 	// Affichage le power des beacons
@@ -62,14 +63,27 @@ int	my_line(Data &stock_data, int origin, int neighbor, int index_base)
 		if (stock_data.beacon_this_loop[i])
 			stock_data.total_power_beacon += stock_data.power_cell[i] * stock_data.priority_cell[i];
 
-	if (stock_data.total_power_beacon + ((path.size() - 1) * 4) > (unsigned long int) stock_data.total_ants)
+//	if (origin != index_base)
+//	{
+		cerr << "( " << stock_data.total_power_beacon << " * " << ((path.size() - 1) * 2) << " > " << stock_data.total_ants << " ) = ";
+		cerr << stock_data.total_power_beacon * ((path.size() - 1) * 2) << " > " << stock_data.total_ants << " ? ";
+//	}
+	if (stock_data.total_power_beacon * ((path.size() - 1) * 2) > (unsigned long int) stock_data.total_ants)
+	{
+		cerr << "OUI" << endl;
 		return (1);
+	}
+	cerr << "NON" << endl;
+//	if (origin == index_base)
+//		if (stock_data.beacon + path.size() > (unsigned long int) stock_data.total_ants * 50 / 100)
+//			return (1);
 
 	path = assign_power_until_base(stock_data, neighbor, index_base);
 	for (long long int i = path.size() - 1; i > -1; i--)
 	{
 //		power_prio = stock_data.power_cell[path[i]] * stock_data.priority_cell[path[i]];
-		power_prio = stock_data.power_cell[path[i]];
+//		power_prio = stock_data.power_cell[path[i]];
+		power_prio = 1;
 		cout << "BEACON" << " " << path[i] << " " << power_prio << ";";
 
 		if (!stock_data.beacon_this_loop[path[i]])
