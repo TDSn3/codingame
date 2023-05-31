@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:25:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 13:11:07 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:44:33 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	visit_neighbors(
 		bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 		visited[neighbor] = true;
 
-		if (stock_data.data_of_cells[neighbor][9] > 0
+		if ((stock_data.data_of_cells[neighbor][9] > 0)
 			&& ((stock_data.data_of_cells[neighbor][6] > stock_data.egg_and_cryst
 			&& stock_data.data_of_cells[neighbor][6] <= stock_data.limit_egg) || stock_data.signal_for_crystal > 0))
 		{			

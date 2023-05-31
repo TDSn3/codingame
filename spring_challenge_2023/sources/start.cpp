@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 23:02:25 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 14:24:47 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	start(Data &stock_data)
 		stock_data.priority_cell.push_back(0);
 		stock_data.beacon_this_loop.push_back(0);
 		stock_data.conected_to_base.push_back(0);
-		stock_data.conexions.push_back(std::vector<int>());
+		stock_data.conexions.push_back( std::vector<std::vector<int> >() );
 		stock_data.dist_from_base.push_back(std::vector<int>());
 	}
 

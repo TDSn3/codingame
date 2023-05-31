@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 13:10:08 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 22:08:55 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@
 using namespace std;
 
 # include "./class/Data.hpp"
+
+typedef struct s_tuple
+{
+	int	x;
+	int	y;
+	int	z;
+}	t_tuple;
 
 void								start(Data &stock_data);
 void								start_2(Data &stock_data);

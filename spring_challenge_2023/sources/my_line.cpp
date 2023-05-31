@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:52:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 09:50:22 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 21:04:59 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	my_line(Data &stock_data, int origin, int neighbor, int index_base, std::vec
 		return (1);
 
 	//	assigne real priority cell
-	path = assign_power_until_base(stock_data, neighbor, index_base);
+//	path = assign_power_until_base(stock_data, neighbor, index_base);
+	stock_data.conexions[path.back()].push_back(std::vector<int>());
 	for (long long int i = path.size() - 1; i > -1; i--)
 	{
 //		power_prio = stock_data.priority_cell[path[i]];
@@ -36,6 +37,7 @@ int	my_line(Data &stock_data, int origin, int neighbor, int index_base, std::vec
 		power_prio = 1;
 
 		cout << "BEACON" << " " << path[i] << " " << power_prio << ";";
+		stock_data.conexions[path.back()].back().push_back(path[i]);
 
 		if (!stock_data.beacon_this_loop[path[i]])
 			stock_data.beacon++;
@@ -44,7 +46,6 @@ int	my_line(Data &stock_data, int origin, int neighbor, int index_base, std::vec
 
 	stock_data.conected_to_base[neighbor] = 1;
 	stock_data.conected_to_base[origin] = 1;
-	stock_data.conexions[origin].push_back(neighbor);
 	stock_data.total_power_beacon = 0;
 	return (0);
 }
