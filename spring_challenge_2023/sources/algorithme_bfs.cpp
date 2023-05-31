@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 13:12:07 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 22:55:55 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ std::vector<int>	find_next_base(Data& stock_data, int origin, int max_dist)
 			{
 				int neighbor = stock_data.data_of_cells[index][j];
 
-				if (neighbor != -1 && !visited[neighbor] && !stock_data.check_opp_base(stock_data, neighbor) && stock_data.priority_cell[neighbor])
+				if (neighbor != -1 && !visited[neighbor] && !stock_data.check_opp_base(stock_data, neighbor) && (stock_data.priority_cell[neighbor] /**/|| stock_data.data_of_cells[neighbor][10] > 2/**/))
 				{
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 					visited[neighbor] = true;

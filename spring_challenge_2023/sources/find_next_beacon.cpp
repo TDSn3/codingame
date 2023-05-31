@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:12:07 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 13:58:46 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 22:55:48 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin,
 
 				if (neighbor != -1 && !visited[neighbor] && !stock_data.check_opp_base(stock_data, neighbor))
 				{
-					if (stock_data.beacon_this_loop[neighbor] || stock_data.conected_to_base[neighbor])
+					if (stock_data.beacon_this_loop[neighbor] || stock_data.conected_to_base[neighbor] /**/|| stock_data.data_of_cells[neighbor][10] > 2/**/)
 						list_beacons.push_back(std::pair<int, std::vector<int> >(neighbor, std::vector<int>()));
 					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 					visited[neighbor] = true;
