@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 22:32:44 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 08:52:34 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ std::vector<int>	find_next_base(Data& stock_data, int origin, int dest, int max_
 				current = dest;
 				while (current != origin)
 				{
-					assignation_priority2(stock_data, current);
+//					assignation_priority2(stock_data, current);
 					path.push_back(current);
 					current = previous[current];
 				}
-				assignation_priority2(stock_data, current);
+//				assignation_priority2(stock_data, current);
 				path.push_back(origin);
 				return (path);
 			}
@@ -142,8 +142,8 @@ std::vector<int>	find_next_base(Data& stock_data, int origin, int dest, int max_
 	return (std::vector<int>());
 }
 
-void	assignation_priority2(Data& stock_data, int	path_neighbor)
-{
+//void	assignation_priority2(Data& stock_data, int	path_neighbor)
+//{
 //	if (stock_data.priority_cell[path_neighbor] < 1)
 //		stock_data.priority_cell[path_neighbor] = 1;
 //	if (stock_data.data_of_cells[path_neighbor][10] < stock_data.data_of_cells[path_neighbor][11])
@@ -153,4 +153,4 @@ void	assignation_priority2(Data& stock_data, int	path_neighbor)
 //	}
 //	else if (stock_data.priority_cell[path_neighbor] > 1)
 //		stock_data.priority_cell[path_neighbor] -= 1;
-}
+//}

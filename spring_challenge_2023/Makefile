@@ -7,15 +7,16 @@ CPPFLAGS	=	-MMD
 CXXFLAGS	=	-Wall -Wextra #-Werror
 
 #ADD YOUR SOURCES BELOW WITHOUT THE SOURCE PREFIX MAIN.C GIVEN AS EXAMPLE
-SRCS		=	class/Data.cpp			\
-				algorithme_bfs.cpp		\
-				find_next_beacon.cpp	\
-				start.cpp				\
-				start_2.cpp				\
-				my_line.cpp				\
-				bfs_from_base.cpp		\
-				debug.cpp				\
-				main.cpp				\
+SRCS		=	class/Data.cpp				\
+				algorithme_bfs.cpp			\
+				find_next_beacon.cpp		\
+				start.cpp					\
+				start_2.cpp					\
+				assign_power_until_base.cpp	\
+				my_line.cpp					\
+				bfs_from_base.cpp			\
+				debug.cpp					\
+				main.cpp					\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR
 INC_FILES	= 	class/Data.hpp	\
