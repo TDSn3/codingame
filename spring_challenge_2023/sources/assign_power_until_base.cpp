@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 08:50:31 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 08:51:25 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:10:43 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ std::vector<int>	assign_power_until_base(Data &stock_data, int neighbor, int ind
 {
 	std::vector<int>	path_to_base;
 
-	path_to_base = find_next_base(stock_data, neighbor, index_base, 30);
+	path_to_base = find_next_base(stock_data, neighbor, 30);
 
 	// Affichage les beacons
 	for (size_t i = 0; i < path_to_base.size(); i++)

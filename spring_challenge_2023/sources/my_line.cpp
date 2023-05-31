@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:52:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 09:04:21 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 09:50:22 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,9 @@
 
 int	restrict_dist(Data &stock_data, std::vector<int> path);
 
-int	my_line(Data &stock_data, int origin, int neighbor, int index_base)
+int	my_line(Data &stock_data, int origin, int neighbor, int index_base, std::vector<int> path)
 {	
-	std::vector<int>	path;
 	int					power_prio;
-
-//	assigne priority cell = 1
-	path = find_next_beacon(stock_data, neighbor, 10, index_base).second;
 
 	stock_data.total_power_beacon = 0;
 	for (int i = 0; i < stock_data.number_of_cells; i++)
@@ -45,7 +41,6 @@ int	my_line(Data &stock_data, int origin, int neighbor, int index_base)
 			stock_data.beacon++;
 		stock_data.beacon_this_loop[path[i]] = 1;
 	}
-	cerr <<  endl;
 
 	stock_data.conected_to_base[neighbor] = 1;
 	stock_data.conected_to_base[origin] = 1;

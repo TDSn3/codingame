@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:12:07 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 22:27:34 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:11:40 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin,
 
 	bfs_queue.push(std::pair<int, int>(origin, 0));
 	visited[origin] = true;
+	cerr << "base : " << index_base << " origin : " << origin << endl;
 	while (!bfs_queue.empty())
 	{
 		int index = bfs_queue.front().first;
@@ -48,10 +49,11 @@ std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin,
 			}
 			if (!list_beacons.empty())
 			{
+				//	parcours tous les beacons
 				for (size_t k = 0; k < list_beacons.size(); k++)
 				{
 					int	path_neighbor = list_beacons[k].first;
-					
+
 					path[list_beacons[k].first] = index;
 					while (path_neighbor != origin)
 					{
@@ -70,7 +72,7 @@ std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin,
 					if (stock_data.dist_from_base[index_base][ list_beacons[k].first ] < size_dist_from_base)
 					{
 						save_index = k;
-						size_dist_from_base = stock_data.data_of_cells[ list_beacons[k].first ][8];
+						size_dist_from_base = stock_data.dist_from_base[index_base][ list_beacons[k].first ];
 					}
 				}
 				return (list_beacons[save_index]);

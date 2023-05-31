@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:25:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 00:20:52 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:11:07 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,18 @@ void	visit_neighbors(
 			&& ((stock_data.data_of_cells[neighbor][6] > stock_data.egg_and_cryst
 			&& stock_data.data_of_cells[neighbor][6] <= stock_data.limit_egg) || stock_data.signal_for_crystal > 0))
 		{			
-			if (stock_data.data_of_cells[neighbor][6] == 2)
-				stock_data.signal_for_crystal--;
+			//	assigne priority cell = 1
 			std::pair<int, std::vector<int> > stock = find_next_beacon(stock_data, neighbor, 10, base);
+
 			if (stock.first != -1)
 			{
-				cerr << stock.first << " ---> " << neighbor << endl;
-				my_line(stock_data, stock.first, neighbor, base);
+				cerr << stock.first << " ---> " << neighbor << "\n";
+				my_line(stock_data, stock.first, neighbor, base, stock.second);
 			}
 			else
-			{
-				cerr << base << " ---> " << neighbor << endl;
-				my_line(stock_data, base, neighbor, base);
-			}
+				cerr << base << " OUPS ? " << neighbor << endl;
+			if (stock_data.data_of_cells[neighbor][6] == 2)
+				stock_data.signal_for_crystal--;
 		}
 	}
 }

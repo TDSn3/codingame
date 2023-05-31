@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 08:52:34 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/05/31 13:12:07 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,15 @@ std::vector<int>	find_path_origin_neighbor(Data& stock_data, int origin, int des
 	return (std::vector<int>(0));
 }
 
-std::vector<int>	find_next_base(Data& stock_data, int origin, int dest, int max_dist)
+int	check_base(Data& stock_data, int index)
+{	
+	for (size_t i = 0; i < stock_data.list_base_index.size(); i++)
+		if (stock_data.list_base_index[i] == index)
+			return (index);
+	return (-1);
+}
+
+std::vector<int>	find_next_base(Data& stock_data, int origin, int max_dist)
 {
 	std::queue<std::pair<int, int> >	bfs_queue;
 	std::vector<bool>					visited(stock_data.data_of_cells.size(), false);
@@ -110,12 +118,12 @@ std::vector<int>	find_next_base(Data& stock_data, int origin, int dest, int max_
 		bfs_queue.pop();
 		if (dist < max_dist)
 		{
-			if (index == dest)
+			if (check_base(stock_data, index) > -1)
 			{
 				std::vector<int>	path;
 				int					current;
-				
-				current = dest;
+
+				current = check_base(stock_data, index);
 				while (current != origin)
 				{
 //					assignation_priority2(stock_data, current);
