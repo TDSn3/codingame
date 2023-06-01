@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 09:20:09 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/01 11:08:55 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ void	start_2(Data &stock_data)
 		stock_data.data_of_cells[i][11] = opp_ants;
 		stock_data.total_ants += my_ants;
 		stock_data.total_opp_ants += opp_ants;
-		if (resources > 0
-			&& stock_data.data_of_cells[i][6] == 2
-			&& stock_data.data_of_cells[i][8] > 0)							// [6] type == crystal [8] dist_from_base > 0
-			stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-		else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)		// [6] type == egg
-			stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
+//		if (resources > 0
+//			&& stock_data.data_of_cells[i][6] == 2
+//			&& stock_data.data_of_cells[i][8] > 0)							// [6] type == crystal [8] dist_from_base > 0
+//			stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
+//		else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)		// [6] type == egg
+//			stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
 		if (resources > 0 && stock_data.data_of_cells[i][6] == 1)
 			stock_data.limit_egg = 1;
 

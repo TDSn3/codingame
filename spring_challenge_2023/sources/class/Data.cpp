@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:58:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/30 22:48:14 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:20:45 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,30 @@ int	Data::check_opp_base(Data &stock_data, int index)
 		if (stock_data.list_opp_base_index[i] == index)
 			return (1);
 	return (0);
+}
+
+int	Data::give_dist_from_opp_base(int index)
+{
+	int	size_dist_from_opp_base = 1000;
+
+	for (size_t i = 0; i < this->list_opp_base_index.size(); i++)
+	{
+		if (this->dist_from_opp_base[ this->list_opp_base_index[i] ][index] < size_dist_from_opp_base)
+			size_dist_from_opp_base = this->dist_from_opp_base[ this->list_opp_base_index[i] ][index];
+	}
+	return (size_dist_from_opp_base);
+}
+
+int	Data::give_dist_from_base(int index)
+{
+	int	size_dist_from_base = 1000;
+
+	for (size_t i = 0; i < this->list_base_index.size(); i++)
+	{
+		if (this->dist_from_base[ this->list_base_index[i] ][index] < size_dist_from_base)
+			size_dist_from_base = this->dist_from_base[ this->list_base_index[i] ][index];
+	}
+	return (size_dist_from_base);
 }
 
 /*   MÉTHODE PRIVATE   ****************************************************** */

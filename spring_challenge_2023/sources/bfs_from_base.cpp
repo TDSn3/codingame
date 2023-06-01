@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:25:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 22:37:13 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/01 13:39:25 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ void	visit_neighbors(
 				cerr << stock.first << " ---> " << neighbor << "\n";
 				my_line(stock_data, stock.first, neighbor, base, stock.second);
 			}
-			else
-				cerr << base << " OUPS ? " << neighbor << endl;
 			if (stock_data.data_of_cells[neighbor][6] == 2)
 				stock_data.signal_for_crystal--;
 		}

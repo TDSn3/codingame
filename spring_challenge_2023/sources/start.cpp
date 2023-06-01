@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/05/31 14:24:47 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/01 14:25:13 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,18 @@ void	start(Data &stock_data)
 		stock_data.conected_to_base.push_back(0);
 		stock_data.conexions.push_back( std::vector<std::vector<int> >() );
 		stock_data.dist_from_base.push_back(std::vector<int>());
+		stock_data.dist_from_opp_base.push_back(std::vector<int>());
 	}
 
 	for (size_t i = 0; i < stock_data.list_base_index.size(); i++)
 	{
 		for (int j = 0; j < stock_data.number_of_cells; j++)
+		{
 			stock_data.dist_from_base[ stock_data.list_base_index[i] ].push_back(-1);
-		distance_all_cell_from_base(stock_data, stock_data.list_base_index[i], 20, stock_data.list_base_index[i]);
+			stock_data.dist_from_opp_base[ stock_data.list_opp_base_index[i] ].push_back(-1);
+		}
+		distance_all_cell_from_base(stock_data, stock_data.list_base_index[i], 20, stock_data.list_base_index[i], 1);
+		distance_all_cell_from_base(stock_data, stock_data.list_opp_base_index[i], 20, stock_data.list_opp_base_index[i], 2);
 
 		stock_data.conected_to_base[stock_data.list_base_index[i]] = 1;
 	}
