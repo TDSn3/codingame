@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 15:20:15 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 23:50:37 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:17:25 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,13 @@ void	debug(Data &stock_data)
 
 	stock_data.total_res_cryst_now = 0;
 	stock_data.total_res_egg_now = 0;
+
+	if (stock_data.my_score_last_turn == stock_data.my_score)
+		stock_data.i_am_bloc++;
+	else
+		stock_data.i_am_bloc--;
+
+	stock_data.my_score_last_turn = stock_data.my_score;
+
+	stock_data.beacon_on_res_this_turn = 0;
 }

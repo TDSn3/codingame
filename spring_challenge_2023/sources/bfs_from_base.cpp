@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:25:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/02 12:51:32 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:55:28 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,19 @@ void	visit_neighbors(
 
 int		stategie_specific(Data &stock_data, int neighbor)
 {
+//	// si je suis bloqué depuis 3 tour
+//	if (stock_data.i_am_bloc > 3)
+//	{
+//		cerr << "!!! I AM BLOC !!! " << stock_data.i_am_bloc << "\n";
+//		stock_data.signal_for_crystal = 1;
+//		if (stock_data.i_am_bloc == 3)
+//			stock_data.i_am_bloc += 3;
+//		if (stock_data.beacon_on_res_this_turn > 1)
+//			return (1);
+//		stock_data.total_ants /= 10;
+//		return(0);
+//	}
+
 	//	si c'est une carte small et qu'il y a des res et que je suis sur la case 0
 	if (stock_data.type_size_map == 1 && stock_data.data_of_cells[0][9] > 0 && neighbor == 0)
 		return (0);
@@ -187,18 +200,44 @@ void	strategie_power2(Data &stock_data)
 	cerr << "\n";
 
 
-	if (stock_data.total_res_egg_start < stock_data.total_res_cryst_start * 0.35)
+	if (stock_data.total_res_egg_now < stock_data.total_res_cryst_now * 0.35)
 	{
 		if (stock_data.egg_cell_now < stock_data.number_egg_cell_start - 1)
 		{
 			if (stock_data.list_base_index.size() == 1 && stock_data.give_dist_from_base(stock_data.list_opp_base_index.front()) < 3)
 			{
-				cout << "LINE" << " " << stock_data.list_base_index.front() << " " << stock_data.list_opp_base_index.front() << " " << "1000" << ";";
-		//		cout << "BEACON" << " " << stock_data.list_base_index.front() << " " << 1000 << ";";
+				std::vector<int>	path;
+				
+				path = find_path_origin_neighbor(stock_data, stock_data.list_base_index.front(), stock_data.list_opp_base_index.front(), 4);
+				if (!path.empty())
+				{
+					for (size_t i = 0; i < path.size(); i++)
+						cout << "BEACON" << " " << path[i] << " " << 1000 << ";";
+				}
 			}
 		}
 	}
 
+	// if (stock_data.list_base_index.size() == 2)
+	// {
+	// 	if (stock_data.total_res_egg_now < stock_data.total_res_egg_start / 2)
+	// 	{
+	// 		for (int i = 0; i < 2; i++)
+	// 		{
+	// 			if (stock_data.give_dist_from_base(stock_data.list_opp_base_index[i]) < 3)
+	// 			{
+	// 				std::vector<int>	path;
+
+	// 				path = find_path_origin_neighbor(stock_data, stock_data.list_base_index[i], stock_data.list_opp_base_index[i], 4);
+	// 				if (!path.empty())
+	// 				{
+	// 					for (size_t i = 0; i < path.size(); i++)
+	// 						cout << "BEACON" << " " << path[i] << " " << 0 << ";";
+	// 				}
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 //	for (int i = 0; i < stock_data.number_of_cells; i++)
 // 		if (stock_data.give_number_becon_neighbor(i) == 1

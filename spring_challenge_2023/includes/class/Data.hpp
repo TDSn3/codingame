@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/02 10:41:12 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:10:20 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ public:
 	int												total_res_cryst_now;
 	int												total_res_egg_now;
 	int												type_size_map;
+	int												my_score;
+	int												my_score_last_turn;
+	int												opp_score;
+	int												i_am_bloc;
+	int												max_search_dist;
+	int												beacon_on_res_this_turn;
 	std::vector<int>								list_base_index;
 	std::vector<int>								list_opp_base_index;
 	std::vector<int>								res_by_dist;

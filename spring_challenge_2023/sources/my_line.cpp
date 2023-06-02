@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:52:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/02 13:34:06 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 15:40:50 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	my_line(Data &stock_data, int origin, int neighbor, int index_base, std::vec
 		stock_data.beacon_this_loop[path[i]] = 1;
 	}
 
+	stock_data.beacon_on_res_this_turn++;
 	stock_data.conected_to_base[neighbor] = 1;
 	stock_data.conected_to_base[origin] = 1;
 	return (0);
@@ -54,20 +55,18 @@ int	my_line(Data &stock_data, int origin, int neighbor, int index_base, std::vec
 void	strategie_power(Data &stock_data, int &power_prio, std::vector<int> path, int i)
 {
 		power_prio = 100;
-			
-		//	si la res visé est un oeuf
-		//	et si c'est un cryst
-//		if (stock_data.data_of_cells[path.back()][6] == 1)
-//			power_prio += 10 * stock_data.egg_cell_now;
-//		else if (stock_data.data_of_cells[path.back()][6] == 1)
-//			power_prio = 100;
 
+		//	si les cryst sont cherché et que le beacon est sur un cryst
 		if (stock_data.signal_for_crystal && stock_data.data_of_cells[path[i]][6] == 2)
 			power_prio += 10;
 
 		//	si la res visé est au centre de la carte
 		if (path.back() == 0)
+		{
 			power_prio += 50;
+//			if (stock_data.data_of_cells[path.back()][11] < stock_data.data_of_cells[path.back()][10])
+//				power_prio *= 10;
+		}
 
 		//	si le beacon est posé sur une cell avec moins de 3 ant
 		if (stock_data.data_of_cells[path[i]][10] < 3)
@@ -142,66 +141,7 @@ int	restrict_dist(Data &stock_data, std::vector<int> path, std::vector<int> save
 				return (1);	
 		}
 	}
-
-
-	// if (stock_data.number_of_cells >= 70) 										// large
-	// {
-	// 	int	new_path_from_base;
-		
-	// 	// si la res visé est un oeuf
-	// 	if (stock_data.data_of_cells[path.back()][6] == 1)
-	// 	{
-	// 		new_path_from_base = (path.size() - 1);
-	// 		if (pow(1.4 , new_path_from_base) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
-	// 			return (1);
-	// 	}
-	// 	else
-	// 	{
-	// 		new_path_from_base = (path.size() - 1);
-	// 		if (pow(1.4 , new_path_from_base) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
-	// 			return (1);
-	// 	}
-	// }
-	// else if (stock_data.number_of_cells < 70 && stock_data.number_of_cells >= 50)	// medium-large
-	// {
-	// 	int	new_path_from_base;
-		
-	// 	// si la res visé est un oeuf
-	// 	if (stock_data.data_of_cells[path.back()][6] == 1)
-	// 	{
-	// 		new_path_from_base = (path.size() - 1);
-	// 		if (pow(1.4 , new_path_from_base) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
-	// 			return (1);
-	// 	}
-	// 	else
-	// 	{
-	// 		new_path_from_base = (path.size() - 1);
-	// 		if (pow(1.4 , new_path_from_base) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
-	// 			return (1);
-	// 	}
-	// }
-	// else if (stock_data.number_of_cells < 50 && stock_data.number_of_cells >= 35)	// medium-small
-	// {
-	// 	int	new_path_from_base;
-		
-	// 	// si la res visé est un oeuf
-	// 	if (stock_data.data_of_cells[path.back()][6] == 1)
-	// 	{
-	// 		new_path_from_base = (path.size() - 1);
-	// 		if (pow(1.6 , new_path_from_base) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
-	// 			return (1);
-	// 	}
-	// 	else
-	// 	{
-	// 		new_path_from_base = (path.size() - 1);
-	// 		if (pow(1.6 , new_path_from_base) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
-	// 			return (1);
-	// 	}
-	// }
-	// else																				// smal
-	// {
-	// 	int	new_path_from_base;
-		
+	
 	// 	// si la res visé est un oeuf
 	// 	if (stock_data.data_of_cells[path.back()][6] == 1)
 	// 	{

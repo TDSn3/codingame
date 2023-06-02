@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 21:52:57 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 17:39:44 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	start_2(Data &stock_data)
 
 	cin >> my_score >> opp_score; cin.ignore();
 
-
-
+	stock_data.my_score = my_score;
+	stock_data.opp_score = opp_score;
 
 
 
@@ -47,12 +47,8 @@ void	start_2(Data &stock_data)
 		stock_data.data_of_cells[i][11] = opp_ants;
 		stock_data.total_ants += my_ants;
 		stock_data.total_opp_ants += opp_ants;
-//		if (resources > 0
-//			&& stock_data.data_of_cells[i][6] == 2
-//			&& stock_data.data_of_cells[i][8] > 0)							// [6] type == crystal [8] dist_from_base > 0
-//			stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
-//		else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)		// [6] type == egg
-//			stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
+
+
 
 		if (resources > 0)
 		{
@@ -96,6 +92,10 @@ void	start_2(Data &stock_data)
 		cerr << "│ " << std::setw(15) << "ratio cryst/egg : 0\n";
 
 	cerr << "├ " << stock_data.signal_for_crystal << "\n\n";
+
+	cerr << "score : " << stock_data.my_score << "\tlast :" << stock_data.my_score_last_turn << "\n";
+	cerr << "bloc : " << stock_data.i_am_bloc << "\n\n";
+
 
 	vector<pair<int, int> >	stock;
 

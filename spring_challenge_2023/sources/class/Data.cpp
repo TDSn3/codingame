@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:58:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/02 10:41:29 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:41:09 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 Data::Data(void)
 {
 	this->my_base_index = 0;
-	this->number_of_cells = 0;
-	this->total_ants = 0;
-	this->total_opp_ants = 0;
+	this->number_of_cells = 0;		//
+	this->total_ants = 0;			//
+	this->total_opp_ants = 0;		//
 	this->max_dist = 0;
-	this->beacon = 0;
+	this->beacon = 0;			
 	this->total_power_beacon = 0;
 	this->power_egg = 2;
 	this->limit_egg = 2;
@@ -33,11 +33,16 @@ Data::Data(void)
 	this->egg_cell_now = 0;
 	this->cryst_cell_now = 0;
 	this->signal_for_crystal = 0;
-	this->total_res_cryst_start = 0;
-	this->total_res_egg_start = 0;
-	this->total_res_cryst_now = 0;
-	this->total_res_egg_now = 0;
+	this->total_res_cryst_start = 0;	//
+	this->total_res_egg_start = 0;		//
+	this->total_res_cryst_now = 0;		//
+	this->total_res_egg_now = 0;		//
 	this->type_size_map = 0;
+	this->my_score = 0;					//
+	this->my_score_last_turn = 0;
+	this->i_am_bloc = 0;
+	this->max_search_dist = 30;
+	this->beacon_on_res_this_turn = 0;
 }
 
 Data::Data(int my_base_index, int number_of_cells)

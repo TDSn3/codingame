@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 20:35:55 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:04:34 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,53 @@ std::vector<int>	find_next_base(Data& stock_data, int origin, int max_dist)
 		}
 	}
 	return (std::vector<int>());
+}
+
+std::vector<int>	find_path_origin_neighbor(Data& stock_data, int origin, int dest, int max_dist)
+{
+	std::queue<std::pair<int, int> >	bfs_queue;
+	std::vector<bool>					visited(stock_data.data_of_cells.size(), false);
+	std::vector<int>					previous(stock_data.data_of_cells.size(), -1);
+
+	bfs_queue.push(std::pair<int, int>(origin, 0));
+	visited[origin] = true;
+	while (!bfs_queue.empty())
+	{
+		int index = bfs_queue.front().first;
+		int dist = bfs_queue.front().second;
+	
+		bfs_queue.pop();
+		if (index == dest)
+		{
+			std::vector<int>	path;
+			int					current;
+
+			current = dest;
+			while (current != origin)
+			{
+				path.push_back(current);
+				current = previous[current];
+			}
+			path.push_back(origin);
+			return (path);
+		}
+		if (dist < max_dist)
+		{
+			std::vector<int>	stock;
+
+			for (int j = 0; j < 6; j++)
+			{
+				int neighbor = stock_data.data_of_cells[index][j];
+				if (neighbor != -1 && !visited[neighbor])
+				{
+					bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
+					visited[neighbor] = true;
+					previous[neighbor] = index;
+				}
+			}
+		}
+	}
+	return (std::vector<int>(0));
 }
 
 //void	assignation_priority2(Data& stock_data, int	path_neighbor)

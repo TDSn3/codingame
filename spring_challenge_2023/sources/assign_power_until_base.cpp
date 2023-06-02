@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 08:50:31 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 19:21:08 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:09:06 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ std::vector<int>	assign_power_until_base(Data &stock_data, int neighbor, int ind
 	std::vector<int>	path_to_base;
 
 	(void) index_base;
-	path_to_base = find_next_base(stock_data, neighbor, 30);
+	path_to_base = find_next_base(stock_data, neighbor, stock_data.max_search_dist);
 	if (path_to_base.empty())
 		return (std::vector<int>());
 
