@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:25:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/02 10:52:48 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 12:51:32 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,15 @@ void	visit_neighbors(
 
 int		stategie_specific(Data &stock_data, int neighbor)
 {
+	//	si c'est une carte small et qu'il y a des res et que je suis sur la case 0
 	if (stock_data.type_size_map == 1 && stock_data.data_of_cells[0][9] > 0 && neighbor == 0)
 		return (0);
 
+	//	si il y a que deux cryst sur la carte
 	if (stock_data.number_cryst_cell_start == 2)
 		return (0);
 
+	//	si il y a moins d'oeuf que 75% de cryst
 	if (stock_data.total_res_egg_start < stock_data.total_res_cryst_start * 0.35)
 	{
 		if (stock_data.egg_cell_now < stock_data.number_egg_cell_start - 1)

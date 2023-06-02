@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/27 22:52:55 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/02 10:43:36 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 13:34:06 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,29 +114,33 @@ int	restrict_dist(Data &stock_data, std::vector<int> path, std::vector<int> save
 			return (0);
 	}
 
-	// si la res visé est plus proche de la base ennemi de plus d'1/3 que de la mienne
-	if (stock_data.ratio_dist(path.back()) <= 1.5)
-		return (1);
 
-	if (stock_data.type_size_map == 4) 		// large
+	if (stock_data.beacon > 0)
 	{
-		if (pow(1.2 , path.size() - 1) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
+		// si la res visé est plus proche de la base ennemi de plus d'1/3 que de la mienne
+		if (stock_data.ratio_dist(path.back()) <= 1.5)
 			return (1);
-	}
-	else if (stock_data.type_size_map == 3)	// medium-large
-	{
-		if (pow(1.3 , path.size() - 1) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
-			return (1);	
-	}
-	else if (stock_data.type_size_map == 2)	// medium-small
-	{
-		if (pow(1.2 , path.size() - 1) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
-			return (1);
-	}
-	else									// smal
-	{
-		if (pow(1.6 , path.size() - 1) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
-			return (1);	
+
+		if (stock_data.type_size_map == 4) 		// large
+		{
+			if (pow(1.2 , path.size() - 1) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
+				return (1);
+		}
+		else if (stock_data.type_size_map == 3)	// medium-large
+		{
+			if (pow(1.3 , path.size() - 1) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
+				return (1);	
+		}
+		else if (stock_data.type_size_map == 2)	// medium-small
+		{
+			if (pow(1.2 , path.size() - 1) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
+				return (1);
+		}
+		else									// smal
+		{
+			if (pow(1.6 , path.size() - 1) > (unsigned long int) stock_data.total_ants - stock_data.beacon)
+				return (1);	
+		}
 	}
 
 
