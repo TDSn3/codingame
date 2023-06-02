@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 14:30:08 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 10:41:12 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,18 @@ public:
 	int												max_dist;
 	int												beacon;
 	int												total_power_beacon;
-	int												egg_and_cryst;
 	int												power_egg;
 	int												limit_egg;
 	int												number_egg_cell_start;
 	int												egg_cell_now;
+	int												number_cryst_cell_start;
+	int												cryst_cell_now;
 	int												signal_for_crystal;
+	int												total_res_cryst_start;
+	int												total_res_egg_start;
+	int												total_res_cryst_now;
+	int												total_res_egg_now;
+	int												type_size_map;
 	std::vector<int>								list_base_index;
 	std::vector<int>								list_opp_base_index;
 	std::vector<int>								res_by_dist;
@@ -63,9 +69,14 @@ public:
 	std::map<int, std::vector<int> >				dof_short_by_dist; // dof = data_of_cells
 	std::list<std::list<int> >						path_to_base;
 
+	int												check_base(Data& stock_data, int index);
 	int												check_opp_base(Data &stock_data, int index);
 	int												give_dist_from_opp_base(int index);
 	int												give_dist_from_base(int index);
+	double											ratio_dist(int index);
+	double											ratio_opp_dist(int index);
+	double											ratio_dist_from_zero(int index);
+	int												give_number_becon_neighbor(int index);
 
 protected:
 

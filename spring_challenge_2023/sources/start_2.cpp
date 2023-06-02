@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 14:56:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 11:08:55 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/01 21:52:57 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,6 @@ void	start_2(Data &stock_data)
 
 
 
-
-//	if (stock_data.total_ants <= stock_data.total_opp_ants + 20)
-//	{
-		stock_data.egg_and_cryst = 0;
-//		stock_data.power_egg = 5;
-//	}
-//	else
-//	{
-//		stock_data.egg_and_cryst = 1;
-//		stock_data.power_egg = 1;
-//	}
 
 
 
@@ -64,19 +53,48 @@ void	start_2(Data &stock_data)
 //			stock_data.res_by_dist[stock_data.data_of_cells[i][8]] += 1;
 //		else if (resources > 0 && stock_data.data_of_cells[i][6] == 1)		// [6] type == egg
 //			stock_data.egg_by_dist[stock_data.data_of_cells[i][8]] += 1;
-		if (resources > 0 && stock_data.data_of_cells[i][6] == 1)
-			stock_data.limit_egg = 1;
 
-		if (resources > 0 && stock_data.data_of_cells[i][6] == 1)
+		if (resources > 0)
 		{
-			stock_data.egg_cell_now++;
+			if (stock_data.data_of_cells[i][6] == 1)
+			{
+				stock_data.egg_cell_now++;
+				stock_data.total_res_egg_now += resources;
+			}
+			else if (stock_data.data_of_cells[i][6] == 2)
+			{
+				stock_data.cryst_cell_now++;
+				stock_data.total_res_cryst_now += resources;
+			}
 		}
 	}
 
-	stock_data.signal_for_crystal = stock_data.number_egg_cell_start - stock_data.egg_cell_now;
+	cout << "MESSAGE" << " " 
+	<< "c(" << stock_data.number_cryst_cell_start << ")"
+	<< "[" << stock_data.total_res_cryst_start << "]"
+	<< " " << stock_data.cryst_cell_now
+	<< " " << stock_data.total_res_cryst_now << "  |  "
+	<< "e(" << stock_data.number_egg_cell_start << ")"
+	<< "[" << stock_data.total_res_egg_start << "]"
+	<< " " << stock_data.egg_cell_now
+	<< " " << stock_data.total_res_egg_now
+	<< ";";
+
+	if (stock_data.egg_cell_now < stock_data.number_egg_cell_start / 2
+		&& stock_data.total_res_egg_now < stock_data.total_res_egg_start / 2)
+		stock_data.signal_for_crystal = 1;
+
+	cerr << "│ " << std::setw(15) << "cryst start : " << stock_data.number_cryst_cell_start << " ";
+	cerr << "│ " << std::setw(15) << "cryst now :" << stock_data.cryst_cell_now  << " │\n";
 
 	cerr << "│ " << std::setw(15) << "egg start : " << stock_data.number_egg_cell_start << " ";
 	cerr << "│ " << std::setw(15) << "egg now :" << stock_data.egg_cell_now  << " │\n";
+
+	if (stock_data.egg_cell_now)
+		cerr << "│ " << std::setw(15) << "ratio cryst/egg : " << stock_data.number_cryst_cell_start / stock_data.egg_cell_now << "\n";
+	else
+		cerr << "│ " << std::setw(15) << "ratio cryst/egg : 0\n";
+
 	cerr << "├ " << stock_data.signal_for_crystal << "\n\n";
 
 	vector<pair<int, int> >	stock;

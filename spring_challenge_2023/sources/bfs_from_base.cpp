@@ -6,13 +6,15 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 21:25:02 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 13:39:25 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 10:52:48 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.hpp"
 
-int	empty_list_queue(std::vector<std::queue<std::pair<int, int> > >	list_queue);
+int		empty_list_queue(std::vector<std::queue<std::pair<int, int> > >	list_queue);
+void	strategie_power2(Data &stock_data);
+int		stategie_specific(Data &stock_data, int neighbor);
 
 void	visit_neighbors(
 	Data &stock_data,
@@ -56,6 +58,8 @@ void	bfs_from_base(Data &stock_data)
 			}
 		}
 	}
+
+	strategie_power2(stock_data);
 }
 
 
@@ -88,10 +92,11 @@ void	visit_neighbors(
 		bfs_queue.push(std::pair<int, int>(neighbor, dist + 1));
 		visited[neighbor] = true;
 
-		if ((stock_data.data_of_cells[neighbor][9] > 0)
-			&& ((stock_data.data_of_cells[neighbor][6] > stock_data.egg_and_cryst
-			&& stock_data.data_of_cells[neighbor][6] <= stock_data.limit_egg) || stock_data.signal_for_crystal > 0))
+		if (stock_data.data_of_cells[neighbor][9] > 0)
 		{			
+			if (stategie_specific(stock_data, neighbor))
+				return ;
+
 			//	assigne priority cell = 1
 			std::pair<int, std::vector<int> > stock = find_next_beacon(stock_data, neighbor, 10, base);
 
@@ -100,8 +105,102 @@ void	visit_neighbors(
 				cerr << stock.first << " ---> " << neighbor << "\n";
 				my_line(stock_data, stock.first, neighbor, base, stock.second);
 			}
-			if (stock_data.data_of_cells[neighbor][6] == 2)
-				stock_data.signal_for_crystal--;
 		}
 	}
+}
+
+int		stategie_specific(Data &stock_data, int neighbor)
+{
+	if (stock_data.type_size_map == 1 && stock_data.data_of_cells[0][9] > 0 && neighbor == 0)
+		return (0);
+
+	if (stock_data.number_cryst_cell_start == 2)
+		return (0);
+
+	if (stock_data.total_res_egg_start < stock_data.total_res_cryst_start * 0.35)
+	{
+		if (stock_data.egg_cell_now < stock_data.number_egg_cell_start - 1)
+		{
+			stock_data.signal_for_crystal = 1;
+			return (0);
+		}
+	}
+	if (stock_data.data_of_cells[neighbor][6] == 2 && !stock_data.signal_for_crystal )
+		return (1);
+	return (0);
+}
+
+void	strategie_power2(Data &stock_data)
+{
+	int	path_power = 1000;
+	int	opp_path_power = 0;
+
+	cerr << "conexion :\n";
+	for (size_t i = 0; i < stock_data.conexions.size(); i++)
+	{
+		if (!stock_data.conexions[i].empty())
+		{
+			cerr << "┌ " << i << endl;
+			for (size_t j = 0; j < stock_data.conexions[i].size(); j++)
+			{
+				cerr << "└ " << j << " : ";
+				for (size_t k = 0; k < stock_data.conexions[i][j].size(); k++)
+				{
+					int	index = stock_data.conexions[i][j][k];
+					
+					cerr << index << " (" << stock_data.data_of_cells[ index ][10] << "-"<< stock_data.data_of_cells[ index ][11] << ") " ;
+					if (stock_data.data_of_cells[ index ][10] < path_power)
+						path_power = stock_data.data_of_cells[ index ][10];
+					if (stock_data.data_of_cells[ index ][11] > opp_path_power)
+						opp_path_power = stock_data.data_of_cells[ index ][11];
+				}
+				cerr << "| pp : " << path_power << " | opp : " << opp_path_power << endl;
+				if (opp_path_power > path_power)
+				{
+					cerr << "BLOC !!!" << endl;
+					for (size_t k = 0; k < stock_data.conexions[i][j].size(); k++)
+					{
+						int	index = stock_data.conexions[i][j][k];
+
+//						if (stock_data.data_of_cells[index][10] < stock_data.data_of_cells[index][11])
+//							cout << "BEACON" << " " << index << " " << stock_data.power_cell[index] + 50 << ";";
+
+						if (k == 0)
+						{
+							cout << "BEACON" << " " << index << " " << 200 << ";";
+							if (index == 0)
+								cout << "BEACON" << " " << index << " " << 250 << ";";
+						}
+						else
+							cout << "BEACON" << " " << index << " " << std::abs(stock_data.power_cell[index] - 10) << ";";
+					}
+				path_power = 1000;	
+				opp_path_power = 0;
+				}
+			}
+			cerr << "\n";
+		}
+	}
+	cerr << "\n";
+
+
+	if (stock_data.total_res_egg_start < stock_data.total_res_cryst_start * 0.35)
+	{
+		if (stock_data.egg_cell_now < stock_data.number_egg_cell_start - 1)
+		{
+			if (stock_data.list_base_index.size() == 1 && stock_data.give_dist_from_base(stock_data.list_opp_base_index.front()) < 3)
+			{
+				cout << "LINE" << " " << stock_data.list_base_index.front() << " " << stock_data.list_opp_base_index.front() << " " << "1000" << ";";
+		//		cout << "BEACON" << " " << stock_data.list_base_index.front() << " " << 1000 << ";";
+			}
+		}
+	}
+
+
+//	for (int i = 0; i < stock_data.number_of_cells; i++)
+// 		if (stock_data.give_number_becon_neighbor(i) == 1
+//			&& stock_data.check_base(stock_data, i) == -1
+//			&& stock_data.data_of_cells[i][9] > 0
+//			&& stock_data.data_of_cells[i][10] == 0)
+//			cout << "BEACON" << " " << i << " " << stock_data.power_cell[i] * 2 << ";";
 }

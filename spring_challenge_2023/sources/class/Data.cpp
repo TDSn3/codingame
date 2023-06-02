@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:58:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 15:20:45 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 10:41:29 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,18 @@ Data::Data(void)
 	this->max_dist = 0;
 	this->beacon = 0;
 	this->total_power_beacon = 0;
-	this->egg_and_cryst = 0;
 	this->power_egg = 2;
 	this->limit_egg = 2;
 	this->number_egg_cell_start = 0;
+	this->number_cryst_cell_start = 0;
 	this->egg_cell_now = 0;
+	this->cryst_cell_now = 0;
 	this->signal_for_crystal = 0;
+	this->total_res_cryst_start = 0;
+	this->total_res_egg_start = 0;
+	this->total_res_cryst_now = 0;
+	this->total_res_egg_now = 0;
+	this->type_size_map = 0;
 }
 
 Data::Data(int my_base_index, int number_of_cells)
@@ -83,8 +89,16 @@ int	Data::check_opp_base(Data &stock_data, int index)
 {
 	for (size_t i = 0; i < stock_data.list_opp_base_index.size(); i++)
 		if (stock_data.list_opp_base_index[i] == index)
-			return (1);
+			return (index);
 	return (0);
+}
+
+int	Data::check_base(Data& stock_data, int index)
+{	
+	for (size_t i = 0; i < stock_data.list_base_index.size(); i++)
+		if (stock_data.list_base_index[i] == index)
+			return (index);
+	return (-1);
 }
 
 int	Data::give_dist_from_opp_base(int index)
@@ -109,6 +123,56 @@ int	Data::give_dist_from_base(int index)
 			size_dist_from_base = this->dist_from_base[ this->list_base_index[i] ][index];
 	}
 	return (size_dist_from_base);
+}
+
+double	Data::ratio_dist(int index)
+{
+	double	base_dist;
+	double	dist_total;
+	double	ratio;
+
+	base_dist = (double) this->give_dist_from_base(index);
+	dist_total = base_dist + this->give_dist_from_opp_base(index);
+	ratio = dist_total / base_dist;
+	return (ratio);
+}
+
+double	Data::ratio_dist_from_zero(int index)
+{
+	double	base_dist;
+	double	dist_total;
+	double	ratio;
+
+	base_dist = (double) this->give_dist_from_base(index);
+	dist_total = base_dist + index;
+	ratio = dist_total / base_dist;
+	return (ratio);
+}
+
+double	Data::ratio_opp_dist(int index)
+{
+	double	base_dist;
+	double	dist_total;
+	double	ratio;
+
+	base_dist = (double) this->give_dist_from_opp_base(index);
+	dist_total = base_dist + this->give_dist_from_base(index);
+	ratio = dist_total / base_dist;
+	return (ratio);
+}
+
+int		Data::give_number_becon_neighbor(int index)
+{
+	int	count;
+	
+	count = 0;
+	for (int j = 0; j < 6; j++)
+	{
+		int neighbor = this->data_of_cells[index][j];
+		if (neighbor != -1 && this->beacon_this_loop[neighbor])
+			count++;
+	}
+	return (count);
 }
 
 /*   MÉTHODE PRIVATE   ****************************************************** */

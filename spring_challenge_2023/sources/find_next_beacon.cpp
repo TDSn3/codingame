@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:12:07 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 02:03:32 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:49:29 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ std::pair<int, std::vector<int> >	find_next_beacon(Data& stock_data, int origin,
 					path[list_beacons[k].first] = index;
 					while (path_neighbor != origin)
 					{
-//						cerr << " [" << path_neighbor << "]";
+						cerr << " [" << path_neighbor << "]";
 						assignation_priority(stock_data, path_neighbor);
 						list_beacons[k].second.push_back(path_neighbor);
 						path_neighbor = path[path_neighbor];
 					}
 					assignation_priority(stock_data, path_neighbor);
-//					cerr << " [" << path_neighbor << "]";
-//					cerr << endl;
+					cerr << " [" << path_neighbor << "]";
+					cerr << endl;
 					list_beacons[k].second.push_back(path_neighbor);
 				}
 				int	save_index = -1;

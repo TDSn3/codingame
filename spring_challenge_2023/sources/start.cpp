@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:49:48 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 14:25:13 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/02 10:42:57 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,15 @@ void	start(Data &stock_data)
 		stock_data.data_of_cells[i].push_back(-1);					// [12] case conected
 		stock_data.data_of_cells[i].push_back(i);					// [13] real index
 		if (type == 1)
+		{
 			stock_data.number_egg_cell_start++;
+			stock_data.total_res_egg_start += initial_resources;
+		}
+		if (type == 2)
+		{
+			stock_data.number_cryst_cell_start++;
+			stock_data.total_res_cryst_start += initial_resources;
+		}
 	}
 
 	int number_of_bases;
@@ -100,5 +108,15 @@ void	start(Data &stock_data)
 
 		stock_data.conected_to_base[stock_data.list_base_index[i]] = 1;
 	}
+
+	if (stock_data.number_of_cells >= 70) 											// large
+		stock_data.type_size_map = 4;
+	else if (stock_data.number_of_cells < 70 && stock_data.number_of_cells >= 50)	// medium-large
+		stock_data.type_size_map = 3;
+	else if (stock_data.number_of_cells < 50 && stock_data.number_of_cells >= 35)	// medium-small
+		stock_data.type_size_map = 2;
+	else																			// smal
+		stock_data.type_size_map = 1;
+
 }
 

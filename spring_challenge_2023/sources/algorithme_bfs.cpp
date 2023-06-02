@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 11:04:47 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/01 13:45:46 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/01 20:35:55 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,6 @@ void	distance_all_cell_from_base(Data& stock_data, int origin, int max_dist, int
 	}
 }
 
-int	check_base(Data& stock_data, int index)
-{	
-	for (size_t i = 0; i < stock_data.list_base_index.size(); i++)
-		if (stock_data.list_base_index[i] == index)
-			return (index);
-	return (-1);
-}
-
 std::vector<int>	find_next_base(Data& stock_data, int origin, int max_dist)
 {
 	std::queue<std::pair<int, int> >	bfs_queue;
@@ -72,12 +64,12 @@ std::vector<int>	find_next_base(Data& stock_data, int origin, int max_dist)
 		bfs_queue.pop();
 		if (dist < max_dist)
 		{
-			if (check_base(stock_data, index) > -1)
+			if (stock_data.check_base(stock_data, index) > -1)
 			{
 				std::vector<int>	path;
 				int					current;
 
-				current = check_base(stock_data, index);
+				current = stock_data.check_base(stock_data, index);
 				while (current != origin)
 				{
 //					assignation_priority2(stock_data, current);
