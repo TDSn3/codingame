@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/06 14:18:07 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/06 17:01:50 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:13:23 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ class Vertex
 	const int					index;
 	vector<pair<int, Vertex*> >	edges;		// int for edge statue : 1 = active, 0 = cut
 	int							gateway;
+
+	int							find_vertex_index_in_edges(int index);
 
 	protected:
 

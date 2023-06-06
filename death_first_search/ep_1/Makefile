@@ -6,13 +6,14 @@ CXX			=	g++
 CPPFLAGS	=	-MMD
 CXXFLAGS	=	-Wall -Wextra #-Werror
 
-SRCS		=	class/Vertex.cpp	\
-				class/Data.cpp		\
-				main.cpp			\
+SRCS		=	class/Vertex.cpp			\
+				class/Data.cpp				\
+				bfs_nearest_gateway.cpp		\
+				main.cpp					\
 
-INC_FILES	= 	header.hpp			\
-				class/Vertex.hpp	\
-				class/Data.hpp		\
+INC_FILES	= 	class/Vertex.hpp			\
+				class/Data.hpp				\
+				header.hpp					\
 
 INC_PATH	=	includes/
 INC			=	-I $(INC_PATH)

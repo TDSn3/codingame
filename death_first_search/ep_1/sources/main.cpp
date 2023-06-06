@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/06 17:21:34 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/06 22:09:53 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int main()
 	int		si;							// The index of the node on which the Bobnet agent is positioned this turn
 
 	Data	data;
-	bool	break_all;
 
 	cin >> n >> l >> e; cin.ignore();
 
@@ -50,9 +49,8 @@ int main()
 
 	while (1)
 	{
-		break_all = 0;
 		cin >> si; cin.ignore();
-	
+
 		for (size_t i = 0; i < data.vertices.size(); i++)
 		{
 			cerr << "[" << i << "], gateway : " << data.vertices[i].gateway << endl;
@@ -60,20 +58,15 @@ int main()
 				cerr << data.vertices[i].edges[j].second->index << " ("<< data.vertices[i].edges[j].first << ") " << endl;
 		}
 
-		for (size_t i = 0; i < data.vertices.size() && !break_all; i++)
-		{
-			if (data.vertices[i].gateway)
-			{
-				for (size_t j = 0; j < data.vertices[i].edges.size() && !break_all; j++)
-				{
-					if (data.vertices[i].edges[j].first)
-					{
-						cout << i << " " << data.vertices[i].edges[j].second->index << endl;
-						data.vertices[i].edges[j].first = 0;
-						break_all = 1;
-					}
-				}
-			}
-		}
+		pair<int, int>	nearest_edge_gateway = bfs_nearest_gateway(data, si, 5);
+		Vertex			*v1;
+		Vertex			*v2;
+
+		v1 = &(data.vertices[ nearest_edge_gateway.first ]);
+		v2 = &(data.vertices[  nearest_edge_gateway.second ]);
+		cout << nearest_edge_gateway.first << " " << nearest_edge_gateway.second << endl;
+
+		data.vertices[ nearest_edge_gateway.first ].edges[ v1->find_vertex_index_in_edges(nearest_edge_gateway.first) ].first = 0;
+		data.vertices[ nearest_edge_gateway.second ].edges[ v2->find_vertex_index_in_edges(nearest_edge_gateway.second) ].first = 0;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/06/06 15:36:21 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/06/06 18:31:47 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ using namespace std;
 
 #include "./class/Vertex.hpp"
 #include "./class/Data.hpp"
+
+pair<int, int>	bfs_nearest_gateway(Data &data, int origin, int max_dist);
 
 #endif
