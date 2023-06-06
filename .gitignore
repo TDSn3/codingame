@@ -1,0 +1,12 @@
+
+*.vscode
+*objects
+*object
+
+*.DStore
+
+*.o
+*.d
+*.a
+
+*codingame_sync_file
