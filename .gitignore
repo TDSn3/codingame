@@ -1,4 +1,12 @@
 
+**/.DStore
+**/.DS_Store
+**/.vscode
+**/object
+**/*.o
+**/*.a
+**/.env
+
 *.vscode
 *objects
 *object
@@ -10,3 +18,4 @@
 *.a
 
 *codingame_sync_file
+*compiled
