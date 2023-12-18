@@ -8,6 +8,7 @@ CXXFLAGS	=	-Wall -Wextra #-Werror
 
 #ADD YOUR SOURCES BELOW WITHOUT THE SOURCE PREFIX MAIN.C GIVEN AS EXAMPLE
 SRCS		=	class/Data.cpp								\
+				init_creatures.cpp							\
 				game_loop.cpp								\
 				main.cpp									\
 
