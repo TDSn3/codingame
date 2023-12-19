@@ -94,7 +94,7 @@ void	Data::update(void)
 
 /* ************************************************************************** */
 /*                                                                            */
-/*   Créature scaned																  */
+/*   Créature scaned														  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,17 @@ void	Data::update(void)
 	{
 		cin >> drone_id >> creature_id >> radar; cin.ignore();
 	}
+
+/* ************************************************************************** */
+
+	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
+	{
+		for (map<int, s_drone> :: iterator it2 = my_drone.begin(); it2 != my_drone.end(); it2++)
+		{
+			it->second.distance_my_drone[it2->first] = distance(it2->first, it->first);
+		}
+	}
+
 }
 
 /*   MÉTHODE PRIVATE   ****************************************************** */

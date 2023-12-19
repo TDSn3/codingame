@@ -10,8 +10,8 @@ CXXFLAGS	=	-Wall -Wextra #-Werror
 SRCS		=	class/Data.cpp								\
 				class/distance.cpp							\
 				game_loop.cpp								\
-				move.cpp									\
-				wait.cpp									\
+				instruction_move.cpp						\
+				instruction_wait.cpp						\
 				main.cpp									\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR

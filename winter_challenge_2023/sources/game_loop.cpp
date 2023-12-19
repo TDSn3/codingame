@@ -6,16 +6,25 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:40:05 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/19 11:20:03 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/19 20:30:58 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.hpp"
 
-bool	compare_distance(double dist_a, double dist_b)
+class CompareCreaturesDistance
 {
-	return (dist_a < dist_b);
-}
+	public:
+
+		CompareCreaturesDistance(int param) : drone_id(param) {}
+
+		int drone_id;
+
+		bool operator () (const map<int, s_creature> :: iterator &it1, const map<int, s_creature> :: iterator &it2) const
+		{
+			return (it1->second.distance_my_drone[drone_id] < it2->second.distance_my_drone[drone_id]);
+		}
+};
 
 void	game_loop(Data &data)
 {
@@ -46,9 +55,25 @@ void	game_loop(Data &data)
 				creatures_sort_by_dist.push_back(it);
 			}
 
-			sort(creatures_sort_by_dist.begin(), creatures_sort_by_dist.end());
+			CompareCreaturesDistance	comp(0);
 
-			wait(1);
+			sort(creatures_sort_by_dist.begin(), creatures_sort_by_dist.end(), comp);
+
+			for (size_t j = 0; j < creatures_sort_by_dist.size(); j++)
+			{
+				cerr
+					<< creatures_sort_by_dist[j]->second.distance_my_drone[0]
+					<< "   >" << creatures_sort_by_dist[j]->second.my_scan
+					<< endl;
+
+				if (creatures_sort_by_dist[j]->second.my_scan == false)
+				{
+					instruction_move(creatures_sort_by_dist[j]->second.x, creatures_sort_by_dist[j]->second.y, 0 );
+					break ;
+				}
+			}
+
+			// wait(1);
 		}
 	}
 }

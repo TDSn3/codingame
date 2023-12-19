@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/19 10:57:42 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/19 19:37:23 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,20 @@ using namespace std;
 
 struct s_creature
 {
-	int		id;
-	int		color;	// de 0 à 3
-	int		type;	// de 0 à 2
+	int					id;
+	int					color;	// de 0 à 3
+	int					type;	// de 0 à 2
 
-	int		x;		// position
-	int		y;		//
+	int					x;		// position
+	int					y;		//
 
-	int		vx;		// vitesse
-	int 	vy;		//
+	int					vx;		// vitesse
+	int 				vy;		//
 
-	bool	my_scan;
-	bool	foe_scan;
+	bool				my_scan;
+	bool				foe_scan;
+
+	map<int, double>	distance_my_drone;
 };
 
 struct s_drone
