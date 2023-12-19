@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/19 19:37:23 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/19 23:04:13 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,21 @@ struct s_creature
 	int					color;	// de 0 à 3
 	int					type;	// de 0 à 2
 
+	bool				visible;
+
 	int					x;		// position
 	int					y;		//
 
 	int					vx;		// vitesse
 	int 				vy;		//
 
-	bool				my_scan;
-	bool				foe_scan;
+	bool				my_scan_saved;
+	bool				my_scan_no_saved;
+	bool				foe_scan_saved;
 
-	map<int, double>	distance_my_drone;
+	// map<int, double>	distance_my_drone;
+
+	map<int, string>	radar;
 };
 
 struct s_drone
@@ -78,9 +83,14 @@ class Data
 		int 					visible_creature_count;
 		int 					radar_blip_count;
 
+		map<int, vector<map<int, s_creature> :: iterator> >	creatures_sort_by_dist;
+
 		void					show_creatures(void);
 		void					update(void);
+		void					reset(void);
 		double					distance(int drone_id, int creature_id);
+		string					radar_direction(int drone_id);
+		bool 					no_scaned(void);
 
 	protected:
 

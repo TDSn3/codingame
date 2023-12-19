@@ -1,0 +1,66 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   radar_direction.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/19 10:30:26 by tda-silv          #+#    #+#             */
+/*   Updated: 2023/12/19 22:04:22 by tda-silv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+# include "../../includes/header.hpp"
+
+string	Data::radar_direction(int drone_id)
+{
+	string	lf;
+	int		count[4] = {};	// { tl, tr, bl, br}
+	int		biggest_radar_int = -1;
+	int		biggest_radar;
+
+	(my_drone[drone_id].x < 4999) ? lf = "L" : lf = "R";
+
+	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
+	{
+		if (it->second.radar[drone_id] == "TL")
+			count[0]++;
+		else if (it->second.radar[drone_id] == "TR")
+			count[1]++;
+		else if (it->second.radar[drone_id] == "BL")
+			count[2]++;
+		else if (it->second.radar[drone_id] == "BR")
+			count[3]++;
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (biggest_radar_int < count[i])
+		{
+			biggest_radar_int = count[i];
+			biggest_radar = i;
+		}
+		else if (biggest_radar_int == count[i])
+		{
+			if (lf == "L")
+			{
+				if (biggest_radar != 0 && biggest_radar != 2)
+					biggest_radar = i;
+			}
+			else
+			{
+				if (biggest_radar != 1 && biggest_radar != 3)
+					biggest_radar = i;				
+			}
+		}
+	}
+
+	if (biggest_radar == 0)
+		return ("TL");
+	else if (biggest_radar == 1)
+		return ("TR");
+	else if (biggest_radar == 2)
+		return ("BL");
+	else
+		return ("BR");
+}

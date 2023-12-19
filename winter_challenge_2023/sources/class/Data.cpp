@@ -72,12 +72,12 @@ void	Data::show_creatures(void)
 			<< it->second.id << " : "
 			<< "   color : " << it->second.color
 			<< "   type : " << it->second.type
-			//<< "   x : " << it->second.x
-			//<< "   y : " << it->second.y
-			//<< "   vx : " << it->second.vx
-			//<< "   vy : " << it->second.vy
-			<< "   my_scan : " << it->second.my_scan
-			<< "   foe_scan : " << it->second.foe_scan
+			<< "   x : " << it->second.x
+			<< "   y : " << it->second.y
+			<< "   vx : " << it->second.vx
+			<< "   vy : " << it->second.vy
+			<< "   my_scan : " << it->second.my_scan_saved
+			<< "   foe_scan : " << it->second.foe_scan_saved
 			<< "   dist : " << distance(0, it->second.id)
 			<< std::endl;
 	}
@@ -87,7 +87,6 @@ void	Data::update(void)
 {
 	int 	creature_id;
 	int		drone_id;
-	string	radar;
 
 	cin >> my_score; cin.ignore();
 	cin >> foe_score; cin.ignore();
@@ -103,7 +102,7 @@ void	Data::update(void)
 	for (int i = 0; i < my_scan_count; i++)
 	{
 		cin >> creature_id; cin.ignore();
-		creatures[creature_id].my_scan = true;
+		creatures[creature_id].my_scan_saved = true;
 	}
 
 	cin >> foe_scan_count; cin.ignore();
@@ -111,7 +110,7 @@ void	Data::update(void)
 	for (int i = 0; i < foe_scan_count; i++)
 	{
 		cin >> creature_id; cin.ignore();
-		creatures[creature_id].foe_scan = true;
+		creatures[creature_id].foe_scan_saved = true;
 	}
 
 /* ************************************************************************** */
@@ -155,6 +154,8 @@ void	Data::update(void)
 	for (int i = 0; i < drone_scan_count; i++)
 	{
 		cin >> drone_id >> creature_id; cin.ignore();
+		creatures[creature_id].my_scan_no_saved = true;
+		// cerr << drone_id << " " << creature_id << "NO SAVED" << endl;
 	}
 
 /* ************************************************************************** */
@@ -171,25 +172,45 @@ void	Data::update(void)
 			>> creatures[creature_id].vy;
 		cin.ignore();
 		creatures[creature_id].id = creature_id;
+		creatures[creature_id].visible = true;
 	}
 
 	cin >> radar_blip_count; cin.ignore();
 
 	for (int i = 0; i < radar_blip_count; i++)
 	{
-		cin >> drone_id >> creature_id >> radar; cin.ignore();
+		cin
+			>> drone_id
+			>> creature_id
+			>> creatures[creature_id].radar[drone_id];
+		cin.ignore();
 	}
 
 /* ************************************************************************** */
 
+	// for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
+	// {
+	// 	for (map<int, s_drone> :: iterator it2 = my_drone.begin(); it2 != my_drone.end(); it2++)
+	// 	{
+	// 		it->second.distance_my_drone[it2->first] = distance(it2->first, it->first);
+	// 	}
+	// }
+
+}
+
+void	Data::reset(void)
+{
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
-		for (map<int, s_drone> :: iterator it2 = my_drone.begin(); it2 != my_drone.end(); it2++)
-		{
-			it->second.distance_my_drone[it2->first] = distance(it2->first, it->first);
-		}
+		it->second.visible = false;
+		it->second.x = -1;
+		it->second.y = -1;
+		it->second.vx = -1;
+		it->second.vy = -1;
+		it->second.my_scan_saved = false;
+		it->second.my_scan_no_saved = false;
+		it->second.foe_scan_saved = false;
 	}
-
 }
 
 /*   MÉTHODE PRIVATE   ****************************************************** */
