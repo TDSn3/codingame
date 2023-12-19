@@ -19,7 +19,7 @@
 /* ************************************************************************** */
 Data::Data(void)
 {
-	s_creature	creature;
+	s_creature	creature = {};
 
 	cin >> creature_count; cin.ignore();
 
@@ -69,13 +69,16 @@ void	Data::show_creatures(void)
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
 		cerr
-			<< it->second.id << " - "
-			<< it->second.color << " - "
-			<< it->second.type
-			<< "   x : " << it->second.x
-			<< "   y : " << it->second.y
-			<< "   vx : " << it->second.vx
-			<< "   vy : " << it->second.vy
+			<< it->second.id << " : "
+			<< "   color : " << it->second.color
+			<< "   type : " << it->second.type
+			//<< "   x : " << it->second.x
+			//<< "   y : " << it->second.y
+			//<< "   vx : " << it->second.vx
+			//<< "   vy : " << it->second.vy
+			<< "   my_scan : " << it->second.my_scan
+			<< "   foe_scan : " << it->second.foe_scan
+			<< "   dist : " << distance(0, it->second.id)
 			<< std::endl;
 	}
 }
@@ -84,19 +87,23 @@ void	Data::update(void)
 {
 	int 	creature_id;
 	int		drone_id;
-	int		drone_x;
-	int		drone_y;
-	int		emergency;
-	int		battery;
 	string	radar;
 
 	cin >> my_score; cin.ignore();
 	cin >> foe_score; cin.ignore();
+
+/* ************************************************************************** */
+/*                                                                            */
+/*   Créature scaned																  */
+/*                                                                            */
+/* ************************************************************************** */
+
 	cin >> my_scan_count; cin.ignore();
 
 	for (int i = 0; i < my_scan_count; i++)
 	{
 		cin >> creature_id; cin.ignore();
+		creatures[creature_id].my_scan = true;
 	}
 
 	cin >> foe_scan_count; cin.ignore();
@@ -104,21 +111,44 @@ void	Data::update(void)
 	for (int i = 0; i < foe_scan_count; i++)
 	{
 		cin >> creature_id; cin.ignore();
+		creatures[creature_id].foe_scan = true;
 	}
+
+/* ************************************************************************** */
+/*                                                                            */
+/*   Drone																	  */
+/*                                                                            */
+/* ************************************************************************** */
 
 	cin >> my_drone_count; cin.ignore();
 
 	for (int i = 0; i < my_drone_count; i++)
 	{
-		cin >> drone_id >> drone_x >> drone_y >> emergency >> battery; cin.ignore();
+		cin
+			>> drone_id
+			>> my_drone[drone_id].x
+			>> my_drone[drone_id].y
+			>> my_drone[drone_id].emergency
+			>> my_drone[drone_id].battery;
+		cin.ignore();
+		my_drone[drone_id].id = drone_id;
 	}
 
 	cin >> foe_drone_count; cin.ignore();
 
 	for (int i = 0; i < foe_drone_count; i++)
 	{
-		cin >> drone_id >> drone_x >> drone_y >> emergency >> battery; cin.ignore();
+		cin
+			>> drone_id
+			>> foe_drone[drone_id].x
+			>> foe_drone[drone_id].y
+			>> foe_drone[drone_id].emergency
+			>> foe_drone[drone_id].battery;
+		cin.ignore();
+		foe_drone[drone_id].id = drone_id;
 	}
+
+/* ************************************************************************** */
 
 	cin >> drone_scan_count; cin.ignore();
 
@@ -126,6 +156,8 @@ void	Data::update(void)
 	{
 		cin >> drone_id >> creature_id; cin.ignore();
 	}
+
+/* ************************************************************************** */
 
 	cin >> visible_creature_count; cin.ignore();
 
@@ -138,6 +170,7 @@ void	Data::update(void)
 			>> creatures[creature_id].vx
 			>> creatures[creature_id].vy;
 		cin.ignore();
+		creatures[creature_id].id = creature_id;
 	}
 
 	cin >> radar_blip_count; cin.ignore();

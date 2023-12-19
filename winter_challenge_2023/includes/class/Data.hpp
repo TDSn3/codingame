@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/19 09:27:58 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/19 10:57:42 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,27 @@ using namespace std;
 
 struct s_creature
 {
+	int		id;
+	int		color;	// de 0 à 3
+	int		type;	// de 0 à 2
+
+	int		x;		// position
+	int		y;		//
+
+	int		vx;		// vitesse
+	int 	vy;		//
+
+	bool	my_scan;
+	bool	foe_scan;
+};
+
+struct s_drone
+{
 	int	id;
-	int	color;	// de 0 à 3
-	int	type;	// de 0 à 2
-
-	int	x;		// position
-	int	y;		//
-
-	int	vx;		// vitesse
-	int vy;		//
+	int	x;
+	int	y;
+	int	emergency;
+	int battery;
 };
 
 class Data
@@ -52,6 +64,8 @@ class Data
 
 		int						creature_count;
 		map<int, s_creature>	creatures;
+		map<int, s_drone>		my_drone;
+		map<int, s_drone>		foe_drone;
 		int						my_score;
 		int						foe_score;
 		int						my_scan_count;
@@ -64,6 +78,7 @@ class Data
 
 		void					show_creatures(void);
 		void					update(void);
+		double					distance(int drone_id, int creature_id);
 
 	protected:
 
