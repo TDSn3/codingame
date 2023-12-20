@@ -7,21 +7,23 @@ CPPFLAGS	=	-MMD
 CXXFLAGS	=	-Wall -Wextra #-Werror
 
 #ADD YOUR SOURCES BELOW WITHOUT THE SOURCE PREFIX MAIN.C GIVEN AS EXAMPLE
-SRCS		=	class/Data.cpp								\
-				class/distance.cpp							\
-				class/biggest_radar_direction.cpp			\
-				class/count_no_scaned.cpp					\
-				game_loop.cpp								\
-				instruction_move.cpp						\
-				instruction_wait.cpp						\
-				choice_pos.cpp								\
-				choice_light.cpp							\
-				main.cpp									\
+SRCS		=	class/Data.cpp						\
+				class/distance.cpp					\
+				class/biggest_radar_direction.cpp	\
+				class/count_no_scaned.cpp			\
+				class/get_drone_zone.cpp			\
+				game_loop.cpp						\
+				instruction_move.cpp				\
+				instruction_wait.cpp				\
+				choice_pos.cpp						\
+				choice_light.cpp					\
+				enum_to_str.cpp						\
+				main.cpp							\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR
-INC_FILES	= 	utils.hpp			\
-				class/Data.hpp		\
-				header.hpp			\
+INC_FILES	= 	utils.hpp							\
+				class/Data.hpp						\
+				header.hpp							\
 
 INC_PATH	=	includes/
 INC			=	-I $(INC_PATH)

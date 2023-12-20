@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_no_scaned.cpp                                :+:      :+:    :+:   */
+/*   drone_zone.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 22:50:24 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 16:39:32 by tda-silv         ###   ########.fr       */
+/*   Created: 2023/12/20 15:54:56 by tda-silv          #+#    #+#             */
+/*   Updated: 2023/12/20 16:25:59 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/header.hpp"
 
-int	Data::count_no_scaned(void)
+e_zone	Data::get_drone_zone(int drone_id)
 {
-	int	count = 0;
+	int x = drones[drone_id].pos.x;
+	int y = drones[drone_id].pos.y;
 
-	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
+	if (x <= 4999)	// Zone gauche (L)
 	{
-		for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
-		{
-			if (it2->second.my_scan_no_saved)
-				count++;
-		}
+		if (y <= 2499)
+			return L0;
+		else if (y <= 4999)
+			return L1;
+		else if (y <= 7499)
+			return L2;
+		else
+			return L3;
 	}
-	return (count);
+	else			// Zone droite (R)
+	{
+		if (y <= 2499)
+			return R0;
+		else if (y <= 4999)
+			return R1;
+		else if (y <= 7499)
+			return R2;
+		else
+			return R3;
+	}
 }

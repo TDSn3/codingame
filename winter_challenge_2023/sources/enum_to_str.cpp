@@ -1,28 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_no_scaned.cpp                                :+:      :+:    :+:   */
+/*   enum_to_str.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/19 22:50:24 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 16:39:32 by tda-silv         ###   ########.fr       */
+/*   Created: 2023/12/20 16:32:13 by tda-silv          #+#    #+#             */
+/*   Updated: 2023/12/20 16:36:00 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/header.hpp"
+#include "../includes/header.hpp"
 
-int	Data::count_no_scaned(void)
+string	enum_to_str(e_zone token)
 {
-	int	count = 0;
-
-	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
-	{
-		for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
-		{
-			if (it2->second.my_scan_no_saved)
-				count++;
-		}
-	}
-	return (count);
+	if (token == L0)
+		return ("L0");
+	else if (token == R0)
+		return ("R0");
+	else if (token == L1)
+		return ("L1");
+	else if (token == R1)
+		return ("R1");
+	else if (token == L2)
+		return ("L2");
+	else if (token == R2)
+		return ("R2");
+	else if (token == L3)
+		return ("L3");
+	else	// (token == R3)
+		return ("R3");
 }

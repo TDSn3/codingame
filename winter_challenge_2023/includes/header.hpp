@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 14:16:24 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:34:40 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	instruction_move(u_tuple pos, bool light);
 void	instruction_wait(bool light);
 u_tuple	choice_pos(Data &data);
 bool	choice_light(Data &data);
+string	enum_to_str(e_zone token);
 
 #endif
