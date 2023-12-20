@@ -6,11 +6,11 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 22:50:24 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 16:39:32 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 16:54:10 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../includes/header.hpp"
+# include "../../../includes/header.hpp"
 
 int	Data::count_no_scaned(void)
 {

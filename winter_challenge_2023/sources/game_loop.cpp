@@ -6,14 +6,15 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:40:05 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 16:35:21 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 17:42:53 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/header.hpp"
 
-void	game_loop(Data &data)
+void	game_loop(Data &data, Stock &stock)
 {
+	(void) stock;
 	while (1)
 	{
 		cerr << "round : " << g_round << endl;
@@ -24,8 +25,7 @@ void	game_loop(Data &data)
 
 		for (int i = 0; i < data.my_drone_count; i++)
 		{
-			instruction_move(choice_pos(data), choice_light(data));
-			// instruction_wait(1);
+			instruction_move(choice_pos(data, stock), choice_light(data));
 		}
 
 		data.reset();
