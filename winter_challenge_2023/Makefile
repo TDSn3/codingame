@@ -10,11 +10,12 @@ CXXFLAGS	=	-Wall -Wextra #-Werror
 SRCS		=	class/Data.cpp								\
 				class/distance.cpp							\
 				class/biggest_radar_direction.cpp			\
-				class/no_scaned.cpp							\
+				class/count_no_scaned.cpp					\
 				game_loop.cpp								\
 				instruction_move.cpp						\
 				instruction_wait.cpp						\
 				choice_pos.cpp								\
+				choice_light.cpp							\
 				main.cpp									\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 13:41:35 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 14:02:32 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:10:53 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,11 @@ u_tuple choice_pos(Data &data)
 		pos.y = data.drones[0].pos.y + 600;
 	}
 
-	if (data.no_scaned())
+	int	count = data.count_no_scaned();
+
+	cerr << "count no scaned : " << count << endl;
+
+	if (count >= 3)
 	{
 		pos.x = data.drones[0].pos.x;
 		pos.y = data.drones[0].pos.y - 600;

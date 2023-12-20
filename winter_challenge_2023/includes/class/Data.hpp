@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 13:55:55 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:09:19 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ class Data
 
 		double					distance(int drone_id, int creature_id);
 		e_radar					biggest_radar_direction(int drone_id);
-		bool 					no_scaned(void);
+		int 					count_no_scaned(void);
 
 	protected:
 
