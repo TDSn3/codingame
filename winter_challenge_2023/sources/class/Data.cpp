@@ -87,6 +87,7 @@ void	Data::update(void)
 {
 	int 	creature_id;
 	int		drone_id;
+	string	radar;
 
 	cin >> my_score; cin.ignore();
 	cin >> foe_score; cin.ignore();
@@ -125,12 +126,13 @@ void	Data::update(void)
 	{
 		cin
 			>> drone_id
-			>> my_drone[drone_id].x
-			>> my_drone[drone_id].y
-			>> my_drone[drone_id].emergency
-			>> my_drone[drone_id].battery;
+			>> drones[drone_id].x
+			>> drones[drone_id].y
+			>> drones[drone_id].emergency
+			>> drones[drone_id].battery;
 		cin.ignore();
-		my_drone[drone_id].id = drone_id;
+		drones[drone_id].id = drone_id;
+		drones[drone_id].owner = PLAYER;
 	}
 
 	cin >> foe_drone_count; cin.ignore();
@@ -139,12 +141,13 @@ void	Data::update(void)
 	{
 		cin
 			>> drone_id
-			>> foe_drone[drone_id].x
-			>> foe_drone[drone_id].y
-			>> foe_drone[drone_id].emergency
-			>> foe_drone[drone_id].battery;
+			>> drones[drone_id].x
+			>> drones[drone_id].y
+			>> drones[drone_id].emergency
+			>> drones[drone_id].battery;
 		cin.ignore();
-		foe_drone[drone_id].id = drone_id;
+		drones[drone_id].id = drone_id;
+		drones[drone_id].owner = FOE;
 	}
 
 /* ************************************************************************** */
@@ -154,8 +157,15 @@ void	Data::update(void)
 	for (int i = 0; i < drone_scan_count; i++)
 	{
 		cin >> drone_id >> creature_id; cin.ignore();
-		creatures[creature_id].my_scan_no_saved = true;
-		// cerr << drone_id << " " << creature_id << "NO SAVED" << endl;
+
+		if (drones[drone_id].owner == PLAYER)
+		{
+			creatures[creature_id].scan_no_saved[drone_id].my_scan_no_saved = true;
+		}
+		else // FOE
+		{
+			creatures[creature_id].scan_no_saved[drone_id].foe_scan_no_saved = true;
+		}
 	}
 
 /* ************************************************************************** */
@@ -182,19 +192,19 @@ void	Data::update(void)
 		cin
 			>> drone_id
 			>> creature_id
-			>> creatures[creature_id].radar[drone_id];
+			>> radar;
 		cin.ignore();
+		if (radar == "TL")
+			creatures[creature_id].radar[drone_id] = TL;
+		else if (radar == "TR")
+			creatures[creature_id].radar[drone_id] = TR;
+		else if (radar == "BL")
+			creatures[creature_id].radar[drone_id] = BL;
+		else
+			creatures[creature_id].radar[drone_id] = BR;
 	}
 
 /* ************************************************************************** */
-
-	// for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
-	// {
-	// 	for (map<int, s_drone> :: iterator it2 = my_drone.begin(); it2 != my_drone.end(); it2++)
-	// 	{
-	// 		it->second.distance_my_drone[it2->first] = distance(it2->first, it->first);
-	// 	}
-	// }
 
 }
 
@@ -208,8 +218,13 @@ void	Data::reset(void)
 		it->second.vx = -1;
 		it->second.vy = -1;
 		it->second.my_scan_saved = false;
-		it->second.my_scan_no_saved = false;
 		it->second.foe_scan_saved = false;
+
+		for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
+		{
+			it2->second.my_scan_no_saved = false;
+			it2->second.foe_scan_no_saved = false;
+		}
 	}
 }
 

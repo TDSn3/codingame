@@ -17,7 +17,8 @@ SRCS		=	class/Data.cpp								\
 				main.cpp									\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR
-INC_FILES	= 	class/Data.hpp		\
+INC_FILES	= 	utils.hpp			\
+				class/Data.hpp		\
 				header.hpp			\
 
 INC_PATH	=	includes/

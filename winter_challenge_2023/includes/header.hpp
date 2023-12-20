@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/19 20:27:03 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 09:30:56 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 
 using namespace std;
 
+# include "./utils.hpp"
 # include "./color.hpp"
 # include "./class/Data.hpp"
 

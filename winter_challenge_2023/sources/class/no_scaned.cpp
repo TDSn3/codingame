@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 22:50:24 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/19 23:12:50 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 09:34:42 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 bool Data::no_scaned(void)
 {
-	// cerr << "ici" << endl;
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
-		if (it->second.my_scan_no_saved)
+		for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
 		{
-			cerr << "true : " << it->first << endl;
-			return (true);
+			if (it2->second.my_scan_no_saved)
+			{
+				cerr << "true" << endl;
+				return (true);
+			}
 		}
 	}
 	cerr << "false" << endl;

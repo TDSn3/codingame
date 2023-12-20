@@ -6,30 +6,32 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 10:30:26 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/19 22:04:22 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 09:45:55 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/header.hpp"
 
-string	Data::radar_direction(int drone_id)
+e_radar	Data::radar_direction(int drone_id)
 {
+	e_radar	tblr;
+
 	string	lf;
 	int		count[4] = {};	// { tl, tr, bl, br}
 	int		biggest_radar_int = -1;
 	int		biggest_radar;
 
-	(my_drone[drone_id].x < 4999) ? lf = "L" : lf = "R";
+	(drones[drone_id].x < 4999) ? tblr = L : tblr = R;
 
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
-		if (it->second.radar[drone_id] == "TL")
+		if (it->second.radar[drone_id] == TL)
 			count[0]++;
-		else if (it->second.radar[drone_id] == "TR")
+		else if (it->second.radar[drone_id] == TR)
 			count[1]++;
-		else if (it->second.radar[drone_id] == "BL")
+		else if (it->second.radar[drone_id] == BL)
 			count[2]++;
-		else if (it->second.radar[drone_id] == "BR")
+		else if (it->second.radar[drone_id] == BR)
 			count[3]++;
 	}
 
@@ -56,11 +58,11 @@ string	Data::radar_direction(int drone_id)
 	}
 
 	if (biggest_radar == 0)
-		return ("TL");
+		return (TL);
 	else if (biggest_radar == 1)
-		return ("TR");
+		return (TR);
 	else if (biggest_radar == 2)
-		return ("BL");
+		return (BL);
 	else
-		return ("BR");
+		return (BR);
 }

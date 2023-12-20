@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/19 23:04:13 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 09:31:59 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,36 +29,44 @@
 
 using namespace std;
 
+# include "../utils.hpp"
+
+struct s_scan
+{
+	bool	my_scan_no_saved;
+	bool	foe_scan_no_saved;
+};
+
 struct s_creature
 {
 	int					id;
-	int					color;	// de 0 à 3
-	int					type;	// de 0 à 2
+	int					color;			// de 0 à 3
+	int					type;			// de 0 à 2
 
 	bool				visible;
 
-	int					x;		// position
-	int					y;		//
+	int					x;				// position
+	int					y;				//
 
-	int					vx;		// vitesse
-	int 				vy;		//
+	int					vx;				// vitesse
+	int 				vy;				//
 
 	bool				my_scan_saved;
-	bool				my_scan_no_saved;
 	bool				foe_scan_saved;
 
-	// map<int, double>	distance_my_drone;
+	map<int, s_scan>	scan_no_saved;	// PLAYER & FOE
 
-	map<int, string>	radar;
+	map<int, e_radar>	radar;
 };
 
 struct s_drone
 {
-	int	id;
-	int	x;
-	int	y;
-	int	emergency;
-	int battery;
+	int				id;
+	int				x;
+	int				y;
+	int				emergency;
+	int				battery;
+	e_drone_owner	owner;
 };
 
 class Data
@@ -71,8 +79,7 @@ class Data
 
 		int						creature_count;
 		map<int, s_creature>	creatures;
-		map<int, s_drone>		my_drone;
-		map<int, s_drone>		foe_drone;
+		map<int, s_drone>		drones;
 		int						my_score;
 		int						foe_score;
 		int						my_scan_count;
@@ -83,13 +90,12 @@ class Data
 		int 					visible_creature_count;
 		int 					radar_blip_count;
 
-		map<int, vector<map<int, s_creature> :: iterator> >	creatures_sort_by_dist;
-
 		void					show_creatures(void);
 		void					update(void);
 		void					reset(void);
+
 		double					distance(int drone_id, int creature_id);
-		string					radar_direction(int drone_id);
+		e_radar					radar_direction(int drone_id);
 		bool 					no_scaned(void);
 
 	protected:
