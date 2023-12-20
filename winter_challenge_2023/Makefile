@@ -9,11 +9,12 @@ CXXFLAGS	=	-Wall -Wextra #-Werror
 #ADD YOUR SOURCES BELOW WITHOUT THE SOURCE PREFIX MAIN.C GIVEN AS EXAMPLE
 SRCS		=	class/Data.cpp								\
 				class/distance.cpp							\
-				class/radar_direction.cpp					\
+				class/biggest_radar_direction.cpp			\
 				class/no_scaned.cpp							\
 				game_loop.cpp								\
 				instruction_move.cpp						\
 				instruction_wait.cpp						\
+				choice_pos.cpp								\
 				main.cpp									\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR

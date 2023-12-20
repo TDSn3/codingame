@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 09:30:56 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:03:03 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ using namespace std;
 # include "./class/Data.hpp"
 
 void	game_loop(Data &data);
-void	instruction_move(int x, int y, bool light);
+void	instruction_move(u_tuple pos, bool light);
 void	instruction_wait(bool light);
+u_tuple	choice_pos(Data &data);
 
 #endif

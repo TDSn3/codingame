@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 09:31:59 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:55:55 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,8 @@ struct s_creature
 
 	bool				visible;
 
-	int					x;				// position
-	int					y;				//
-
-	int					vx;				// vitesse
-	int 				vy;				//
+	u_tuple				pos;			// position
+	u_tuple				v;				// vitesse (velocity)
 
 	bool				my_scan_saved;
 	bool				foe_scan_saved;
@@ -62,8 +59,7 @@ struct s_creature
 struct s_drone
 {
 	int				id;
-	int				x;
-	int				y;
+	u_tuple			pos;		// position
 	int				emergency;
 	int				battery;
 	e_drone_owner	owner;
@@ -95,7 +91,7 @@ class Data
 		void					reset(void);
 
 		double					distance(int drone_id, int creature_id);
-		e_radar					radar_direction(int drone_id);
+		e_radar					biggest_radar_direction(int drone_id);
 		bool 					no_scaned(void);
 
 	protected:

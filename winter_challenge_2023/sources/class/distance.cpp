@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 10:30:26 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 09:06:34 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:57:45 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ struct s_point
 double	Data::distance(int drone_id, int creature_id)
 {
 	s_point	p1 =	{
-						static_cast<double>(drones[drone_id].x),
-						static_cast<double>(drones[drone_id].y)
+						static_cast<double>(drones[drone_id].pos.x),
+						static_cast<double>(drones[drone_id].pos.y)
 					};
 
 	s_point	p2 =	{
-						static_cast<double>(creatures[creature_id].x),
-						static_cast<double>(creatures[creature_id].y)
+						static_cast<double>(creatures[creature_id].pos.x),
+						static_cast<double>(creatures[creature_id].pos.y)
 					};
 
 	double	deltaX = p2.x - p1.x;

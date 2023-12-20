@@ -72,10 +72,10 @@ void	Data::show_creatures(void)
 			<< it->second.id << " : "
 			<< "   color : " << it->second.color
 			<< "   type : " << it->second.type
-			<< "   x : " << it->second.x
-			<< "   y : " << it->second.y
-			<< "   vx : " << it->second.vx
-			<< "   vy : " << it->second.vy
+			<< "   x : " << it->second.pos.x
+			<< "   y : " << it->second.pos.y
+			<< "   vx : " << it->second.v.x
+			<< "   vy : " << it->second.v.y
 			<< "   my_scan : " << it->second.my_scan_saved
 			<< "   foe_scan : " << it->second.foe_scan_saved
 			<< "   dist : " << distance(0, it->second.id)
@@ -126,8 +126,8 @@ void	Data::update(void)
 	{
 		cin
 			>> drone_id
-			>> drones[drone_id].x
-			>> drones[drone_id].y
+			>> drones[drone_id].pos.x
+			>> drones[drone_id].pos.y
 			>> drones[drone_id].emergency
 			>> drones[drone_id].battery;
 		cin.ignore();
@@ -141,8 +141,8 @@ void	Data::update(void)
 	{
 		cin
 			>> drone_id
-			>> drones[drone_id].x
-			>> drones[drone_id].y
+			>> drones[drone_id].pos.x
+			>> drones[drone_id].pos.y
 			>> drones[drone_id].emergency
 			>> drones[drone_id].battery;
 		cin.ignore();
@@ -176,10 +176,10 @@ void	Data::update(void)
 	{
 		cin
 			>> creature_id
-			>> creatures[creature_id].x
-			>> creatures[creature_id].y
-			>> creatures[creature_id].vx
-			>> creatures[creature_id].vy;
+			>> creatures[creature_id].pos.x
+			>> creatures[creature_id].pos.y
+			>> creatures[creature_id].v.x
+			>> creatures[creature_id].v.y;
 		cin.ignore();
 		creatures[creature_id].id = creature_id;
 		creatures[creature_id].visible = true;
@@ -213,10 +213,10 @@ void	Data::reset(void)
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
 		it->second.visible = false;
-		it->second.x = -1;
-		it->second.y = -1;
-		it->second.vx = -1;
-		it->second.vy = -1;
+		it->second.pos.x = -1;
+		it->second.pos.y = -1;
+		it->second.v.x = -1;
+		it->second.v.y = -1;
 		it->second.my_scan_saved = false;
 		it->second.foe_scan_saved = false;
 

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   radar_direction.cpp                                :+:      :+:    :+:   */
+/*   biggest_radar_direction.cpp                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 10:30:26 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 09:45:55 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:57:54 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../includes/header.hpp"
 
-e_radar	Data::radar_direction(int drone_id)
+e_radar	Data::biggest_radar_direction(int drone_id)
 {
 	e_radar	tblr;
 
@@ -21,7 +21,7 @@ e_radar	Data::radar_direction(int drone_id)
 	int		biggest_radar_int = -1;
 	int		biggest_radar;
 
-	(drones[drone_id].x < 4999) ? tblr = L : tblr = R;
+	(drones[drone_id].pos.x < 4999) ? tblr = L : tblr = R;
 
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
