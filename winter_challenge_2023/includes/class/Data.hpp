@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 16:44:39 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:45:35 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ class Data
 		int						creature_count;
 		map<int, s_creature>	creatures;
 		map<int, s_drone>		drones;
+		vector<s_drone*>		drones_player;
 		int						my_score;
 		int						foe_score;
 		int						my_scan_count;

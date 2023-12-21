@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 16:53:59 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/21 15:46:21 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,6 +205,15 @@ void	Data::update(void)
 	}
 
 /* ************************************************************************** */
+
+	if (g_round == 0)
+	{
+		for (map<int, s_drone> :: iterator it = drones.begin(); it != drones.end(); it++)
+		{
+			if (it->second.owner == PLAYER)
+				drones_player.push_back(&it->second);
+		}
+	}
 
 }
 
