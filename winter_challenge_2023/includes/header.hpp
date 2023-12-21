@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 17:38:13 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:05:25 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ using namespace std;
 void	game_loop(Data &data, Stock &stock);
 void	instruction_move(u_tuple pos, bool light);
 void	instruction_wait(bool light);
-u_tuple	choice_pos(Data &data, Stock &stock);
-bool	choice_light(Data &data);
+u_tuple	choice_pos(Data &data, Stock &stock, int drone);
+bool	choice_light(Data &data, int drone);
 string	enum_to_str(e_zone token);
 
 #endif

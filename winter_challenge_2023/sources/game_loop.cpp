@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:40:05 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 17:42:53 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/21 16:06:07 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	game_loop(Data &data, Stock &stock)
 
 		for (int i = 0; i < data.my_drone_count; i++)
 		{
-			instruction_move(choice_pos(data, stock), choice_light(data));
+			instruction_move(choice_pos(data, stock, i), choice_light(data, i));
 		}
 
 		data.reset();
