@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 13:41:35 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 16:34:18 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 19:42:48 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,6 @@ u_tuple	give_ret_pos(Data &data, Stock &stock, int drone, int i)
 	return (ret);	
 }
 
-double distance(u_tuple a, u_tuple b)
-{
-	return (sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2)));
-}
-
 u_tuple	round_tuple(u_tuple tuple)
 {
 	return ((u_tuple){{ round(tuple.x), round(tuple.y) }});
@@ -110,11 +105,13 @@ u_tuple	ray_casting_pos(Data &data, u_tuple origin, u_tuple target)
 
 	pos_arround_origin(data, origin, 600, safe_pos);
 
+	// TODO: if safe_pos.size() == 0
+
 	min_dist = numeric_limits<double>::max();
 
 	for (size_t i = 0; i < safe_pos.size(); ++i)
 	{
-		dist = distance(safe_pos[i], target);
+		dist = distance_tuple(safe_pos[i], target);
 
 		if (dist < min_dist)
 		{
@@ -143,7 +140,7 @@ void	pos_arround_origin(Data &data, u_tuple origin, int dist, vector<u_tuple> &s
 		{
 			if (it->second.type == -1 && it->second.visible)
 			{
-				if (distance(pos, (u_tuple){{ it->second.pos.x, it->second.pos.y }}) < 1041)
+				if (distance_tuple(pos, (u_tuple){{ it->second.pos.x, it->second.pos.y }}) < 1040 + 5)
 				{
 					is_safe = false;
 					break;
@@ -153,5 +150,5 @@ void	pos_arround_origin(Data &data, u_tuple origin, int dist, vector<u_tuple> &s
 
 		if (is_safe)
 			safe_pos.push_back(pos);
-	}	
+	}
 }

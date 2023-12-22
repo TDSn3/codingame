@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 14:04:47 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 20:51:09 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,13 @@ void	Data::show_creatures(void)
 			<< "   type : " << it->second.type
 			<< "   x : " << it->second.pos.x
 			<< "   y : " << it->second.pos.y
-			// << "   vx : " << it->second.v.x
-			// << "   vy : " << it->second.v.y
+			<< "   vx : " << it->second.v.x
+			<< "   vy : " << it->second.v.y
 			// << "   my_scan : " << it->second.my_scan_saved
 			// << "   foe_scan : " << it->second.foe_scan_saved
 			// << "   dist : " << distance(0, it->second.id)
+			<< ((it->second.visible) ? (" visible") : (""))
+			<< ((it->second.in_light) ? (" flashed") : (" dark"))
 			<< std::endl;
 	}
 }
@@ -134,7 +136,7 @@ void	Data::update(void)
 		drones[drone_id].id = drone_id;
 		drones[drone_id].owner = PLAYER;
 		if (g_round == 0)
-			drones[drone_id].light_last_round = 0;
+			drones[drone_id].round_light[g_round] = 0;
 	}
 
 	cin >> foe_drone_count; cin.ignore();
@@ -150,7 +152,7 @@ void	Data::update(void)
 		cin.ignore();
 		drones[drone_id].id = drone_id;
 		drones[drone_id].owner = FOE;
-		drones[drone_id].light_last_round = -1;
+		drones[drone_id].round_light[g_round] = -1;
 	}
 
 /* ************************************************************************** */
@@ -186,6 +188,7 @@ void	Data::update(void)
 		cin.ignore();
 		creatures[creature_id].id = creature_id;
 		creatures[creature_id].visible = true;
+		creatures[creature_id].in_light = is_in_light(creatures[creature_id].pos);
 	}
 
 	cin >> radar_blip_count; cin.ignore();
@@ -218,12 +221,70 @@ void	Data::update(void)
 		}
 	}
 
+	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
+	{
+		if (it->second.type == -1 && it->second.visible)
+		{
+			it->second.next_pos = get_round_move(it->second.pos, get_nearest_drone(it->second.pos)->pos, 270);
+			if (it->second.pos.x == 7461 && it->second.pos.y == 7186)
+			{
+				cerr << "ICI2 :" << it->second.pos.x << " " << it->second.pos.y << endl;
+				cerr << "ICI2 :" << get_nearest_drone(it->second.pos)->pos.x << " " << get_nearest_drone(it->second.pos)->pos.y << endl;
+				cerr << "ICI :" << it->second.next_pos.x << " " << it->second.next_pos.y << endl;
+			}
+		}		
+	}
+
+}
+
+s_drone	*Data::get_nearest_drone(u_tuple origin)
+{
+	double	min_dist = numeric_limits<double>::max();
+	double	dist;
+	s_drone	*ret;
+
+	for (map<int, s_drone> :: iterator it = drones.begin(); it != drones.end(); it++)
+	{
+		dist = distance_tuple(origin, it->second.pos);
+
+		if (dist < min_dist)
+		{
+			min_dist = dist;
+			ret = &it->second;
+		}
+	}
+
+	return (ret);
+}
+
+bool	Data::is_in_light(u_tuple origin)
+{
+	for (map<int, s_drone> :: iterator it = drones.begin(); it != drones.end(); it++)
+		if (distance_tuple(origin, it->second.pos) <= it->second.round_light[(g_round == 0 ? 0 : g_round - 1)])
+			return (true);
+	
+	return (false);
 }
 
 void	Data::reset(void)
-{
+{	
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
+		// if (it->second.type == -1 && it->second.visible)
+		// {
+		// 	it->second.next_pos = get_round_move(it->second.pos, get_nearest_drone(it->second.pos)->pos, 270);
+		// 	if (it->second.pos.x == 7461 && it->second.pos.y == 7186)
+		// 	{
+		// 		cerr << "ICI2 :" << it->second.pos.x << " " << it->second.pos.y << endl;
+		// 		cerr << "ICI2 :" << get_nearest_drone(it->second.pos)->pos.x << " " << get_nearest_drone(it->second.pos)->pos.y << endl;
+		// 		cerr << "ICI :" << it->second.next_pos.x << " " << it->second.next_pos.y << endl;
+		// 	}
+		// }
+		// else if (it->second.type == -1 && it->second.visible && !is_in_light(it->second.pos))
+		// {
+		// 	it->second.next_pos = get_round_move(it->second.pos, get_nearest_drone(it->second.pos)->pos, 270);
+		// }
+		
 		it->second.visible = false;
 		it->second.pos.x = -1;
 		it->second.pos.y = -1;

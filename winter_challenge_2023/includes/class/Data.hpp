@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 14:02:35 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 20:45:21 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,13 @@ struct s_scan
 struct s_creature
 {
 	int					id;
-	int					color;			// de 0 à 3	// monstre -1
-	int					type;			// de 0 à 2	// monstre -1
+	int					color;			// de 0 à 3	// monster -1
+	int					type;			// de 0 à 2	// monster -1
 
 	bool				visible;
 
 	u_tuple				pos;			// position
+	u_tuple				next_pos;		// position for monster
 	u_tuple				v;				// vitesse (velocity)
 
 	bool				my_scan_saved;
@@ -54,16 +55,18 @@ struct s_creature
 	map<int, s_scan>	scan_no_saved;	// PLAYER & FOE
 
 	map<int, e_radar>	radar;
+
+	bool				in_light;
 };
 
 struct s_drone
 {
 	int				id;
-	u_tuple			pos;		// position
-	int				emergency;	// 1 mode urgence, 0 sinon
+	u_tuple			pos;			// position
+	int				emergency;		// 1 mode urgence, 0 sinon
 	int				battery;
 	e_drone_owner	owner;
-	int				light_last_round;
+	map<int, int>	round_light;	// round, light
 };
 
 class Data
@@ -92,6 +95,8 @@ class Data
 		void					update(void);
 		void					reset(void);
 
+		s_drone					*get_nearest_drone(u_tuple origin);
+		bool					is_in_light(u_tuple origin);
 		double					distance(int drone_id, int creature_id);
 		e_radar					biggest_radar_direction(int drone_id);
 		int 					count_no_scaned(void);

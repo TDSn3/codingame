@@ -15,6 +15,7 @@ SRCS		=	class/Data/Data.cpp						\
 				class/Data/get_round_move.cpp			\
 				class/Stock/Stock.cpp					\
 				game_loop.cpp							\
+				distance_tuple.cpp						\
 				instruction_move.cpp					\
 				instruction_wait.cpp					\
 				choice_pos.cpp							\
