@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 20:51:09 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 21:23:29 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,18 +221,22 @@ void	Data::update(void)
 		}
 	}
 
-	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
+	if (g_round > 0)
 	{
-		if (it->second.type == -1 && it->second.visible)
-		{
-			it->second.next_pos = get_round_move(it->second.pos, get_nearest_drone(it->second.pos)->pos, 270);
-			if (it->second.pos.x == 7461 && it->second.pos.y == 7186)
+		for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
+		{	
+			if (it->second.type == -1 && last_round_creatures[it->first].visible && !it->second.visible)
 			{
-				cerr << "ICI2 :" << it->second.pos.x << " " << it->second.pos.y << endl;
-				cerr << "ICI2 :" << get_nearest_drone(it->second.pos)->pos.x << " " << get_nearest_drone(it->second.pos)->pos.y << endl;
-				cerr << "ICI :" << it->second.next_pos.x << " " << it->second.next_pos.y << endl;
+				it->second.next_pos = (u_tuple){{ it->second.pos.x + it->second.v.x, it->second.pos.y + it->second.v.y }};
+				cerr << it->second.id << " next pos 1 :" << it->second.next_pos.x << " " << it->second.next_pos.y << endl;				
 			}
-		}		
+
+			if (it->second.type == -1 && it->second.visible && !it->second.in_light)
+			{
+				it->second.next_pos = (u_tuple){{ it->second.pos.x + it->second.v.x, it->second.pos.y + it->second.v.y }};
+				cerr << it->second.id << " next pos 2 :" << it->second.next_pos.x << " " << it->second.next_pos.y << endl;
+			}
+		}
 	}
 
 }
@@ -269,22 +273,9 @@ bool	Data::is_in_light(u_tuple origin)
 void	Data::reset(void)
 {	
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
-	{
-		// if (it->second.type == -1 && it->second.visible)
-		// {
-		// 	it->second.next_pos = get_round_move(it->second.pos, get_nearest_drone(it->second.pos)->pos, 270);
-		// 	if (it->second.pos.x == 7461 && it->second.pos.y == 7186)
-		// 	{
-		// 		cerr << "ICI2 :" << it->second.pos.x << " " << it->second.pos.y << endl;
-		// 		cerr << "ICI2 :" << get_nearest_drone(it->second.pos)->pos.x << " " << get_nearest_drone(it->second.pos)->pos.y << endl;
-		// 		cerr << "ICI :" << it->second.next_pos.x << " " << it->second.next_pos.y << endl;
-		// 	}
-		// }
-		// else if (it->second.type == -1 && it->second.visible && !is_in_light(it->second.pos))
-		// {
-		// 	it->second.next_pos = get_round_move(it->second.pos, get_nearest_drone(it->second.pos)->pos, 270);
-		// }
-		
+	{		
+		last_round_creatures[it->first] = it->second;
+
 		it->second.visible = false;
 		it->second.pos.x = -1;
 		it->second.pos.y = -1;
@@ -292,12 +283,14 @@ void	Data::reset(void)
 		it->second.v.y = -1;
 		it->second.my_scan_saved = false;
 		it->second.foe_scan_saved = false;
-
+		// TODO: next pos ?
 		for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
 		{
 			it2->second.my_scan_no_saved = false;
 			it2->second.foe_scan_no_saved = false;
 		}
+
+		it->second.in_light = false;
 	}
 }
 
