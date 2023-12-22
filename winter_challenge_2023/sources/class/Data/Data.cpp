@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/21 15:46:21 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 08:03:27 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,11 @@ void	Data::show_creatures(void)
 			<< "   type : " << it->second.type
 			<< "   x : " << it->second.pos.x
 			<< "   y : " << it->second.pos.y
-			<< "   vx : " << it->second.v.x
-			<< "   vy : " << it->second.v.y
-			<< "   my_scan : " << it->second.my_scan_saved
-			<< "   foe_scan : " << it->second.foe_scan_saved
-			<< "   dist : " << distance(0, it->second.id)
+			// << "   vx : " << it->second.v.x
+			// << "   vy : " << it->second.v.y
+			// << "   my_scan : " << it->second.my_scan_saved
+			// << "   foe_scan : " << it->second.foe_scan_saved
+			// << "   dist : " << distance(0, it->second.id)
 			<< std::endl;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/21 15:45:35 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 07:57:25 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ struct s_scan
 struct s_creature
 {
 	int					id;
-	int					color;			// de 0 à 3
-	int					type;			// de 0 à 2
+	int					color;			// de 0 à 3	// monstre -1
+	int					type;			// de 0 à 2	// monstre -1
 
 	bool				visible;
 
@@ -60,7 +60,7 @@ struct s_drone
 {
 	int				id;
 	u_tuple			pos;		// position
-	int				emergency;
+	int				emergency;	// 1 mode urgence, 0 sinon
 	int				battery;
 	e_drone_owner	owner;
 };
