@@ -12,6 +12,7 @@ SRCS		=	class/Data/Data.cpp						\
 				class/Data/biggest_radar_direction.cpp	\
 				class/Data/count_no_scaned.cpp			\
 				class/Data/get_drone_zone.cpp			\
+				class/Data/get_round_move.cpp			\
 				class/Stock/Stock.cpp					\
 				game_loop.cpp							\
 				instruction_move.cpp					\

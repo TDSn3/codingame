@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 07:57:25 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 11:09:17 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ class Data
 		e_radar					biggest_radar_direction(int drone_id);
 		int 					count_no_scaned(void);
 		e_zone					get_drone_zone(int drone_id);
+		u_tuple					get_round_move(u_tuple origin, u_tuple cible, int max_dist);
 
 	protected:
 
