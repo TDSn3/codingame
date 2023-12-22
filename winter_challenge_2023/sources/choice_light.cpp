@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 14:15:53 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 12:26:54 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:10:09 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,12 @@ bool	choice_light(Data &data, int drone)
 		|| (data.drones_player[drone]->pos.y >= 6249 - 300 && data.drones_player[drone]->pos.y <= 6249 + 300)
 		|| (data.drones_player[drone]->pos.y >= 8749 - 300 && data.drones_player[drone]->pos.y <= 8749 + 300))
 	{
+		data.drones_player[drone]->light_last_round = 2000;
+
 		return (1);
 	}
+
+	data.drones_player[drone]->light_last_round = 800;
+
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 11:09:17 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 14:02:35 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ struct s_drone
 	int				emergency;	// 1 mode urgence, 0 sinon
 	int				battery;
 	e_drone_owner	owner;
+	int				light_last_round;
 };
 
 class Data

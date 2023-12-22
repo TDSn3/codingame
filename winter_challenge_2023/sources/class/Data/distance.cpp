@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 10:30:26 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 07:59:53 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/22 15:25:06 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ double	Data::distance(int drone_id, int creature_id)
 	if (creatures[creature_id].pos.x == -1)
 		return (-1);
 
-	return (sqrt(deltaX * deltaX + deltaY * deltaY));
+	return (sqrt(pow(deltaX, 2) + pow(deltaY, 2)));
 }
