@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 21:11:26 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/23 11:08:13 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,24 @@ struct s_scan
 struct s_creature
 {
 	int					id;
-	int					color;			// de 0 à 3	// monster -1
-	int					type;			// de 0 à 2	// monster -1
+	int					color;				// de 0 à 3	// monster -1
+	int					type;				// de 0 à 2	// monster -1
 
 	bool				visible;
 
-	u_tuple				pos;			// position
-	u_tuple				next_pos;		// position for monster
-	u_tuple				v;				// vitesse (velocity)
+	u_tuple				pos;				// position
+	u_tuple				next_pos;			// position at the end of the round
+	u_tuple				next_next_pos;		// position at the start of the next round for last_round_creatures
+	u_tuple				v;					// vitesse (velocity)
 
 	bool				my_scan_saved;
 	bool				foe_scan_saved;
 
-	map<int, s_scan>	scan_no_saved;	// PLAYER & FOE
+	map<int, s_scan>	scan_no_saved;		// PLAYER & FOE
 
 	map<int, e_radar>	radar;
 
-	bool				in_light;
+	bool				in_light;			// 0 dark | 1 flashed
 };
 
 struct s_drone
