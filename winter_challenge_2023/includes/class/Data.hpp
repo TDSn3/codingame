@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/23 11:08:13 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/23 11:50:30 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ class Data
 		int 					radar_blip_count;
 
 		void					show_creatures(void);
-		void					update(void);
+		void					show_drones(void);
+		void					update();
 		void					reset(void);
 
 		s_drone					*get_nearest_drone(u_tuple origin);

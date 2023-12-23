@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 13:41:35 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/22 19:42:48 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/23 12:19:19 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 u_tuple	give_ret_pos(Data &data, Stock &stock, int drone, int i);
 u_tuple	ray_casting_pos(Data &data, u_tuple origin, u_tuple target);
-void	pos_arround_origin(Data &data, u_tuple origin, int dist, vector<u_tuple> &safe_pos);
+void	safe_pos_arround_origin(Data &data, u_tuple origin, int dist, vector<u_tuple> &safe_pos);
 
 u_tuple choice_pos(Data &data, Stock &stock, int drone)
 {
@@ -103,7 +103,7 @@ u_tuple	ray_casting_pos(Data &data, u_tuple origin, u_tuple target)
 	double			min_dist;
 	double			dist;
 
-	pos_arround_origin(data, origin, 600, safe_pos);
+	safe_pos_arround_origin(data, origin, 600, safe_pos);
 
 	// TODO: if safe_pos.size() == 0
 
@@ -123,7 +123,7 @@ u_tuple	ray_casting_pos(Data &data, u_tuple origin, u_tuple target)
 	return (round_tuple(closest_pos));
 }
 
-void	pos_arround_origin(Data &data, u_tuple origin, int dist, vector<u_tuple> &safe_pos)
+void	safe_pos_arround_origin(Data &data, u_tuple origin, int dist, vector<u_tuple> &safe_pos)
 {
 	double	angle_step = M_PI / 18;	// 18 = 37 steps
 	u_tuple	pos;
@@ -140,10 +140,23 @@ void	pos_arround_origin(Data &data, u_tuple origin, int dist, vector<u_tuple> &s
 		{
 			if (it->second.type == -1 && it->second.visible)
 			{
-				if (distance_tuple(pos, (u_tuple){{ it->second.pos.x, it->second.pos.y }}) < 1040 + 5)
+				if (distance_tuple(pos, it->second.pos) < 1040 + 5)
 				{
 					is_safe = false;
 					break;
+				}
+			}
+
+			if (it->second.type == -1
+				&& !it->second.visible
+				&& data.last_round_creatures[it->first].visible
+				&& !data.last_round_creatures[it->first].in_light)
+			{
+				if (distance_tuple(pos, data.last_round_creatures[it->first].next_next_pos) < 1040 + 5)
+				{
+					cerr << "USE PREDICT " << it->second.id << endl;
+					is_safe = false;
+					break;					
 				}
 			}
 		}

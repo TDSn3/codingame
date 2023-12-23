@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/23 11:08:45 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/23 12:23:14 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,54 +68,57 @@ void	Data::show_creatures(void)
 {
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
-		if (it->second.id == 16)
+		if (it->second.visible)
 			cerr
-				<< it->second.id << " : "
-				<< "   color : " << it->second.color
-				<< "   type : " << it->second.type
-				<< "   x : " << it->second.pos.x
-				<< "   y : " << it->second.pos.y
-				<< "   vx : " << it->second.v.x
-				<< "   vy : " << it->second.v.y
-				<< "   next_x : " << it->second.next_pos.x
-				<< "   next_y : " << it->second.next_pos.y
-				<< "   next2_x : " << it->second.next_next_pos.x
-				<< "   next2_y : " << it->second.next_next_pos.y
+				<< it->second.id << " "
+				<< " c(" << it->second.color << ")"
+				<< " t(" << it->second.type << ")"
+				<< " pos(" << it->second.pos.x << ", " << it->second.pos.y << ")"
+				<< " v(" << it->second.v.x << ", " << it->second.v.y << ")"
+				<< " next(" << it->second.next_pos.x << ", " << it->second.next_pos.y << ")"
+				<< " next2(" << it->second.next_next_pos.x << ", " << it->second.next_next_pos.y << ")"
 				// << "   my_scan : " << it->second.my_scan_saved
 				// << "   foe_scan : " << it->second.foe_scan_saved
 				// << "   dist : " << distance(0, it->second.id)
 				<< ((it->second.visible) ? (" visible") : (""))
 				<< ((it->second.in_light) ? (" flashed") : (" dark"))
-				<< std::endl;
+				<< endl;
 	}
 	for (map<int, s_creature> :: iterator it = last_round_creatures.begin(); it != last_round_creatures.end(); it++)
 	{
-		if (it->second.id == 16)
+		if (it->second.visible)
 		{
-			cerr << "last round" << endl;
+			cerr << "last round :" << endl;
 			cerr
-				<< it->second.id << " : "
-				<< "   color : " << it->second.color
-				<< "   type : " << it->second.type
-				<< "   x : " << it->second.pos.x
-				<< "   y : " << it->second.pos.y
-				<< "   vx : " << it->second.v.x
-				<< "   vy : " << it->second.v.y
-				<< "   next_x : " << it->second.next_pos.x
-				<< "   next_y : " << it->second.next_pos.y
-				<< "   next2_x : " << it->second.next_next_pos.x
-				<< "   next2_y : " << it->second.next_next_pos.y
+				<< it->second.id << " "
+				<< " c(" << it->second.color << ")"
+				<< " t(" << it->second.type << ")"
+				<< " pos(" << it->second.pos.x << ", " << it->second.pos.y << ")"
+				<< " v(" << it->second.v.x << ", " << it->second.v.y << ")"
+				<< " next(" << it->second.next_pos.x << ", " << it->second.next_pos.y << ")"
+				<< " next2(" << it->second.next_next_pos.x << ", " << it->second.next_next_pos.y << ")"
 				// << "   my_scan : " << it->second.my_scan_saved
 				// << "   foe_scan : " << it->second.foe_scan_saved
 				// << "   dist : " << distance(0, it->second.id)
 				<< ((it->second.visible) ? (" visible") : (""))
 				<< ((it->second.in_light) ? (" flashed") : (" dark"))
-				<< std::endl;
+				<< endl;
 		}
 	}
 }
 
-void	Data::update(void)
+void	Data::show_drones(void)
+{
+	for (map<int, s_drone> :: iterator it = drones.begin(); it != drones.end(); it++)
+	{
+		cerr
+			<< it->second.id << " : "
+			<< it->second.pos.x << " " << it->second.pos.y
+			<< endl;
+	}
+}
+
+void	Data::update()
 {
 	int 	creature_id;
 	int		drone_id;
@@ -263,7 +266,11 @@ void	Data::update(void)
 				it->second.pos.y + it->second.v.y
 			}};
 
-			if (!it->second.in_light)	// dark
+			if (it->second.in_light)
+			{
+				// TODO
+			}
+			else	// dark
 			{
 				it->second.next_next_pos = (u_tuple){{
 					it->second.next_pos.x + it->second.v.x,
