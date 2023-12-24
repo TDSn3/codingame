@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/23 12:23:14 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/24 12:02:40 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ void	Data::update()
 
 			if (it->second.in_light)
 			{
-				// TODO
+				// TODO: look in "else"
 			}
 			else	// dark
 			{
@@ -276,6 +276,17 @@ void	Data::update()
 					it->second.next_pos.x + it->second.v.x,
 					it->second.next_pos.y + it->second.v.y
 				}};
+			}
+		}
+		else
+		{
+			if (last_round_creatures[it->first].in_light)	// flashed
+			{
+				last_round_creatures[it->first].next_next_pos = get_round_move(
+					last_round_creatures[it->first].next_pos,
+					get_nearest_drone(last_round_creatures[it->first].next_pos)->pos,
+					540
+				);
 			}
 		}
 	}

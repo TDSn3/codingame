@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/23 11:50:30 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/24 12:19:01 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ class Data
 		map<int, s_creature>	creatures;
 		map<int, s_creature>	last_round_creatures;
 		map<int, s_drone>		drones;
-		vector<s_drone*>		drones_player;
+		vector<s_drone*>		drones_player;	// int for the int of the map<int, s_drone>
 		int						my_score;
 		int						foe_score;
 		int						my_scan_count;

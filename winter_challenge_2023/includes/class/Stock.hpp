@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:46:22 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/21 16:26:00 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/24 12:03:19 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,10 @@ class Data;
 struct s_pos_node
 {
 	u_tuple			pos;
-	map<int, bool>	visited;
+	bool			visited;
+	e_tb			direction_goal;
 
-	s_pos_node(u_tuple pos, int my_drone_count) : pos(pos)
-	{
-		for (int i = 0; i < my_drone_count; i++)
-			visited[i] = false;
-	}
+	s_pos_node(u_tuple pos) : pos(pos), visited(false), direction_goal(BOT) {}
 };
 
 class Stock
@@ -53,9 +50,11 @@ class Stock
 		Stock(const Stock &src);
 		~Stock(void);
 
-		vector<s_pos_node>	list_pos;
+		map<int, vector<s_pos_node> >	list_pos;	// int = player_drone
 
 		void	init_list_pos(Data &data);
+		void	update(Data &data);
+		int		index_vector_first_visited_false(int drone);
 
 	protected:
 

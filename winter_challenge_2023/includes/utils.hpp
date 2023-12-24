@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 15:49:59 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 16:06:56 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/24 08:21:56 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,12 @@ enum e_radar
 	TR			= T | R,
 	BL			= B | L,
 	BR			= B | R
+};
+
+enum e_tb
+{
+	TOP,
+	BOT
 };
 
 enum e_drone_owner
