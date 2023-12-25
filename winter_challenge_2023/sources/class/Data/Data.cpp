@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/25 13:44:04 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 00:34:27 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,45 +66,61 @@ Data::~Data(void)
 
 void	Data::show_creatures(void)
 {
+	std::stringstream	ss;
+	
+	cerr
+		<< setw(4) << "id " << "│"
+		<< setw(4) << "co " << "│"
+		<< setw(4) << "ty " << "│"
+		<< setw(12) << "pos " << "│"
+		<< setw(9) << "visible " << "│"
+		<< setw(9) << "light " << "│"
+		<< " radar"
+		<< endl;
+	
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
-		if (it->second.visible)
+		// if (it->second.visible)
+			ss << it->second.pos.x << ", " << it->second.pos.y;
 			cerr
-				<< it->second.id << " "
-				<< " c(" << it->second.color << ")"
-				<< " t(" << it->second.type << ")"
-				<< " pos(" << it->second.pos.x << ", " << it->second.pos.y << ")"
-				<< " v(" << it->second.v.x << ", " << it->second.v.y << ")"
-				<< " next(" << it->second.next_pos.x << ", " << it->second.next_pos.y << ")"
-				<< " next2(" << it->second.next_next_pos.x << ", " << it->second.next_next_pos.y << ")"
-				// << "   my_scan : " << it->second.my_scan_saved
-				// << "   foe_scan : " << it->second.foe_scan_saved
-				// << "   dist : " << distance(0, it->second.id)
-				<< ((it->second.visible) ? (" visible") : (""))
-				<< ((it->second.in_light) ? (" flashed") : (" dark"))
-				<< endl;
+				<< setw(3) << it->second.id << " │"
+				<< setw(3) << it->second.color << " │"
+				<< setw(3) << it->second.type << " │"
+				<< setw(11) << ss.str() << " │"
+				<< setw(8) << ((it->second.visible) ? ("visible") : ("")) << " │"
+				<< setw(8) << ((it->second.in_light) ? ("flashed") : ("dark"));
+
+			cerr << " │ ";
+
+			for (map<int, e_radar> :: iterator it2 = it->second.radar.begin(); it2 !=  it->second.radar.end(); it2++ )
+				cerr << "drone[" << it2->first << "] " << enum_to_str(it2->second) << " │ " ;
+			
+			cerr << endl;
+
+			ss.str("");
+			ss.clear();
 	}
-	for (map<int, s_creature> :: iterator it = last_round_creatures.begin(); it != last_round_creatures.end(); it++)
-	{
-		if (it->second.visible)
-		{
-			cerr << "last round :" << endl;
-			cerr
-				<< it->second.id << " "
-				<< " c(" << it->second.color << ")"
-				<< " t(" << it->second.type << ")"
-				<< " pos(" << it->second.pos.x << ", " << it->second.pos.y << ")"
-				<< " v(" << it->second.v.x << ", " << it->second.v.y << ")"
-				<< " next(" << it->second.next_pos.x << ", " << it->second.next_pos.y << ")"
-				<< " next2(" << it->second.next_next_pos.x << ", " << it->second.next_next_pos.y << ")"
-				// << "   my_scan : " << it->second.my_scan_saved
-				// << "   foe_scan : " << it->second.foe_scan_saved
-				// << "   dist : " << distance(0, it->second.id)
-				<< ((it->second.visible) ? (" visible") : (""))
-				<< ((it->second.in_light) ? (" flashed") : (" dark"))
-				<< endl;
-		}
-	}
+	// for (map<int, s_creature> :: iterator it = last_round_creatures.begin(); it != last_round_creatures.end(); it++)
+	// {
+	// 	if (it->second.visible)
+	// 	{
+	// 		cerr << "last round :" << endl;
+	// 		cerr
+	// 			<< it->second.id << " "
+	// 			<< " c(" << it->second.color << ")"
+	// 			<< " t(" << it->second.type << ")"
+	// 			<< " pos(" << it->second.pos.x << ", " << it->second.pos.y << ")"
+	// 			<< " v(" << it->second.v.x << ", " << it->second.v.y << ")"
+	// 			<< " next(" << it->second.next_pos.x << ", " << it->second.next_pos.y << ")"
+	// 			<< " next2(" << it->second.next_next_pos.x << ", " << it->second.next_next_pos.y << ")"
+	// 			// << "   my_scan : " << it->second.my_scan_saved
+	// 			// << "   foe_scan : " << it->second.foe_scan_saved
+	// 			// << "   dist : " << distance(0, it->second.id)
+	// 			<< ((it->second.visible) ? (" visible") : (""))
+	// 			<< ((it->second.in_light) ? (" flashed") : (" dark"))
+	// 			<< endl;
+	// 	}
+	// }
 }
 
 void	Data::show_drones(void)
@@ -112,8 +128,8 @@ void	Data::show_drones(void)
 	for (map<int, s_drone> :: iterator it = drones.begin(); it != drones.end(); it++)
 	{
 		cerr
-			<< it->second.id << " : "
-			<< it->second.pos.x << " " << it->second.pos.y << " "
+			<< "drone[" << it->second.id << "] "
+			<< it->second.pos.x << ", " << it->second.pos.y << " "
 			<< enum_to_str(get_drone_zone(it->second.id))
 			<< endl;
 	}
@@ -236,9 +252,10 @@ void	Data::update()
 		cerr << " > drone " << it->first << " : " << endl;
 		for (int i = 0; i < 3; i++)		// type
 		{
-			cerr << "TYPE " << i << " : " << type[it->first][i] << endl;
+			cerr << "TYPE " << i << " : " << type[it->first][i] << "     ";
 			combo_type[i] += type[it->first][i];
-		}		
+		}
+		cerr << endl;
 	}
 	
 	for (int i = 0; i < 3; i++)
@@ -255,9 +272,10 @@ void	Data::update()
 		cerr << " > drone " << it->first << " : " << endl;
 		for (int i = 0; i < 4; i++)		// color
 		{
-			cerr << "COLOR " << i << " : " << type[it->first][i] << endl;
+			cerr << "COLOR " << i << " : " << type[it->first][i] << "     ";
 			combo_color[i] += type[it->first][i];
-		}	
+		}
+		cerr << endl;
 	}
 
 	for (int i = 0; i < 4; i++)
@@ -354,6 +372,135 @@ void	Data::update()
 				);
 			}
 		}
+	
+		// x(right - left), y(top - bot)
+	
+		array<u_tuple, 4>								final_radar_predict;
+
+		final_radar_predict[0] = (u_tuple){{ 0, 0 }};
+		final_radar_predict[1] = (u_tuple){{ 0, 0 }};
+		final_radar_predict[2] = (u_tuple){{ 0, 0 }};
+		final_radar_predict[3] = (u_tuple){{ 0, 0 }};
+
+		map<int, pair<e_radar, array<u_tuple, 2> > >	radar_predict;
+			
+		for (map<int, e_radar> :: iterator it2 = it->second.radar.begin(); it2 !=  it->second.radar.end(); it2++ )
+		{				
+			radar_predict[it2->first].first = it2->second;
+			
+			radar_predict[it2->first].second[0].x = drones[it2->first].pos.x;
+			radar_predict[it2->first].second[0].y = get_limite_zone(it->second).first;
+
+			radar_predict[it2->first].second[1].x = drones[it2->first].pos.x;
+			radar_predict[it2->first].second[1].y = get_limite_zone(it->second).second;
+
+			if (it2->second == TL || it2->second == TR)
+			{
+				if (drones[it2->first].pos.y < radar_predict[it2->first].second[1].y)
+					radar_predict[it2->first].second[1].y = drones[it2->first].pos.y;
+			}
+			else if (it2->second == BL || it2->second == BR)
+			{
+				if (drones[it2->first].pos.y > radar_predict[it2->first].second[0].y)
+					radar_predict[it2->first].second[0].y = drones[it2->first].pos.y;
+			}
+		}
+
+		for (map<int, pair<e_radar, array<u_tuple, 2> > > :: iterator it3 = radar_predict.begin(); it3 != radar_predict.end(); it3++)
+		{			
+			if (it3->second.first == TL)
+			{
+				if (final_radar_predict[0].y < it3->second.second[0].y)
+					final_radar_predict[0].y = it3->second.second[0].y;
+
+				if (final_radar_predict[1].x > it3->second.second[0].x || final_radar_predict[1].x == 0)
+					final_radar_predict[1].x = it3->second.second[0].x;
+				if (final_radar_predict[1].y < it3->second.second[0].y)
+					final_radar_predict[1].y = it3->second.second[0].y;
+
+				if (final_radar_predict[2].x > it3->second.second[1].x || final_radar_predict[2].x == 0)
+					final_radar_predict[2].x = it3->second.second[1].x;
+				if (final_radar_predict[2].y > it3->second.second[1].y || final_radar_predict[2].y == 0)
+					final_radar_predict[2].y = it3->second.second[1].y;
+
+				if (final_radar_predict[3].y > it3->second.second[1].y || final_radar_predict[3].y == 0)
+					final_radar_predict[3].y = it3->second.second[1].y;
+			}
+			else if (it3->second.first == TR)
+			{
+				if (final_radar_predict[0].x < it3->second.second[0].x)
+					final_radar_predict[0].x = it3->second.second[0].x;
+				if (final_radar_predict[0].y < it3->second.second[0].y)
+					final_radar_predict[0].y = it3->second.second[0].y;
+
+				if (final_radar_predict[1].x == 0)
+					final_radar_predict[1].x = 9999;
+				if (final_radar_predict[1].y < it3->second.second[0].y)
+					final_radar_predict[1].y = it3->second.second[0].y;
+
+				if (final_radar_predict[2].x == 0)
+					final_radar_predict[2].x = 9999;
+				if (final_radar_predict[2].y > it3->second.second[1].y || final_radar_predict[2].y == 0)
+					final_radar_predict[2].y = it3->second.second[1].y;
+
+				if (final_radar_predict[3].x < it3->second.second[1].x)
+					final_radar_predict[3].x = it3->second.second[1].x;
+				if (final_radar_predict[3].y > it3->second.second[1].y || final_radar_predict[3].y == 0)
+					final_radar_predict[3].y = it3->second.second[1].y;
+			}
+			else if (it3->second.first == BL)	// OK
+			{
+				if (final_radar_predict[0].y < it3->second.second[0].y)
+					final_radar_predict[0].y = it3->second.second[0].y;
+
+				if (final_radar_predict[1].x > it3->second.second[0].x || final_radar_predict[1].x == 0)
+					final_radar_predict[1].x = it3->second.second[0].x;
+				if (final_radar_predict[1].y < it3->second.second[0].y)
+					final_radar_predict[1].y = it3->second.second[0].y;
+
+				if (final_radar_predict[2].x > it3->second.second[1].x || final_radar_predict[2].x == 0)
+					final_radar_predict[2].x = it3->second.second[1].x;
+				if (final_radar_predict[2].y > it3->second.second[1].y || final_radar_predict[2].y == 0)
+					final_radar_predict[2].y = it3->second.second[1].y;
+
+				if (final_radar_predict[3].y > it3->second.second[1].y || final_radar_predict[3].y == 0)
+					final_radar_predict[3].y = it3->second.second[1].y;
+			}
+			else if (it3->second.first == BR)
+			{
+				if (final_radar_predict[0].x < it3->second.second[0].x)
+					final_radar_predict[0].x = it3->second.second[0].x;
+				if (final_radar_predict[0].y < it3->second.second[0].y)
+					final_radar_predict[0].y = it3->second.second[0].y;
+
+				if (final_radar_predict[1].x == 0)
+					final_radar_predict[1].x = 9999;
+				if (final_radar_predict[1].y < it3->second.second[0].y)
+					final_radar_predict[1].y = it3->second.second[0].y;
+
+				if (final_radar_predict[2].x == 0)
+					final_radar_predict[2].x = 9999;
+				if (final_radar_predict[2].y > it3->second.second[1].y || final_radar_predict[2].y == 0)
+					final_radar_predict[2].y = it3->second.second[1].y;
+
+				if (final_radar_predict[3].x < it3->second.second[1].x)
+					final_radar_predict[3].x = it3->second.second[1].x;
+				if (final_radar_predict[3].y > it3->second.second[1].y || final_radar_predict[3].y == 0)
+					final_radar_predict[3].y = it3->second.second[1].y;	
+			}			
+		}
+
+		cerr << it->second.id << " : ";
+		cerr << "[0]" << final_radar_predict[0].x << ", " << final_radar_predict[0].y << "   ";
+		cerr << "[1]" << final_radar_predict[1].x << ", " << final_radar_predict[1].y << "   ";
+		cerr << "[2]" << final_radar_predict[2].x << ", " << final_radar_predict[2].y << "   ";
+		cerr << "[3]" << final_radar_predict[3].x << ", " << final_radar_predict[3].y << endl;
+	
+		it->second.radar_predict = final_radar_predict;
+		it->second.predict_center = (u_tuple){{
+			round((final_radar_predict[0].x + final_radar_predict[2].x) / 2.0),
+			round((final_radar_predict[0].y + final_radar_predict[2].y) / 2.0)
+		}};
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:40:05 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/24 19:51:45 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/25 14:32:31 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	game_loop(Data &data, Stock &stock)
 	{
 		cerr << "round : " << g_round << endl;
 		data.update();
-		// data.show_creatures();
+		data.show_creatures();
 		data.show_drones();
 
 		if (g_round == 0)

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/24 19:40:26 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 00:31:24 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,14 @@ struct s_creature
 
 	map<int, e_radar>	radar;
 
+	array<u_tuple, 4>	radar_predict;		// Square :
+											// [0] top left corner,
+											// [1] top right corner,
+											// [2] bot right corner,
+											// [3] bot left corner
+
+	u_tuple				predict_center;
+
 	bool				in_light;			// 0 dark | 1 flashed
 };
 
@@ -105,6 +113,7 @@ class Data
 		e_radar					biggest_radar_direction(int drone_id);
 		int 					count_no_scaned(void);
 		e_zone					get_drone_zone(int drone_id);
+		pair<int, int>			get_limite_zone(s_creature creature);
 		u_tuple					get_round_move(u_tuple origin, u_tuple cible, int max_dist);
 
 	protected:

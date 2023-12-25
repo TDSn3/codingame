@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:32:13 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/20 16:36:00 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/25 15:16:36 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,17 @@ string	enum_to_str(e_zone token)
 		return ("L3");
 	else	// (token == R3)
 		return ("R3");
+}
+
+string	enum_to_str(e_radar token)
+{
+	if (token == TL)
+		return ("TL");
+	else if (token == TR)
+		return ("TR");
+	else if (token == BL)
+		return ("BL");
+	else	// (token == BR)
+		return ("BR");
+
 }

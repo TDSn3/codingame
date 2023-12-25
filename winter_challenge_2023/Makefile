@@ -13,6 +13,7 @@ SRCS		=	class/Data/Data.cpp						\
 				class/Data/count_no_scaned.cpp			\
 				class/Data/get_drone_zone.cpp			\
 				class/Data/get_round_move.cpp			\
+				class/Data/get_limite_zone.cpp			\
 				class/Stock/Stock.cpp					\
 				game_loop.cpp							\
 				distance_tuple.cpp						\
