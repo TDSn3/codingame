@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/24 12:02:40 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/25 13:44:04 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,8 @@ void	Data::show_drones(void)
 	{
 		cerr
 			<< it->second.id << " : "
-			<< it->second.pos.x << " " << it->second.pos.y
+			<< it->second.pos.x << " " << it->second.pos.y << " "
+			<< enum_to_str(get_drone_zone(it->second.id))
 			<< endl;
 	}
 }
@@ -190,6 +191,11 @@ void	Data::update()
 
 /* ************************************************************************** */
 
+	map<int, array<int, 3> >	type;	//	[0] type 0,	[1] type 1,	[2] type 2
+	map<int, array<int, 4> >	color;	//	[0] pink,	[1] yellow,	[2] green,	[3] blue
+
+	int		potential_score = 0;
+
 	cin >> drone_scan_count; cin.ignore();
 
 	for (int i = 0; i < drone_scan_count; i++)
@@ -205,6 +211,65 @@ void	Data::update()
 			creatures[creature_id].scan_no_saved[drone_id].foe_scan_no_saved = true;
 		}
 	}
+
+	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
+	{
+		for (size_t i = 0; i < drones.size() ; i++)
+		{
+			if (it->second.scan_no_saved[i].my_scan_no_saved)
+			{
+				potential_score += creatures[it->first].type + 1;
+				type[i][creatures[it->first].type]++;
+				color[i][creatures[it->first].color]++;
+				break ;
+			}
+		}
+	}
+
+/* ************************************************************************** */
+
+	int	combo_type[3] = { 0, 0, 0 };
+	int	combo_color[4] = { 0, 0, 0, 0 };
+
+	for (map<int, array<int, 3> > :: iterator it = type.begin(); it != type.end(); it++)
+	{
+		cerr << " > drone " << it->first << " : " << endl;
+		for (int i = 0; i < 3; i++)		// type
+		{
+			cerr << "TYPE " << i << " : " << type[it->first][i] << endl;
+			combo_type[i] += type[it->first][i];
+		}		
+	}
+	
+	for (int i = 0; i < 3; i++)
+	{
+		if (combo_type[i] == 4)
+		{
+			cerr << " FULL TYPE " << i << endl;
+			potential_score += 4;
+		}
+	}
+	
+	for (map<int, array<int, 4> > :: iterator it = color.begin(); it != color.end(); it++)
+	{
+		cerr << " > drone " << it->first << " : " << endl;
+		for (int i = 0; i < 4; i++)		// color
+		{
+			cerr << "COLOR " << i << " : " << type[it->first][i] << endl;
+			combo_color[i] += type[it->first][i];
+		}	
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (combo_type[i] == 3)
+		{
+			cerr << " FULL COLOR " << i << endl;
+			potential_score += 3;
+		}
+	}
+
+	cerr << "potential score " << potential_score << endl;
 
 /* ************************************************************************** */
 

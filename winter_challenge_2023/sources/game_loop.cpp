@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:40:05 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/24 12:06:30 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/24 19:51:45 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	game_loop(Data &data, Stock &stock)
 			stock.init_list_pos(data);
 		else
 			stock.update(data);
-
-		cerr << enum_to_str(data.get_drone_zone(0)) << endl;
 
 		for (int i = 0; i < data.my_drone_count; i++)
 		{

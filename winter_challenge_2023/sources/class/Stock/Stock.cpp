@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:32 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/24 14:10:24 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/24 19:51:15 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ void	Stock::update(Data &data)
 {
 	for (size_t i = 0; i < data.drones_player.size(); i++)
 	{
-		cerr << "stock_update : " << i << " " << index_vector_first_visited_false(i) << " (/" << list_pos[i].size() << ")" << endl;
+		// cerr << "stock_update : " << i << " " << index_vector_first_visited_false(i) << " (/" << list_pos[i].size() << ")" << endl;
 
 		if (index_vector_first_visited_false(i) == -1)
 		{

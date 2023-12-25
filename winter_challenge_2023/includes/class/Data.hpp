@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/24 12:19:01 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/24 19:40:26 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ class Data
 		vector<s_drone*>		drones_player;	// int for the int of the map<int, s_drone>
 		int						my_score;
 		int						foe_score;
+		int						my_scan_score_not_saved;
 		int						my_scan_count;
 		int						foe_scan_count;
 		int						my_drone_count;
