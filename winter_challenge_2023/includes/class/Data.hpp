@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 12:24:50 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 16:49:40 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ class Data
 		e_radar					biggest_radar_direction(int drone_id);
 		int 					count_no_scaned(void);
 		e_zone					get_drone_zone(int drone_id);
-		e_zone					get_drone_simple_zone(int drone_id);
+		e_zone					get_drone_player_simple_zone(int drone_id);
 		pair<int, int>			get_limite_zone(s_creature creature);
 		u_tuple					get_round_move(u_tuple origin, u_tuple cible, int max_dist);
 

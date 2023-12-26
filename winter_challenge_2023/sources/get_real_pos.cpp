@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 15:50:43 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 15:52:59 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 17:31:22 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ u_tuple	get_real_pos(Data &data, int player_drone_id, u_tuple pos)
 	u_tuple	ret;
 	s_drone	&drone_player = *data.drones_player[player_drone_id];
 
-	cerr <<  drone_player.id << " cible : " << pos.x << " " << pos.y << endl;
+	cerr <<  drone_player.id << " : cible : " << pos.x << ", " << pos.y << "   ";
 
 	ret = data.get_round_move(
 		(u_tuple){{ drone_player.pos.x, drone_player.pos.y }},
@@ -32,7 +32,10 @@ u_tuple	get_real_pos(Data &data, int player_drone_id, u_tuple pos)
 
 	ret = ray_casting_pos(data, (u_tuple){{ drone_player.pos.x, drone_player.pos.y }}, ret);
 
-	cerr << drone_player.id << " real cible : " << ret.x << " " << ret.y << endl;
+	cerr << "real cible : " << ret.x << ", " << ret.y << endl;
+
+	if (ret.y < 500)
+		ret.y = 500;
 
 	return (ret);	
 }

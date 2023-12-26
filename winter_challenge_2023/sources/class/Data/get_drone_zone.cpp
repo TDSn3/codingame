@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 15:54:56 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 11:58:34 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 16:56:39 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 e_zone	Data::get_drone_zone(int drone_id)
 {
-	int x = drones[drone_id].pos.x;
-	int y = drones[drone_id].pos.y;
+	double x = drones[drone_id].pos.x;
+	double y = drones[drone_id].pos.y;
 
 	if (x <= 4999)	// Zone gauche (L)
 	{
@@ -41,9 +41,9 @@ e_zone	Data::get_drone_zone(int drone_id)
 	}
 }
 
-e_zone	Data::get_drone_simple_zone(int drone_id)
+e_zone	Data::get_drone_player_simple_zone(int drone_id)
 {
-	int y = drones[drone_id].pos.y;
+	int y = drones_player[drone_id]->pos.y;
 
 	if (y <= 2499)
 		return Z0;

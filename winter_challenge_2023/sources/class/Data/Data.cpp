@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 13:29:53 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 16:56:17 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	Data::show_drones(void)
 		cerr
 			<< "drone[" << it->second.id << "] "
 			<< it->second.pos.x << ", " << it->second.pos.y << " "
-			<< enum_to_str(get_drone_zone(it->second.id))
+			<< enum_to_str(get_drone_zone(it->first))
 			<< endl;
 	}
 }
@@ -212,7 +212,7 @@ void	Data::update()
 	map<int, array<int, 3> >	type;	//	[0] type 0,	[1] type 1,	[2] type 2
 	map<int, array<int, 4> >	color;	//	[0] pink,	[1] yellow,	[2] green,	[3] blue
 
-	int		potential_score = 0;
+	// int		potential_score = 0;
 
 	cin >> drone_scan_count; cin.ignore();
 
@@ -236,7 +236,7 @@ void	Data::update()
 		{
 			if (it->second.scan_no_saved[i].my_scan_no_saved)
 			{
-				potential_score += creatures[it->first].type + 1;
+				// potential_score += creatures[it->first].type + 1;
 				type[i][creatures[it->first].type]++;
 				color[i][creatures[it->first].color]++;
 				break ;
@@ -251,45 +251,45 @@ void	Data::update()
 
 	for (map<int, array<int, 3> > :: iterator it = type.begin(); it != type.end(); it++)
 	{
-		cerr << " > drone " << it->first << " : " << endl;
+		// cerr << " > drone " << it->first << " : " << endl;
 		for (int i = 0; i < 3; i++)		// type
 		{
-			cerr << "TYPE " << i << " : " << type[it->first][i] << "     ";
+			// cerr << "TYPE " << i << " : " << type[it->first][i] << "     ";
 			combo_type[i] += type[it->first][i];
 		}
-		cerr << endl;
+		// cerr << endl;
 	}
 	
 	for (int i = 0; i < 3; i++)
 	{
 		if (combo_type[i] == 4)
 		{
-			cerr << " FULL TYPE " << i << endl;
-			potential_score += 4;
+			// cerr << " FULL TYPE " << i << endl;
+			// potential_score += 4;
 		}
 	}
 	
 	for (map<int, array<int, 4> > :: iterator it = color.begin(); it != color.end(); it++)
 	{
-		cerr << " > drone " << it->first << " : " << endl;
+		// cerr << " > drone " << it->first << " : " << endl;
 		for (int i = 0; i < 4; i++)		// color
 		{
-			cerr << "COLOR " << i << " : " << type[it->first][i] << "     ";
+			// cerr << "COLOR " << i << " : " << type[it->first][i] << "     ";
 			combo_color[i] += type[it->first][i];
 		}
-		cerr << endl;
+		// cerr << endl;
 	}
 
 	for (int i = 0; i < 4; i++)
 	{
 		if (combo_type[i] == 3)
 		{
-			cerr << " FULL COLOR " << i << endl;
-			potential_score += 3;
+			// cerr << " FULL COLOR " << i << endl;
+			// potential_score += 3;
 		}
 	}
 
-	cerr << "potential score " << potential_score << endl;
+	// cerr << "potential score " << potential_score << endl;
 
 /* ************************************************************************** */
 
