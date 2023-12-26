@@ -20,6 +20,7 @@ SRCS		=	class/Data/Data.cpp						\
 				instruction_move.cpp					\
 				instruction_wait.cpp					\
 				choice_pos.cpp							\
+				get_real_pos.cpp						\
 				choice_light.cpp						\
 				enum_to_str.cpp							\
 				main.cpp								\

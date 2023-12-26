@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 02:22:58 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 13:29:53 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,9 +375,9 @@ void	Data::update()
 				);
 			}
 		}
-	
-		// x(right - left), y(top - bot)
-	
+
+/* ************************************************************************** */	
+		
 		array<u_tuple, 4>								final_radar_predict;
 
 		final_radar_predict[0] = (u_tuple){{ 0, 0 }};
@@ -522,6 +522,29 @@ s_drone	*Data::get_nearest_drone(u_tuple origin)
 		{
 			min_dist = dist;
 			ret = &it->second;
+		}
+	}
+
+	return (ret);
+}
+
+s_drone	*Data::get_nearest_player_drone(u_tuple origin)
+{
+	double	min_dist = numeric_limits<double>::max();
+	double	dist;
+	s_drone	*ret;
+
+	for (map<int, s_drone> :: iterator it = drones.begin(); it != drones.end(); it++)
+	{
+		if (it->second.owner == PLAYER)
+		{
+			dist = distance_tuple(origin, it->second.pos);
+
+			if (dist < min_dist)
+			{
+				min_dist = dist;
+				ret = &it->second;
+			}
 		}
 	}
 

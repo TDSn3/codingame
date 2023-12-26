@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:32 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/24 19:51:15 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 15:44:04 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,19 +163,35 @@ void	Stock::init_list_pos(Data &data)
 }
 
 void	Stock::update(Data &data)
-{
+{	
 	for (size_t i = 0; i < data.drones_player.size(); i++)
 	{
-		// cerr << "stock_update : " << i << " " << index_vector_first_visited_false(i) << " (/" << list_pos[i].size() << ")" << endl;
+		cerr << "stock_update : " << data.drones_player[i]->id << " : " << index_vector_first_visited_false(i) << "  /" << list_pos[i].size() << "" << endl;
+
+		for (size_t j = 0; j < list_pos[i].size(); j++)
+		{
+			if (list_pos[i][j].visited == false)
+			{
+				if (list_pos[i][j].pos.y == 500 && data.drones_player[i]->pos.y <= list_pos[i][j].pos.y)
+				{
+					cerr << data.drones_player[i]->id << " : valided the checkpoint " << list_pos[i][j].pos.y << endl;
+					list_pos[i][j].visited = true;
+				}
+				else if (data.drones_player[i]->pos.y >= list_pos[i][j].pos.y - 300 && data.drones_player[i]->pos.y <= list_pos[i][j].pos.y + 300)
+				{
+					cerr << data.drones_player[i]->id << ": valided the checkpoint " << list_pos[i][j].pos.y << endl;
+					list_pos[i][j].visited = true;
+				}
+
+				break ;
+			}
+		}
 
 		if (index_vector_first_visited_false(i) == -1)
 		{
-			if (data.drones_player[i]->pos.x < 4999)	// left
-				for (size_t j = 0; j < list_pos[i].size(); j++)
-					list_pos[i][j].visited = false;
-			else	// right
-				for (size_t j = 0; j < list_pos[i].size(); j++)
-					list_pos[i][j].visited = false;	
+			cerr << "RESET LIST POS" << endl;
+			for (size_t j = 0; j < list_pos[i].size(); j++)
+				list_pos[i][j].visited = false;
 		}
 	}
 }
