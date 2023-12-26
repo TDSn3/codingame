@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 00:31:24 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 02:19:27 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ struct s_creature
 
 	map<int, s_scan>	scan_no_saved;		// PLAYER & FOE
 
+	bool				radar_signal;
+
 	map<int, e_radar>	radar;
 
 	array<u_tuple, 4>	radar_predict;		// Square :
@@ -64,6 +66,7 @@ struct s_creature
 											// [3] bot left corner
 
 	u_tuple				predict_center;
+	bool				predict_center_target_by_drone;
 
 	bool				in_light;			// 0 dark | 1 flashed
 };

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 13:41:35 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/24 13:05:01 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 02:20:47 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,72 @@ u_tuple	ray_casting_pos(Data &data, u_tuple origin, u_tuple target);
 void	safe_pos_arround_origin(Data &data, u_tuple origin, int dist, vector<u_tuple> &safe_pos);
 bool	check_proximity_during_movement(u_tuple monster_pos, u_tuple monster_pos_next, u_tuple drone_pos, u_tuple drone_pos_next);
 
+bool	is_scaned_no_save(map<int, s_creature> :: iterator it)
+{
+	for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
+	{
+		if (it2->second.my_scan_no_saved)
+			return (true);
+	}	
+	return (false);
+}
+
+u_tuple get_drone_predict_center_target(Data &data, int drone)
+{
+	double		dist =  numeric_limits<double>::max();
+	u_tuple		ret = {{ -1, -1 }};
+	s_creature	*creature = nullptr;
+	
+	for (map<int, s_creature> :: iterator it = data.creatures.begin(); it != data.creatures.end(); it++)
+	{
+		if (it->second.type == -1)
+			continue ;
+		
+		if (!it->second.radar_signal || it->second.predict_center_target_by_drone || is_scaned_no_save(it))
+			continue ;
+		
+		double temp = distance_tuple(it->second.predict_center, data.drones_player[drone]->pos);
+
+		if (temp < dist)
+		{
+			creature = &it->second;
+			dist = temp;
+			ret = it->second.predict_center;
+		}
+	}
+
+	if (ret.x == -1)
+	{
+		ret = (u_tuple){{
+			data.drones_player[drone]->pos.x,
+			0
+		}};
+	}
+	else
+	{
+		creature->predict_center_target_by_drone = true;
+	}
+
+	ret = data.get_round_move(
+		(u_tuple){{ data.drones_player[drone]->pos.x, data.drones_player[drone]->pos.y }},
+		ret,
+		600
+	);
+
+	ret = ray_casting_pos(data, (u_tuple){{ data.drones_player[drone]->pos.x, data.drones_player[drone]->pos.y }}, ret);
+
+	return (ret);
+}
+
 u_tuple choice_pos(Data &data, Stock &stock, int drone)
 {
 	u_tuple			ret;
 	
+	ret = get_drone_predict_center_target(data, drone);
+	cerr << drone << " : " << ret.x << ", " << ret.y << endl;
+
+	return ret;
+
 	for (size_t i = 0; i < stock.list_pos[drone].size(); i++)
 	{
 		if (!stock.list_pos[drone][i].visited)

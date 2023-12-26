@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 00:34:27 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 02:22:58 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,8 @@ void	Data::show_creatures(void)
 
 			for (map<int, e_radar> :: iterator it2 = it->second.radar.begin(); it2 !=  it->second.radar.end(); it2++ )
 				cerr << "drone[" << it2->first << "] " << enum_to_str(it2->second) << " │ " ;
+			
+			cerr << (it->second.radar_signal ? "" : "NO SIGNAL");
 			
 			cerr << endl;
 
@@ -324,6 +326,7 @@ void	Data::update()
 			creatures[creature_id].radar[drone_id] = BL;
 		else
 			creatures[creature_id].radar[drone_id] = BR;
+		creatures[creature_id].radar_signal = true;
 	}
 
 /* ************************************************************************** */
@@ -490,17 +493,18 @@ void	Data::update()
 			}			
 		}
 
-		cerr << it->second.id << " : ";
-		cerr << "[0]" << final_radar_predict[0].x << ", " << final_radar_predict[0].y << "   ";
-		cerr << "[1]" << final_radar_predict[1].x << ", " << final_radar_predict[1].y << "   ";
-		cerr << "[2]" << final_radar_predict[2].x << ", " << final_radar_predict[2].y << "   ";
-		cerr << "[3]" << final_radar_predict[3].x << ", " << final_radar_predict[3].y << endl;
+		// cerr << it->second.id << " : ";
+		// cerr << "[0]" << final_radar_predict[0].x << ", " << final_radar_predict[0].y << "   ";
+		// cerr << "[1]" << final_radar_predict[1].x << ", " << final_radar_predict[1].y << "   ";
+		// cerr << "[2]" << final_radar_predict[2].x << ", " << final_radar_predict[2].y << "   ";
+		// cerr << "[3]" << final_radar_predict[3].x << ", " << final_radar_predict[3].y << endl;
 	
 		it->second.radar_predict = final_radar_predict;
 		it->second.predict_center = (u_tuple){{
 			round((final_radar_predict[0].x + final_radar_predict[2].x) / 2.0),
 			round((final_radar_predict[0].y + final_radar_predict[2].y) / 2.0)
 		}};
+		it->second.predict_center_target_by_drone = false;
 	}
 }
 
@@ -550,6 +554,7 @@ void	Data::reset(void)
 		it->second.next_next_pos.y = -1;
 		it->second.my_scan_saved = false;
 		it->second.foe_scan_saved = false;
+		it->second.radar_signal = false;
 		
 		for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
 		{
