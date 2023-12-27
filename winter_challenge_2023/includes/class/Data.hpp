@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 16:49:40 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/27 14:20:17 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ struct s_drone
 	int				battery;
 	e_drone_owner	owner;
 	map<int, int>	round_light;	// round, light
+
+	bool			use_predict_last_round;
+	bool			target_creature;
+	s_creature		*target_creature_pt;
+	u_tuple			target_creature_predict_center;
 };
 
 class Data
@@ -120,6 +125,10 @@ class Data
 		e_zone					get_drone_player_simple_zone(int drone_id);
 		pair<int, int>			get_limite_zone(s_creature creature);
 		u_tuple					get_round_move(u_tuple origin, u_tuple cible, int max_dist);
+		pair<bool, int>			is_full_scanned(int player_drone_id);
+		pair<bool, int>			is_full_scanned(int player_drone_id, int type);
+		int						get_type_scanned(int type);
+		int						get_type_scanned(int player_drone_id, int type);
 
 	protected:
 

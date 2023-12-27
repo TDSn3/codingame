@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 16:56:17 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/26 17:48:13 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,10 @@ void	Data::update()
 		drones[drone_id].id = drone_id;
 		drones[drone_id].owner = PLAYER;
 		if (g_round == 0)
+		{
 			drones[drone_id].round_light[g_round] = 0;
+			drones[drone_id].use_predict_last_round = false;
+		}
 	}
 
 	cin >> foe_drone_count; cin.ignore();

@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 16:40:05 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 15:55:09 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/27 19:51:30 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	game_loop(Data &data, Stock &stock)
 	{
 		cerr << "round : " << g_round << endl;
 		data.update();
-		data.show_creatures();
+		// data.show_creatures();
 		data.show_drones();
 
 		if (g_round == 0)
@@ -31,8 +31,8 @@ void	game_loop(Data &data, Stock &stock)
 
 		for (int i = 0; i < data.my_drone_count; i++)
 		{
-			light = choice_light(data, stock, i);	// light before pos because stock change in choice_pos()
 			pos = choice_pos(data, stock, i);
+			light = choice_light(data, stock, i, pos);
 			instruction_move(pos, light);
 		}
 
