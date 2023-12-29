@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 08:57:10 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/27 14:20:17 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/29 20:08:35 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ struct s_drone
 	e_drone_owner	owner;
 	map<int, int>	round_light;	// round, light
 
+	int				potential_point;			// without bonus first scan
+	int				first_scan_potential_point;	// with bonus first scan
+	int				potential_point_combo;
+	int				first_potential_point_combo;
+
 	bool			use_predict_last_round;
 	bool			target_creature;
 	s_creature		*target_creature_pt;
@@ -93,6 +98,9 @@ class Data
 		Data(void);
 		Data(const Data &src);
 		~Data(void);
+
+		typedef map<int, s_creature> :: iterator	it_creatures;
+		typedef map<int, s_drone> :: iterator		it_drones;
 
 		int						creature_count;
 		map<int, s_creature>	creatures;
@@ -118,6 +126,7 @@ class Data
 		s_drone					*get_nearest_drone(u_tuple origin);
 		s_drone					*get_nearest_player_drone(u_tuple origin);
 		bool					is_in_light(u_tuple origin);
+		bool					is_creature_already_scanned(int id_creature);
 		double					distance(int drone_id, int creature_id);
 		e_radar					biggest_radar_direction(int drone_id);
 		int 					count_no_scaned(void);
@@ -125,8 +134,13 @@ class Data
 		e_zone					get_drone_player_simple_zone(int drone_id);
 		pair<int, int>			get_limite_zone(s_creature creature);
 		u_tuple					get_round_move(u_tuple origin, u_tuple cible, int max_dist);
+		bool					is_scanned(int drone_id, int creature_id);
 		pair<bool, int>			is_full_scanned(int player_drone_id);
-		pair<bool, int>			is_full_scanned(int player_drone_id, int type);
+		pair<bool, int>			is_full_scanned(int drone_id, int type);
+		pair<bool, int>			is_full_scanned(int drone_id, int color, bool useless);
+		pair<bool, int>			is_full_scanned(e_drone_owner player_or_foe, int type);
+		pair<bool, int>			is_full_scanned(e_drone_owner player_or_foe, int color, bool useless);
+		void					calculate_advantage_score(void);
 		int						get_type_scanned(int type);
 		int						get_type_scanned(int player_drone_id, int type);
 

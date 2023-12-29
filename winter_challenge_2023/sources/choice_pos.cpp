@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 13:41:35 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/27 16:45:01 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/29 10:42:14 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ u_tuple get_drone_predict_center_target(Data &data, int player_drone_id, e_tb di
 	double		dist =  numeric_limits<double>::max();
 	u_tuple		ret = {{ -1, -1 }};
 	s_creature	*creature = nullptr;
+	
+	(void) direction_goal;
 	
 	for (map<int, s_creature> :: iterator it = data.creatures.begin(); it != data.creatures.end(); it++)
 	{

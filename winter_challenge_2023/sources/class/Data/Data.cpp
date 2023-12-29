@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 17:48:13 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/29 21:58:10 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	Data::show_creatures(void)
 			cerr << " │ ";
 
 			for (map<int, e_radar> :: iterator it2 = it->second.radar.begin(); it2 !=  it->second.radar.end(); it2++ )
-				cerr << "drone[" << it2->first << "] " << enum_to_str(it2->second) << " │ " ;
+				cerr << "[" << it2->first << "] " << enum_to_str(it2->second) << " │ " ;
 			
 			cerr << (it->second.radar_signal ? "" : "NO SIGNAL");
 			
@@ -191,6 +191,10 @@ void	Data::update()
 		{
 			drones[drone_id].round_light[g_round] = 0;
 			drones[drone_id].use_predict_last_round = false;
+			drones[drone_id].potential_point = 0;
+			drones[drone_id].first_scan_potential_point = 0;
+			drones[drone_id].potential_point_combo = 0;
+			drones[drone_id].first_potential_point_combo = 0;
 		}
 	}
 
@@ -208,14 +212,16 @@ void	Data::update()
 		drones[drone_id].id = drone_id;
 		drones[drone_id].owner = FOE;
 		drones[drone_id].round_light[g_round] = -1;
+		if (g_round == 0)
+		{
+			drones[drone_id].potential_point = 0;
+			drones[drone_id].first_scan_potential_point = 0;
+			drones[drone_id].potential_point_combo = 0;
+			drones[drone_id].first_potential_point_combo = 0;
+		}
 	}
 
 /* ************************************************************************** */
-
-	map<int, array<int, 3> >	type;	//	[0] type 0,	[1] type 1,	[2] type 2
-	map<int, array<int, 4> >	color;	//	[0] pink,	[1] yellow,	[2] green,	[3] blue
-
-	// int		potential_score = 0;
 
 	cin >> drone_scan_count; cin.ignore();
 
@@ -232,67 +238,6 @@ void	Data::update()
 			creatures[creature_id].scan_no_saved[drone_id].foe_scan_no_saved = true;
 		}
 	}
-
-	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
-	{
-		for (size_t i = 0; i < drones.size() ; i++)
-		{
-			if (it->second.scan_no_saved[i].my_scan_no_saved)
-			{
-				// potential_score += creatures[it->first].type + 1;
-				type[i][creatures[it->first].type]++;
-				color[i][creatures[it->first].color]++;
-				break ;
-			}
-		}
-	}
-
-/* ************************************************************************** */
-
-	int	combo_type[3] = { 0, 0, 0 };
-	int	combo_color[4] = { 0, 0, 0, 0 };
-
-	for (map<int, array<int, 3> > :: iterator it = type.begin(); it != type.end(); it++)
-	{
-		// cerr << " > drone " << it->first << " : " << endl;
-		for (int i = 0; i < 3; i++)		// type
-		{
-			// cerr << "TYPE " << i << " : " << type[it->first][i] << "     ";
-			combo_type[i] += type[it->first][i];
-		}
-		// cerr << endl;
-	}
-	
-	for (int i = 0; i < 3; i++)
-	{
-		if (combo_type[i] == 4)
-		{
-			// cerr << " FULL TYPE " << i << endl;
-			// potential_score += 4;
-		}
-	}
-	
-	for (map<int, array<int, 4> > :: iterator it = color.begin(); it != color.end(); it++)
-	{
-		// cerr << " > drone " << it->first << " : " << endl;
-		for (int i = 0; i < 4; i++)		// color
-		{
-			// cerr << "COLOR " << i << " : " << type[it->first][i] << "     ";
-			combo_color[i] += type[it->first][i];
-		}
-		// cerr << endl;
-	}
-
-	for (int i = 0; i < 4; i++)
-	{
-		if (combo_type[i] == 3)
-		{
-			// cerr << " FULL COLOR " << i << endl;
-			// potential_score += 3;
-		}
-	}
-
-	// cerr << "potential score " << potential_score << endl;
 
 /* ************************************************************************** */
 
@@ -509,6 +454,10 @@ void	Data::update()
 		}};
 		it->second.predict_center_target_by_drone = false;
 	}
+
+/* ************************************************************************** */
+
+	calculate_advantage_score();
 }
 
 s_drone	*Data::get_nearest_drone(u_tuple origin)
@@ -563,6 +512,11 @@ bool	Data::is_in_light(u_tuple origin)
 	return (false);
 }
 
+bool	Data::is_creature_already_scanned(int id_creature)
+{
+	return (creatures[id_creature].my_scan_saved = true || creatures[id_creature].foe_scan_saved == true);
+}
+
 void	Data::reset(void)
 {	
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
@@ -578,8 +532,8 @@ void	Data::reset(void)
 		it->second.next_pos.y = -1;
 		it->second.next_next_pos.x = -1;
 		it->second.next_next_pos.y = -1;
-		it->second.my_scan_saved = false;
-		it->second.foe_scan_saved = false;
+		// it->second.my_scan_saved = false;
+		// it->second.foe_scan_saved = false;
 		it->second.radar_signal = false;
 		
 		for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
@@ -590,6 +544,15 @@ void	Data::reset(void)
 
 		it->second.in_light = false;
 	}
+
+	for (it_drones it = drones.begin(); it != drones.end(); it++)
+	{
+		it->second.potential_point = 0;
+		it->second.first_scan_potential_point = 0;
+		it->second.potential_point_combo = 0;
+		it->second.first_potential_point_combo = 0;
+	}
+
 }
 
 /*   MÉTHODE PRIVATE   ****************************************************** */

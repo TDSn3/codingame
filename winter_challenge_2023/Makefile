@@ -7,31 +7,33 @@ CPPFLAGS	=	-MMD
 CXXFLAGS	=	-Wall -Wextra #-Werror
 
 #ADD YOUR SOURCES BELOW WITHOUT THE SOURCE PREFIX MAIN.C GIVEN AS EXAMPLE
-SRCS		=	class/Data/Data.cpp						\
-				class/Data/distance.cpp					\
-				class/Data/biggest_radar_direction.cpp	\
-				class/Data/count_no_scaned.cpp			\
-				class/Data/get_drone_zone.cpp			\
-				class/Data/get_round_move.cpp			\
-				class/Data/get_limite_zone.cpp			\
-				class/Data/is_full_scanned.cpp			\
-				class/Data/get_type_scanned.cpp			\
-				class/Stock/Stock.cpp					\
-				game_loop.cpp							\
-				distance_tuple.cpp						\
-				instruction_move.cpp					\
-				instruction_wait.cpp					\
-				choice_pos.cpp							\
-				get_real_pos.cpp						\
-				choice_light.cpp						\
-				enum_to_str.cpp							\
-				main.cpp								\
+SRCS		=	class/Data/Data.cpp							\
+				class/Data/distance.cpp						\
+				class/Data/biggest_radar_direction.cpp		\
+				class/Data/count_no_scaned.cpp				\
+				class/Data/get_drone_zone.cpp				\
+				class/Data/get_round_move.cpp				\
+				class/Data/get_limite_zone.cpp				\
+				class/Data/is_scanned.cpp					\
+				class/Data/is_full_scanned.cpp				\
+				class/Data/get_type_scanned.cpp				\
+				class/Data/calculate_advantage_score.cpp	\
+				class/Stock/Stock.cpp						\
+				game_loop.cpp								\
+				distance_tuple.cpp							\
+				instruction_move.cpp						\
+				instruction_wait.cpp						\
+				choice_pos.cpp								\
+				get_real_pos.cpp							\
+				choice_light.cpp							\
+				enum_to_str.cpp								\
+				main.cpp									\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR
-INC_FILES	= 	utils.hpp							\
-				class/Data.hpp						\
-				class/Stock.hpp						\
-				header.hpp							\
+INC_FILES	= 	utils.hpp									\
+				class/Data.hpp								\
+				class/Stock.hpp								\
+				header.hpp									\
 
 INC_PATH	=	includes/
 INC			=	-I $(INC_PATH)
