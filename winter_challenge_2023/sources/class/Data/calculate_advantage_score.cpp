@@ -6,67 +6,59 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/29 10:53:56 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/29 23:24:12 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/31 19:21:01 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "../../../includes/header.hpp"
 
-struct CompareDronePosY
-{
-    bool	operator () (const s_drone *a, const s_drone *b)
-	{
-        return (a->pos.y < b->pos.y);
-    }
-};
-
 void	Data::calculate_advantage_score(void)
 {
-	cerr << "TYPE :\n"; 
+	// cerr << "TYPE :\n"; 
 
-	for (it_drones it = drones.begin(); it != drones.end(); it++)
-	{
-		cerr << "[" << it->second.id << "] ";
-		for (int type = 0; type < 3; type++)
-		{
-			if (type == 0)
-				cerr << " (0_tentacle) ";
-			if (type == 1)
-				cerr << " (1_fish) ";
-			if (type == 2)
-				cerr << " (2_pincer) ";
+	// for (it_drones it = drones.begin(); it != drones.end(); it++)
+	// {
+		// cerr << "[" << it->second.id << "] ";
+		// for (int type = 0; type < 3; type++)
+		// {
+		// 	if (type == 0)
+		// 		cerr << " (0_tentacle) ";
+		// 	if (type == 1)
+		// 		cerr << " (1_fish) ";
+		// 	if (type == 2)
+		// 		cerr << " (2_pincer) ";
 
-			cerr << " : " << is_full_scanned(it->first, type).second << (is_full_scanned(it->second.owner, type).first ? "*" : "") << "  │  ";
+		// 	cerr << " : " << is_full_scanned(it->first, type).second << (is_full_scanned(it->second.owner, type).first ? "*" : "") << "  │  ";
 
 			// drones[it->first].potential_score += stock_is_full_scanned.second * (type + 1);
-		}
+		// }
 
-		cerr << endl;
-	}
+		// cerr << endl;
+	// }
 
-	cerr << "COLOR :\n";
+	// cerr << "COLOR :\n";
 
-	for (it_drones it = drones.begin(); it != drones.end(); it++)
-	{
-		cerr << "[" << it->second.id << "] ";
-		for (int color = 0; color < 4; color++)
-		{
-			if (color == 0)
-				cerr << " (0_pink) ";
-			if (color == 1)
-				cerr << " (1_yellow) ";
-			if (color == 2)
-				cerr << " (2_green) ";
-			if (color == 3)
-				cerr << " (3_blue) ";
+	// for (it_drones it = drones.begin(); it != drones.end(); it++)
+	// {
+		// cerr << "[" << it->second.id << "] ";
+		// for (int color = 0; color < 4; color++)
+		// {
+			// if (color == 0)
+			// 	cerr << " (0_pink) ";
+			// if (color == 1)
+			// 	cerr << " (1_yellow) ";
+			// if (color == 2)
+			// 	cerr << " (2_green) ";
+			// if (color == 3)
+			// 	cerr << " (3_blue) ";
 
-			cerr << " : " << is_full_scanned(it->first, color, 0).second << (is_full_scanned(it->second.owner, color, 0).first ? "*" : "") << "  │  ";
+			// cerr << " : " << is_full_scanned(it->first, color, 0).second << (is_full_scanned(it->second.owner, color, 0).first ? "*" : "") << "  │  ";
 
 			// drones[it->first].potential_score += stock_is_full_scanned.second * (color + 1);
-		}
+		// }
 
-		cerr << endl;
-	}
+		// cerr << endl;
+	// }
 
 /* ************************************************************************** */
 
@@ -76,7 +68,7 @@ void	Data::calculate_advantage_score(void)
 	for (it_drones it = drones.begin(); it != drones.end(); it++)
 		sort_by_pos_y_drones.push_back(&it->second);
 
-	sort(sort_by_pos_y_drones.begin(), sort_by_pos_y_drones.end(), CompareDronePosY());
+	sort(sort_by_pos_y_drones.begin(), sort_by_pos_y_drones.end(), s_compare_drone_pos_y());
 
 	for (it_creatures it = creatures.begin(); it != creatures.end(); it++)
 	{
@@ -127,7 +119,7 @@ void	Data::calculate_advantage_score(void)
 		if (player_combo_type[type] == 4 || foe_combo_type[type] == 4)
 		{
 			first_combo_type[type] = true;
-			cerr << " ! type " << type << " is alredy full saved !\n";
+			// cerr << " ! type " << type << " is alredy full saved !\n";
 		}
 	}
 
@@ -136,7 +128,7 @@ void	Data::calculate_advantage_score(void)
 		if (player_combo_color[color] == 3 || foe_combo_color[color] == 3)
 		{
 			first_combo_color[color] = true;
-			cerr << " ! color " << color << " is alredy full saved !\n";
+			// cerr << " ! color " << color << " is alredy full saved !\n";
 		}
 	}
 
@@ -219,18 +211,20 @@ void	Data::calculate_advantage_score(void)
 
 /* ************************************************************************** */
 
-	cerr << "───────\n";
+	// cerr << "───────\n";
 	
 	for (size_t i = 0; i < sort_by_pos_y_drones.size(); i++)
 	{
-		cerr << "[" << sort_by_pos_y_drones[i]->id << "] ("
-		<< sort_by_pos_y_drones[i]->potential_point << "  +  "
-		<< sort_by_pos_y_drones[i]->first_scan_potential_point << "  =  "
-		<< sort_by_pos_y_drones[i]->potential_point + sort_by_pos_y_drones[i]->first_scan_potential_point << ")  +  ("
-		<< sort_by_pos_y_drones[i]->potential_point_combo << "  +  "
-		<< sort_by_pos_y_drones[i]->first_potential_point_combo << "  =  "
-		<< sort_by_pos_y_drones[i]->potential_point_combo + sort_by_pos_y_drones[i]->first_potential_point_combo << ")  =  "
-		<< sort_by_pos_y_drones[i]->potential_point + sort_by_pos_y_drones[i]->first_scan_potential_point + sort_by_pos_y_drones[i]->potential_point_combo + sort_by_pos_y_drones[i]->first_potential_point_combo
-		<< endl;
+		sort_by_pos_y_drones[i]->total_potential_point = sort_by_pos_y_drones[i]->potential_point + sort_by_pos_y_drones[i]->first_scan_potential_point + sort_by_pos_y_drones[i]->potential_point_combo + sort_by_pos_y_drones[i]->first_potential_point_combo;
+
+		// cerr << "[" << sort_by_pos_y_drones[i]->id << "] ("
+		// << sort_by_pos_y_drones[i]->potential_point << "  +  "
+		// << sort_by_pos_y_drones[i]->first_scan_potential_point << "  =  "
+		// << sort_by_pos_y_drones[i]->potential_point + sort_by_pos_y_drones[i]->first_scan_potential_point << ")  +  ("
+		// << sort_by_pos_y_drones[i]->potential_point_combo << "  +  "
+		// << sort_by_pos_y_drones[i]->first_potential_point_combo << "  =  "
+		// << sort_by_pos_y_drones[i]->potential_point_combo + sort_by_pos_y_drones[i]->first_potential_point_combo << ")  =  "
+		// << sort_by_pos_y_drones[i]->total_potential_point
+		// << endl;
 	}
 }

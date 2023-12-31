@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/29 21:58:10 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/31 19:34:22 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,76 @@
 /*                                                                            */
 /* ************************************************************************** */
 Data::Data(void)
-{
-	s_creature	creature = {};
-
-	cin >> creature_count; cin.ignore();
-
-	for (int i = 0; i < creature_count; i++)
-	{
-		cin >> creature.id >> creature.color >> creature.type; cin.ignore();
-		creatures[creature.id] = creature;
-	}
-}
+{}
 
 /*   COPY CONSTRUCTEUR   **************************************************** */
 
 Data::Data(const Data &src)
 {
-	(void) src;
+	*this = src;
+}
+
+Data::Data(const Data &src, map<int, s_drone> &new_drones)	// simulate input whith new drones position
+{
+	*this = src;
+	drones = new_drones;
+
+	// show_drones();
+
+	vector<s_drone*>	sort_by_pos_y_drones;
+
+	for (it_drones it = drones.begin(); it != drones.end(); it++)
+		sort_by_pos_y_drones.push_back(&it->second);
+
+	sort(sort_by_pos_y_drones.begin(), sort_by_pos_y_drones.end(), s_compare_drone_pos_y());
+	
+	for (size_t i = 0; i < sort_by_pos_y_drones.size(); i++)
+	{
+		sort_by_pos_y_drones[i]->potential_point = 0;
+		sort_by_pos_y_drones[i]->first_scan_potential_point = 0;
+		sort_by_pos_y_drones[i]->potential_point_combo = 0;
+		sort_by_pos_y_drones[i]->first_potential_point_combo = 0;
+		sort_by_pos_y_drones[i]->total_potential_point = 0;
+
+		calculate_advantage_score();
+
+		// cerr << "drone[" << sort_by_pos_y_drones[i]->id << "] : " << sort_by_pos_y_drones[i]->total_potential_point << endl;
+
+		if (sort_by_pos_y_drones[i]->pos.y <= 500)
+		{
+			if (sort_by_pos_y_drones[i]->owner == PLAYER)
+				my_score += sort_by_pos_y_drones[i]->total_potential_point;
+			else	// FOE
+				foe_score += sort_by_pos_y_drones[i]->total_potential_point;
+
+			for (it_creatures it = creatures.begin(); it != creatures.end(); it++)
+			{
+				if (is_scanned(sort_by_pos_y_drones[i]->id, it->second.id))
+				{
+					e_drone_owner	owner = sort_by_pos_y_drones[i]->owner;
+					
+					if (owner == PLAYER)
+						it->second.my_scan_saved = true;
+					else	// FOE
+						it->second.foe_scan_saved = true;
+
+					for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
+					{
+						if (drones[it2->first].owner == owner)
+						{
+							if (owner == PLAYER)
+								it2->second.my_scan_no_saved = false;
+							else
+								it2->second.foe_scan_no_saved = false;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	// cerr << "my_score : " << my_score << endl;
+	// cerr << "foe_score : " << foe_score << endl;
 }
 
 /* ************************************************************************** */
@@ -43,8 +96,7 @@ Data::Data(const Data &src)
 /*                                                                            */
 /* ************************************************************************** */
 Data::~Data(void)
-{
-}
+{}
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -53,6 +105,34 @@ Data::~Data(void)
 /* ************************************************************************** */
 
 /*   OPÉRATEUR INTERNE   **************************************************** */
+
+Data	&Data::operator = (const Data &src)
+{
+	if (this != &src)
+	{
+		creature_count = src.creature_count;
+		creatures = src.creatures;
+		last_round_creatures = src.last_round_creatures;
+		drones = src.drones;
+		my_score = src.my_score;
+		foe_score = src.foe_score;
+		my_scan_score_not_saved = src.my_scan_score_not_saved;
+		my_scan_count = src.my_scan_count;
+		foe_scan_count = src.foe_scan_count;
+		my_drone_count = src.my_drone_count;
+		foe_drone_count = src.foe_drone_count;
+		drone_scan_count = src.drone_scan_count;
+		visible_creature_count = src.visible_creature_count;
+		radar_blip_count = src.radar_blip_count;
+
+		drones_player.clear();
+		for (std::vector<s_drone*>::const_iterator it = src.drones_player.begin(); it != src.drones_player.end(); ++it)
+			if (*it != nullptr)
+				drones_player.push_back(&drones[(*it)->id]);
+	}
+
+	return (*this);
+}
 
 /*   OPÉRATEUR EXTERNE   **************************************************** */
 
@@ -63,6 +143,19 @@ Data::~Data(void)
 /* ************************************************************************** */
 
 /*   MÉTHODE PUBLIC   ******************************************************* */
+
+void	Data::round_zero_init(void)
+{
+	s_creature	creature = {};
+
+	cin >> creature_count; cin.ignore();
+
+	for (int i = 0; i < creature_count; i++)
+	{
+		cin >> creature.id >> creature.color >> creature.type; cin.ignore();
+		creatures[creature.id] = creature;
+	}	
+}
 
 void	Data::show_creatures(void)
 {
@@ -80,49 +173,28 @@ void	Data::show_creatures(void)
 	
 	for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
 	{
-		// if (it->second.visible)
-			ss << it->second.pos.x << ", " << it->second.pos.y;
-			cerr
-				<< setw(3) << it->second.id << " │"
-				<< setw(3) << it->second.color << " │"
-				<< setw(3) << it->second.type << " │"
-				<< setw(11) << ss.str() << " │"
-				<< setw(8) << ((it->second.visible) ? ("visible") : ("")) << " │"
-				<< setw(8) << ((it->second.in_light) ? ("flashed") : ("dark"));
+		ss << it->second.pos.x << ", " << it->second.pos.y;
 
-			cerr << " │ ";
+		cerr
+			<< setw(3) << it->second.id << " │"
+			<< setw(3) << it->second.color << " │"
+			<< setw(3) << it->second.type << " │"
+			<< setw(11) << ss.str() << " │"
+			<< setw(8) << ((it->second.visible) ? ("visible") : ("")) << " │"
+			<< setw(8) << ((it->second.in_light) ? ("flashed") : ("dark"));
 
-			for (map<int, e_radar> :: iterator it2 = it->second.radar.begin(); it2 !=  it->second.radar.end(); it2++ )
-				cerr << "[" << it2->first << "] " << enum_to_str(it2->second) << " │ " ;
-			
-			cerr << (it->second.radar_signal ? "" : "NO SIGNAL");
-			
-			cerr << endl;
+		cerr << " │ ";
 
-			ss.str("");
-			ss.clear();
+		for (map<int, e_radar> :: iterator it2 = it->second.radar.begin(); it2 !=  it->second.radar.end(); it2++ )
+			cerr << "[" << it2->first << "] " << enum_to_str(it2->second) << " │ " ;
+		
+		cerr << (it->second.radar_signal ? "" : "NO SIGNAL");
+		
+		cerr << endl;
+
+		ss.str("");
+		ss.clear();
 	}
-	// for (map<int, s_creature> :: iterator it = last_round_creatures.begin(); it != last_round_creatures.end(); it++)
-	// {
-	// 	if (it->second.visible)
-	// 	{
-	// 		cerr << "last round :" << endl;
-	// 		cerr
-	// 			<< it->second.id << " "
-	// 			<< " c(" << it->second.color << ")"
-	// 			<< " t(" << it->second.type << ")"
-	// 			<< " pos(" << it->second.pos.x << ", " << it->second.pos.y << ")"
-	// 			<< " v(" << it->second.v.x << ", " << it->second.v.y << ")"
-	// 			<< " next(" << it->second.next_pos.x << ", " << it->second.next_pos.y << ")"
-	// 			<< " next2(" << it->second.next_next_pos.x << ", " << it->second.next_next_pos.y << ")"
-	// 			// << "   my_scan : " << it->second.my_scan_saved
-	// 			// << "   foe_scan : " << it->second.foe_scan_saved
-	// 			// << "   dist : " << distance(0, it->second.id)
-	// 			<< ((it->second.visible) ? (" visible") : (""))
-	// 			<< ((it->second.in_light) ? (" flashed") : (" dark"))
-	// 			<< endl;
-	// 	}
-	// }
 }
 
 void	Data::show_drones(void)
@@ -145,6 +217,8 @@ void	Data::update()
 
 	cin >> my_score; cin.ignore();
 	cin >> foe_score; cin.ignore();
+
+	cerr << "round : " << g_round << endl;
 
 /* ************************************************************************** */
 /*                                                                            */
@@ -195,6 +269,7 @@ void	Data::update()
 			drones[drone_id].first_scan_potential_point = 0;
 			drones[drone_id].potential_point_combo = 0;
 			drones[drone_id].first_potential_point_combo = 0;
+			drones[drone_id].total_potential_point = 0;
 		}
 	}
 
@@ -218,6 +293,7 @@ void	Data::update()
 			drones[drone_id].first_scan_potential_point = 0;
 			drones[drone_id].potential_point_combo = 0;
 			drones[drone_id].first_potential_point_combo = 0;
+			drones[drone_id].total_potential_point = 0;
 		}
 	}
 
@@ -458,6 +534,12 @@ void	Data::update()
 /* ************************************************************************** */
 
 	calculate_advantage_score();
+
+	pair<int, int>	scores = calculate_score_at_drones_pos_zero();
+
+	cerr << "calculate PLAYER score at drones pos zero : " << scores.first << endl;
+	cerr << "calculate FOE score at drones pos zero : " << scores.second << endl;
+
 }
 
 s_drone	*Data::get_nearest_drone(u_tuple origin)
@@ -532,8 +614,6 @@ void	Data::reset(void)
 		it->second.next_pos.y = -1;
 		it->second.next_next_pos.x = -1;
 		it->second.next_next_pos.y = -1;
-		// it->second.my_scan_saved = false;
-		// it->second.foe_scan_saved = false;
 		it->second.radar_signal = false;
 		
 		for (map<int, s_scan> :: iterator it2 = it->second.scan_no_saved.begin(); it2 != it->second.scan_no_saved.end(); it2++)
@@ -551,11 +631,11 @@ void	Data::reset(void)
 		it->second.first_scan_potential_point = 0;
 		it->second.potential_point_combo = 0;
 		it->second.first_potential_point_combo = 0;
+		it->second.total_potential_point = 0;
 	}
 
 }
 
 /*   MÉTHODE PRIVATE   ****************************************************** */
-
 
 /* ************************************************************************** */

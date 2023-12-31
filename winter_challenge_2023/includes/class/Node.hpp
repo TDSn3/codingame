@@ -1,49 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Stock.hpp                                          :+:      :+:    :+:   */
+/*   Node.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/20 16:46:22 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/31 13:02:57 by tda-silv         ###   ########.fr       */
+/*   Created: 2023/12/30 12:07:36 by tda-silv          #+#    #+#             */
+/*   Updated: 2023/12/31 14:25:26 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STOCK_HPP
-# define STOCK_HPP
+#ifndef NODE_HPP
+# define NODE_HPP
 
 # include "../utils.hpp"
 
-class Data;
-
-struct s_pos_node
-{
-	u_tuple			pos;
-	bool			visited;
-	e_tb			direction_goal;
-
-	s_pos_node(u_tuple pos) : pos(pos), visited(false), direction_goal(BOT) {}
-};
-
-class Stock
+class Node
 {
 	public:
-	
-		Stock(void);
-		Stock(const Stock &src);
-		~Stock(void);
 
-		map<int, vector<s_pos_node> >	list_pos;	// int = player_drone
+		virtual ~Node(void) = 0;
 
-		void	init_list_pos(Data &data);
-		void	update(Data &data);
-		int		index_vector_first_visited_false(int drone);
+		Node						*parent;
+		vector<unique_ptr<Node> >	children;
 
 	protected:
 
 	private:
 
+		Node();
+		Node(const Node &src);
+
+		Node	&operator = (const Node &src);
 };
 
 #endif

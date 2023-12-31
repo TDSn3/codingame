@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/26 18:51:21 by tda-silv         ###   ########.fr       */
+/*   Updated: 2023/12/31 16:19:01 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,17 @@
 # include <array>
 # include <random>
 # include <ctgmath>
+# include <memory>
 
 using namespace std;
 
 # include "./utils.hpp"
 # include "./color.hpp"
+# include "./class/Game.hpp"
+# include "./class/Node.hpp"
 # include "./class/Data.hpp"
 # include "./class/Stock.hpp"
 
-void	game_loop(Data &data, Stock &stock);
 double	distance_tuple(u_tuple a, u_tuple b);
 void	instruction_move(u_tuple pos, bool light);
 void	instruction_wait(bool light);
