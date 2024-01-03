@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 19:46:21 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/31 18:29:14 by tda-silv         ###   ########.fr       */
+/*   Updated: 2024/01/03 08:51:27 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main()
 
 		games.push_back(Game(g_round, data));
 
-		// data.show_creatures();
+		data.show_creatures();
 		data.show_drones();
 
 		if (g_round == 0)
@@ -40,6 +40,7 @@ int main()
 
 		for (int i = 0; i < data.my_drone_count; i++)
 		{
+			// get_objective_pos(games, data, i);
 			pos = choice_pos(data, stock, i);
 			light = choice_light(data, stock, i, pos);
 			instruction_move(pos, light);

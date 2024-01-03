@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:12:11 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/31 16:19:01 by tda-silv         ###   ########.fr       */
+/*   Updated: 2024/01/02 18:42:55 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ u_tuple	get_real_pos(Data &data, int player_drone_id, u_tuple pos);
 bool	choice_light(Data &data, Stock &stock, int player_drone_id, u_tuple pos_drone_end_round);
 string	enum_to_str(e_zone token);
 string	enum_to_str(e_radar token);
+u_tuple	get_objective_pos(list<Game> &games, Data &data, int player_drone_id);
 
 #endif

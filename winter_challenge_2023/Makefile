@@ -29,6 +29,7 @@ SRCS		=	class/Game/Game.cpp									\
 				get_real_pos.cpp									\
 				choice_light.cpp									\
 				enum_to_str.cpp										\
+				get_objective_pos.cpp								\
 				main.cpp											\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR

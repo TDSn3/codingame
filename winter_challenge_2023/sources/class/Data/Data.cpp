@@ -6,7 +6,7 @@
 /*   By: tda-silv <tda-silv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 16:50:45 by tda-silv          #+#    #+#             */
-/*   Updated: 2023/12/31 19:34:22 by tda-silv         ###   ########.fr       */
+/*   Updated: 2024/01/03 09:49:40 by tda-silv         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ void	Data::round_zero_init(void)
 	{
 		cin >> creature.id >> creature.color >> creature.type; cin.ignore();
 		creatures[creature.id] = creature;
+		creatures[creature.id].broken_simetric = false;
 	}	
 }
 
@@ -190,6 +191,8 @@ void	Data::show_creatures(void)
 		
 		cerr << (it->second.radar_signal ? "" : "NO SIGNAL");
 		
+		// cerr << (it->second.broken_simetric ? " BROKEN SIMETRIC " : "");
+		
 		cerr << endl;
 
 		ss.str("");
@@ -204,7 +207,7 @@ void	Data::show_drones(void)
 		cerr
 			<< "drone[" << it->second.id << "] "
 			<< it->second.pos.x << ", " << it->second.pos.y << " "
-			<< enum_to_str(get_drone_zone(it->first))
+			<< enum_to_str(get_drone_zone(it->first)) << " "
 			<< endl;
 	}
 }
@@ -522,7 +525,7 @@ void	Data::update()
 		// cerr << "[1]" << final_radar_predict[1].x << ", " << final_radar_predict[1].y << "   ";
 		// cerr << "[2]" << final_radar_predict[2].x << ", " << final_radar_predict[2].y << "   ";
 		// cerr << "[3]" << final_radar_predict[3].x << ", " << final_radar_predict[3].y << endl;
-	
+
 		it->second.radar_predict = final_radar_predict;
 		it->second.predict_center = (u_tuple){{
 			round((final_radar_predict[0].x + final_radar_predict[2].x) / 2.0),
@@ -540,6 +543,22 @@ void	Data::update()
 	cerr << "calculate PLAYER score at drones pos zero : " << scores.first << endl;
 	cerr << "calculate FOE score at drones pos zero : " << scores.second << endl;
 
+/* ************************************************************************** */
+
+	// for (map<int, s_creature> :: iterator it = creatures.begin(); it != creatures.end(); it++)
+	// {
+	// 	if (it->second.type == -1 || it->second.pos.x == -1)
+	// 		continue ;
+
+	// 	for (map<int, s_drone> :: iterator it2 = drones.begin(); it2 != drones.end(); it2++)
+	// 	{
+	// 		if (distance_tuple(it->second.pos, it2->second.pos) < 1400)
+	// 		{
+	// 			it->second.broken_simetric = true;
+	// 			break ;
+	// 		}
+	// 	}
+	// }
 }
 
 s_drone	*Data::get_nearest_drone(u_tuple origin)
