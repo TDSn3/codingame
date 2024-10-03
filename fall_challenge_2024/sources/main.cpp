@@ -2,33 +2,12 @@
 
 int main()
 {
-    // game loop
+    Data	data;
+	
+	// game loop
     while (1) {
-        int resources;
-        cin >> resources; cin.ignore();
-
-        int num_travel_routes;
-        cin >> num_travel_routes; cin.ignore();
-        for (int i = 0; i < num_travel_routes; i++) {
-            int building_id_1;
-            int building_id_2;
-            int capacity;
-            cin >> building_id_1 >> building_id_2 >> capacity; cin.ignore();
-        }
-
-        int num_pods;
-        cin >> num_pods; cin.ignore();
-        for (int i = 0; i < num_pods; i++) {
-            string pod_properties;
-            getline(cin, pod_properties);
-        }
-
-        int num_new_buildings;
-        cin >> num_new_buildings; cin.ignore();
-        for (int i = 0; i < num_new_buildings; i++) {
-            string building_properties;
-            getline(cin, building_properties);
-        }
+        data.update();
+		data.printData();
 
         // Write an action using cout. DON'T FORGET THE "<< endl"
         // To debug: cerr << "Debug messages..." << endl;

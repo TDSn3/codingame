@@ -7,10 +7,13 @@ CPPFLAGS	=	-MMD
 CXXFLAGS	=	-Wall -Wextra #-Werror
 
 #ADD YOUR SOURCES BELOW WITHOUT THE SOURCE PREFIX MAIN.C GIVEN AS EXAMPLE
-SRCS		=	main.cpp											\
+SRCS		=	class/Data/update.cpp								\
+				class/Data/printData.cpp							\
+				main.cpp											\
 
 #IF YOU HAVE HEADER FILES YOU ABSOLUTELY NEED TO ADD THEM IN THE INC_FILES VAR
 INC_FILES	= 	utils.hpp											\
+				class/Data.hpp										\
 				header.hpp											\
 
 INC_PATH	=	includes/

@@ -17,4 +17,11 @@
 
 using namespace std;
 
+struct s_tube
+{
+	int	buildingId1;
+	int	buildingId2;
+	int	capacity;
+};
+
 #endif

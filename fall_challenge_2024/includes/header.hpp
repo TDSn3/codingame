@@ -19,4 +19,8 @@
 
 using namespace std;
 
+# include "./utils.hpp"
+# include "./color.hpp"
+# include "./class/Data.hpp"
+
 #endif
