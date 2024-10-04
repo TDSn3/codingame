@@ -16,11 +16,13 @@
 # include <random>
 # include <ctgmath>
 # include <memory>
+#include <initializer_list>
 
 using namespace std;
 
 # include "./utils.hpp"
 # include "./color.hpp"
 # include "./class/Data.hpp"
+# include "./class/Game.hpp"
 
 #endif
