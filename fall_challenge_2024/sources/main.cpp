@@ -12,6 +12,9 @@ int main()
         game.tube(0, 2);
         game.pod(42, {0, 1, 0, 2, 0});
         game.end();
+
+        cerr << "\n\nData at the end" << endl;
+        game.data.printData();
     }
 
     return (0);

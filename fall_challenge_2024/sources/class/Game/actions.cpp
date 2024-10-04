@@ -6,6 +6,11 @@ void	Game::tube(int buildingId1, int buildingId2) {
     if (distance == -1)
         return ;
 
+    if (data.travel_routes.find({buildingId1, buildingId2}) != data.travel_routes.end()) {
+        cerr << "ERROR TUBE : Tube already exists between " << buildingId1 << " and " << buildingId2 << endl;
+        return ;
+    }
+
     int		cost = static_cast<int>(floor(distance * 10));
 
     if (data.resources >= cost) {
@@ -16,7 +21,7 @@ void	Game::tube(int buildingId1, int buildingId2) {
         cout << "TUBE " << buildingId1 << " " << buildingId2 << ";";
         cerr << "New tube : " << buildingId1 << " - " << buildingId2 << "     cost : " << cost << endl;
     } else {
-        cerr << "ERROR TUBE : Failed to creat new tube ( " << buildingId1 << " - " << buildingId2 << " )" << endl;
+        cerr << "ERROR TUBE : Insufficient resources to creat new tube ( " << buildingId1 << " - " << buildingId2 << " )" << endl;
     }
 }
 
