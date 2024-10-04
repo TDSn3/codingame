@@ -15,6 +15,9 @@ void	Game::tube(int buildingId1, int buildingId2) {
 
     if (data.resources >= cost) {
         data.resources -= cost;
+        data.num_travel_routes++;
+        data.travel_routes[{buildingId1, buildingId2}].buildingId1 = buildingId1;
+        data.travel_routes[{buildingId1, buildingId2}].buildingId2 = buildingId2;
         data.travel_routes[{buildingId1, buildingId2}].capacity = 1;
         data.travel_routes[{buildingId1, buildingId2}].cost = cost;
 
@@ -34,10 +37,19 @@ void	Game::teleport(int buildingIdEntrance, int buildingIdExit) {
 }
 
 void	Game::pod(int podId, initializer_list<int> buildingIds) {
+    if (data.pods.find(podId) != data.pods.end()) {
+        cerr << "ERROR POD : Pod with ID " << podId << " already exists" << endl;
+        return ;
+    }
+
     const int podCost = 1000;
 
     if (data.resources >= podCost && podId >= 1 && podId <= 500) {
         data.resources -= podCost;
+        data.num_pods++;
+        data.pods[podId].id = podId;
+        data.pods[podId].numStopsCount = buildingIds.size();
+        data.pods[podId].numStopsList = buildingIds;
 
         auto    it = buildingIds.begin();
         int     firstBuilding = *it;
@@ -49,11 +61,11 @@ void	Game::pod(int podId, initializer_list<int> buildingIds) {
         cout << ";";
 
         if (firstBuilding == lastBuilding)
-            cerr << "New Capsule : " << podId << "     LOOP" << std::endl;
+            cerr << "New Capsule : " << podId << "     cost : 1000" << "     LOOP" << std::endl;
         else
-            cerr << "New Capsule : " << podId << "     LINE" << std::endl;
+            cerr << "New Capsule : " << podId << "     cost : 1000" << "     LINE" << std::endl;
     } else {
-        cerr << "ERROR POD" << endl;
+        cerr << "ERROR POD : Insufficient resources or invalid pod ID" << endl;
     }
 }
 

@@ -21,9 +21,26 @@ void	Data::update() {
 
     cin >> num_pods; cin.ignore();
     for (int i = 0; i < num_pods; i++) {
-        string  pod_properties;
+        string              pod_properties;
 
         getline(cin, pod_properties);
+
+        istringstream       iss(pod_properties);
+        vector<int>         properties;
+        int                 value;
+
+        while (iss >> value)
+            properties.push_back(value);
+        
+        s_pod               pod;
+
+        pod.id = properties[0];
+        pod.numStopsCount = properties[1];
+
+        for (size_t j = 2; j < properties.size(); j++)
+            pod.numStopsList.push_back(properties[j]);
+
+        pods[properties[0]] = pod;
     }
 
     cin >> num_new_buildings; cin.ignore();
@@ -50,6 +67,7 @@ void	Data::update() {
             
             for (size_t j = 5; j < properties.size(); j++)
                 landing_pad->astronautType.push_back(properties[j]);
+
             buildings[landing_pad->id] = landing_pad;
         } else {
             s_lunar_module*  lunar_module = new s_lunar_module();

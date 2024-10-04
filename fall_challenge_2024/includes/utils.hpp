@@ -46,4 +46,10 @@ struct s_lunar_module : s_building {
     int moduleType;
 };
 
+struct s_pod {
+    int         id;
+    int     	numStopsCount;
+    vector<int>	numStopsList;
+};
+
 #endif

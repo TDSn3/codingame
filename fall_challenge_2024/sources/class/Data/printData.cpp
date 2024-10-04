@@ -8,9 +8,20 @@ void	Data::printData() {
     cerr << "travel_routes : " << endl;
     int	i = 1;
     for (map<pair<int, int>, s_tube> :: iterator it = travel_routes.begin(); it != travel_routes.end(); it++)
-        cerr << "|   " << (it->second.capacity ? "tube " : "téléporteur ") << i++ << " ( " << it->first.first << " - " << it->first.second << " )     " << it->second.capacity << endl;
+        cerr << "|   " << (it->second.capacity ? "tube " : "téléporteur ") << i++ << " ( " << it->first.first << " - " << it->first.second << " )     " << it->second.capacity << "     cost : " << it->second.cost << endl;
 
     cerr << "num_pods : " << num_pods << endl;
+
+    cerr << "pods : " << endl;
+    for (const auto &podPair : pods) {
+        const s_pod &pod = podPair.second;
+
+        cerr << "|   Pod ID : " << pod.id << ", numStopsCount : " << pod.numStopsCount << endl;
+        cerr << "|   numStopsList : ";
+        for (const int &stopId : pod.numStopsList)
+            cerr << stopId << " ";
+        cerr << endl;
+    }
 
     cerr << "num_new_buildings : " << num_new_buildings << endl;
 
