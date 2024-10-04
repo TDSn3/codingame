@@ -5,7 +5,7 @@ void	Data::update() {
 
     cin >> num_travel_routes; cin.ignore();
     for (int i = 0; i < num_travel_routes; i++) {
-        s_tube tube;
+        s_route tube;
 
         cin >> tube.buildingId1 >> tube.buildingId2 >> tube.capacity; cin.ignore();
 
@@ -64,6 +64,8 @@ void	Data::update() {
             landing_pad->x = properties[2];
             landing_pad->y = properties[3];
             landing_pad->numAstronauts = properties[4];
+            landing_pad->routeCount = 0;
+            landing_pad->teleporterCount = 0;
             
             for (size_t j = 5; j < properties.size(); j++)
                 landing_pad->astronautType.push_back(properties[j]);
@@ -77,6 +79,8 @@ void	Data::update() {
             lunar_module->x = properties[2];
             lunar_module->y = properties[3];
             lunar_module->moduleType = properties[0];
+            lunar_module->routeCount = 0;
+            lunar_module->teleporterCount = 0;
 
             buildings[lunar_module->id] = lunar_module;
         }

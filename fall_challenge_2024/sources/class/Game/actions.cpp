@@ -1,12 +1,19 @@
 #include "../../../includes/header.hpp"
 
 void	Game::tube(int buildingId1, int buildingId2) {
+    auto building1 = data.buildings.find(buildingId1);
+    auto building2 = data.buildings.find(buildingId2);
+
+    if (building1 ==  data.buildings.end() || building2 ==  data.buildings.end())
+        throw runtime_error("ERROR TUBE : Invalid buildingId for " + to_string(buildingId1) + " or " + to_string(buildingId2));
+
+    if (building1->second->routeCount >= 5 || building2->second->routeCount >= 5)
+        throw runtime_error("ERROR TUBE : Maximum of 5 tube connected to " + to_string(buildingId1) + " or " + to_string(buildingId2));
+
     auto route = data.travel_routes.find({buildingId1, buildingId2});
 
-    if (route != data.travel_routes.end() && route->second.capacity != 0) {
-        cerr << "ERROR TUBE : Tube already exists between " << buildingId1 << " and " << buildingId2 << endl;
-        return ;
-    }
+    if (route != data.travel_routes.end() && route->second.capacity != 0)
+        throw runtime_error("ERROR TUBE : Tube already exists between " + to_string(buildingId1) + " and " + to_string(buildingId2));
 
     float	distance = data.calculateDistance(buildingId1, buildingId2);
 
@@ -23,10 +30,16 @@ void	Game::tube(int buildingId1, int buildingId2) {
         data.travel_routes[{buildingId1, buildingId2}].capacity = 1;
         data.travel_routes[{buildingId1, buildingId2}].cost = cost;
 
+        data.buildings[buildingId1]->routeCount++;
+        data.buildings[buildingId1]->connectedRoute.push_back(&data.travel_routes[{buildingId1, buildingId2}]);
+
+        data.buildings[buildingId2]->routeCount++;
+        data.buildings[buildingId2]->connectedRoute.push_back(&data.travel_routes[{buildingId1, buildingId2}]);
+
         cout << "TUBE " << buildingId1 << " " << buildingId2 << ";";
         cerr << "New tube : " << buildingId1 << " - " << buildingId2 << "     cost : " << cost << endl;
     } else {
-        cerr << "ERROR TUBE : Insufficient resources to creat new tube between " << buildingId1 << " and " << buildingId2 << endl;
+        throw runtime_error("ERROR TUBE : Insufficient resources to creat new tube between " + to_string(buildingId1) + " and " + to_string(buildingId2));
     }
 }
 
@@ -51,6 +64,19 @@ void	Game::upgrade(int buildingId1, int buildingId2) {
 }
 
 void	Game::teleport(int buildingIdEntrance, int buildingIdExit) {
+    auto building1 = data.buildings.find(buildingIdEntrance);
+    auto building2 = data.buildings.find(buildingIdExit);
+
+    if (building1 ==  data.buildings.end() || building2 ==  data.buildings.end()) {
+        cerr << "ERROR TUBE : Invalid buildingId for " << buildingIdEntrance << " or " << buildingIdExit << endl;
+        return ;
+    }    
+
+    if (building1->second->routeCount >= 5 || building2->second->routeCount >= 5) {
+        cerr << "ERROR TUBE : Maximum of 1 teleporter connected to " << buildingIdEntrance << " or " << buildingIdExit << endl;
+        return ;        
+    }
+
     if (data.travel_routes.find({buildingIdEntrance, buildingIdExit}) != data.travel_routes.end()
         && data.travel_routes.find({buildingIdEntrance, buildingIdExit})->second.capacity == 0) {
         cerr << "ERROR TELEPORT : Teleporter already exists between " << buildingIdEntrance << " and " << buildingIdExit << endl;
@@ -66,7 +92,13 @@ void	Game::teleport(int buildingIdEntrance, int buildingIdExit) {
         data.travel_routes[{buildingIdEntrance, buildingIdExit}].buildingId2 = buildingIdExit;
         data.travel_routes[{buildingIdEntrance, buildingIdExit}].capacity = 0;
         data.travel_routes[{buildingIdEntrance, buildingIdExit}].cost = teleportCost;
-        
+
+        data.buildings[buildingIdEntrance]->teleporterCount++;
+        data.buildings[buildingIdEntrance]->connectedRoute.push_back(&data.travel_routes[{buildingIdEntrance, buildingIdExit}]);
+
+        data.buildings[buildingIdExit]->teleporterCount++;
+        data.buildings[buildingIdExit]->connectedRoute.push_back(&data.travel_routes[{buildingIdEntrance, buildingIdExit}]);
+
         cout << "TELEPORT " << buildingIdEntrance << " " << buildingIdExit << ";";
         cerr << "New teleporter : " << buildingIdEntrance << " - " << buildingIdExit << "     cost : " << teleportCost << endl;
     } else {
@@ -74,7 +106,7 @@ void	Game::teleport(int buildingIdEntrance, int buildingIdExit) {
     }
 }
 
-void	Game::pod(int podId, initializer_list<int> buildingIds) {
+void	Game::pod(int podId, vector<int> buildingIds) {
     if (data.pods.find(podId) != data.pods.end()) {
         cerr << "ERROR POD : Pod with ID " << podId << " already exists" << endl;
         return ;

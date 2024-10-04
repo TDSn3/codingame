@@ -7,7 +7,7 @@ void	Data::printData() {
 
     cerr << "travel_routes : " << endl;
     int	i = 1;
-    for (map<pair<int, int>, s_tube> :: iterator it = travel_routes.begin(); it != travel_routes.end(); it++)
+    for (map<pair<int, int>, s_route> :: iterator it = travel_routes.begin(); it != travel_routes.end(); it++)
         cerr << "|   " << (it->second.capacity ? "tube " : "téléporteur ") << i++ << " ( " << it->first.first << " - " << it->first.second << " )     " << it->second.capacity << "     cost : " << it->second.cost << endl;
 
     cerr << "num_pods : " << num_pods << endl;
@@ -31,6 +31,7 @@ void	Data::printData() {
         cerr << "id : " << building.second->id << "     ";
         cerr << "type : " << (building.second->type == LANDING_PAD ? "landing_pad" : "lunar_module") << "     ";
         cerr << "xy : (" << building.second->x << ", " << building.second->y << ")" << endl;
+        cerr << "routeCount : " << building.second->routeCount << "    teleporterCount : " << building.second->teleporterCount << endl;
 
         cerr << "|   ";
         if (building.second->type == LANDING_PAD) {
@@ -39,7 +40,7 @@ void	Data::printData() {
             cerr << "numAstronauts : " << landing_pad.numAstronauts << ", astronautType : ";
             for (const int &astronautType : landing_pad.astronautType)
                 cerr << astronautType << " ";
-        } else {
+        } else {                    // LUNAR_MODULE
             const s_lunar_module &lunar_module = static_cast<const s_lunar_module&>(*(building.second));
 
             cerr << "moduleType : " << lunar_module.moduleType;

@@ -18,7 +18,7 @@ class Data
 
 		int		resources;
 		int		num_travel_routes;
-		map		<pair<int, int>, s_tube> travel_routes;
+		map		<pair<int, int>, s_route> travel_routes;
 		int		num_pods;
 		map		<int, s_pod> pods;
 		int		num_new_buildings;

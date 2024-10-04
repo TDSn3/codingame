@@ -16,7 +16,9 @@
 # include <random>
 # include <ctgmath>
 # include <memory>
-#include <initializer_list>
+# include <initializer_list>
+# include <stdexcept>
+# include <exception>
 
 using namespace std;
 

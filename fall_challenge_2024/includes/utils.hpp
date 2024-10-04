@@ -14,10 +14,11 @@
 # include <cmath>
 # include <array>
 # include <ctgmath>
+# include <memory>
 
 using namespace std;
 
-struct s_tube {
+struct s_route {
     int	buildingId1;
     int	buildingId2;
     int	capacity;
@@ -35,6 +36,9 @@ struct s_building {
     int             id;
     int             x;
     int             y;
+    int             routeCount;
+    int             teleporterCount;
+    list<s_route*>  connectedRoute;
 };
 
 struct s_landing_pad : s_building {

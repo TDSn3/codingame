@@ -12,7 +12,7 @@ class Game
 			void	tube(int buildingId1, int buildingId2);
 			void	upgrade(int buildingId1, int buildingId2);
 			void	teleport(int buildingIdEntrance, int buildingIdExit);
-			void	pod(int podId, initializer_list<int> buildingIds);
+			void	pod(int podId, vector<int> buildingIds);
 			void	destroy(int podId);
 			void	wait();
 
