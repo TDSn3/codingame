@@ -15,7 +15,6 @@ class Game
 			void	pod(int podId, initializer_list<int> buildingIds);
 			void	destroy(int podId);
 			void	wait();
-			void	end();
 
 		Data	data;
 

@@ -24,12 +24,28 @@ void	Game::tube(int buildingId1, int buildingId2) {
         cout << "TUBE " << buildingId1 << " " << buildingId2 << ";";
         cerr << "New tube : " << buildingId1 << " - " << buildingId2 << "     cost : " << cost << endl;
     } else {
-        cerr << "ERROR TUBE : Insufficient resources to creat new tube ( " << buildingId1 << " - " << buildingId2 << " )" << endl;
+        cerr << "ERROR TUBE : Insufficient resources to creat new tube between " << buildingId1 << " and " << buildingId2 << endl;
     }
 }
 
 void	Game::upgrade(int buildingId1, int buildingId2) {
+    auto route = data.travel_routes.find({buildingId1, buildingId2});
 
+    if (route != data.travel_routes.end()) {
+        int cost = ((route->second.capacity + 1) * route->second.cost);
+
+        if (data.resources >= cost) {
+            data.resources -= cost;
+            route->second.capacity += 1;
+
+             cout << "UPGRADE " << buildingId1 << " " << buildingId2 << ";";
+             cerr << "Tube upgrade : " << buildingId1 << " - " << buildingId2 << "     cost : " << cost << endl;
+        } else {
+            cerr << "ERROR UPGRADE : Insufficient resources to upgrade the tube between " << buildingId1 << " and " << buildingId2 << endl;
+        }
+    } else {
+        cerr << "ERROR UPGRADE : Np tube between " << buildingId1 << " and " << buildingId2 << endl;
+    }
 }
 
 void	Game::teleport(int buildingIdEntrance, int buildingIdExit) {
@@ -74,9 +90,5 @@ void	Game::destroy(int podId) {
 }
 
 void	Game::wait() {
-    cout << "WAIT";
-}
-
-void	Game::end() {
-    cout << endl;
+    cout << "WAIT" << endl;
 }
